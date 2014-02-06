@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[技術情報棚卸し(平日限定)]]></title>
+  <link href="http://todoa2c.github.io/atom.xml" rel="self"/>
+  <link href="http://todoa2c.github.io/"/>
+  <updated>2014-02-06T16:18:38+09:00</updated>
+  <id>http://todoa2c.github.io/</id>
+  <author>
+    <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+</feed>
