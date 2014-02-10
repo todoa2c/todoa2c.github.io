@@ -4,7 +4,7 @@
   <title><![CDATA[技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-02-07T18:55:06+09:00</updated>
+  <updated>2014-02-10T17:36:58+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,45 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[JavaScriptのparseIntを数値入力の妥当性検証に使うと失敗する話]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/02/10/parseint-in-javascript/"/>
+    <updated>2014-02-10T15:24:50+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/02/10/parseint-in-javascript</id>
+    <content type="html"><![CDATA[<p>Webアプリケーションにおけるクライアント側のバリデーション処理で、
+手抜きで下記のような書き方をしたら、(自分にとって)意外な答えが返ってきました。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>var notNan = parseInt('10x', 10);
+</span><span class='line'>console.log(notNan);
+</span><span class='line'>// NaNが表示されるかと思ったけど、10が表示された</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/parseInt?redirectlocale=ja&amp;redirectslug=JavaScript%2FReference%2FGlobal_Objects%2FparseInt">parseInt &ndash; JavaScript | MDN</a>を見ると、確かにその通りに動いている事がわかります。下記は第1引数に関する記載の引用です。</p>
+
+<blockquote><p>parseInt が、指定された基数においては、数ではない文字に出会った場合、その文字とそれに続く文字の全てを無視し、その地点までパースされた値の整数を返します。 parseInt は、整数の値まで数を切り捨てます。 文字列の前後に空白があっても問題ありません。</p></blockquote>
+
+<p>Javaの<code>Integer.parseInt()</code>やPythonの<code>int()</code>のように、例外を返してくれるだろう、
+または変換不可ということでNaNを返すだろう、と勝手な予想をしながら実装したのですが、
+それがよくありませんでした。</p>
+
+<p>他の言語で使い慣れているAPIのルールが、そのまま他の言語でも通じるだろう、
+という思い込みは捨てて、ちゃんとAPIの挙動を調べて使うべきだ、と改めて痛感しました。</p>
+
+<p>そもそもバリデーションですが、
+バリデーションライブラリを使うか、
+HTML5前提でIE 9を無視してよいのであれば、HTML5のForm Validationを使うのが便利かと思います。
+今回のケースのように独自実装で頑張ると不具合混入しやすいですしね。
+残念ながら私はまだこれらを使ったことがないので、ポインタだけ示しておきます。</p>
+
+<p><a href="http://jqueryvalidation.org/">jQuery Validation Plugin</a></p>
+
+<p><a href="http://girliemac.com/blog/2012/12/01/html5-form-validation-jp/">HTML5 Form Validation のカスタマイズ</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[ちっちゃいWeb APIをPython 3.3に移行する]]></title>
