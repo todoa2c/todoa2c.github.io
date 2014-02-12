@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>JavaScriptのparseIntを数値入力の妥当性検証に使うと失敗する話 - 技術情報棚卸し(平日限定)</title>
+  <title>Emailがコラボレーションツールに適していないもう1点 - 技術情報棚卸し(平日限定)</title>
   <meta name="author" content="Atsushi Kanaya (todoa2c)">
 
    
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://todoa2c.github.io/blog/2014/02/10/parseint-in-javascript">
+  <link rel="canonical" href="http://todoa2c.github.io/blog/2014/02/12/email-one-more-suck">
   <link href="/favicon.png" rel="icon">
   <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
@@ -93,7 +93,7 @@
 
   <header>
   <div class="jumbotron">
-    JavaScriptのparseIntを数値入力の妥当性検証に使うと失敗する話
+    Emailがコラボレーションツールに適していないもう1点
 	<h5>
 
 
@@ -106,42 +106,50 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-02-10T15:24:50+09:00" pubdate data-updated="true">2014-02-10</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-02-12T18:45:30+09:00" pubdate data-updated="true">2014-02-12</time></h5>
   </div>
 </header>
   <div class="row-fluid">
     <div class="span12">
-      <p>Webアプリケーションにおけるクライアント側のバリデーション処理で、
-手抜きで下記のような書き方をしたら、(自分にとって)意外な答えが返ってきました。</p>
+      <p><a href="http://gothedistance.hatenadiary.jp/">ござ先輩</a>による
+<a href="http://gothedistance.hatenadiary.jp/entry/2014/02/10/120745">Eメールで作業内容を管理するのはやめましょう</a>
+の記事が非常に共感できたのですが、一点だけハッキリ書きたかったことがあったので、書いておきます。</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>var notNan = parseInt('10x', 10);
-</span><span class='line'>console.log(notNan);
-</span><span class='line'>// NaNが表示されるかと思ったけど、10が表示された</span></code></pre></td></tr></table></div></figure>
+<h1>新規に参加したメンバーが過去の情報にアクセス出来ない</h1>
+
+<p>私が一番Eメール・メーリングリストによるコラボレーションに不満を持っているのはこの点です。
+Eメールは各人のローカルPCに保存され、各人が管理していくことになります。
+メーリングリストも、何らかのサービスを使わなければ、基本的に同様です。</p>
+
+<p>そして一度送られたEメールは、どこか共通の場所に格納される、ということはありません。
+情報が適切に蓄積されないわけですね。
+その結果、新規に参加したメンバーが、過去の情報にアクセスできなくなります。
+これは新規参加メンバーからすると、非常にツラいのです。</p>
+
+<ul>
+<li>どのような議論の場所があるのか</li>
+<li>過去にどのような議論がなされていたか</li>
+<li>社内ではどのような用語が使われているか</li>
+</ul>
 
 
-<p><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/parseInt?redirectlocale=ja&amp;redirectslug=JavaScript%2FReference%2FGlobal_Objects%2FparseInt">parseInt &ndash; JavaScript | MDN</a>を見ると、確かにその通りに動いている事がわかります。下記は第1引数に関する記載の引用です。</p>
+<p>などの情報に、新規参加メンバーはアクセスすることが出来ないからツラい。</p>
 
-<blockquote><p>parseInt が、指定された基数においては、数ではない文字に出会った場合、その文字とそれに続く文字の全てを無視し、その地点までパースされた値の整数を返します。 parseInt は、整数の値まで数を切り捨てます。 文字列の前後に空白があっても問題ありません。</p></blockquote>
+<p>しかもたちが悪いことに、昔からいた人たちは、過去の情報を持っているため、
+過去の情報にアクセス出来ないという問題に気付かないのです。
+そのため、昔から人たちからは、新しい情報共有の仕組みについて
+議論されることが滅多にありません。</p>
 
-<p>Javaの<code>Integer.parseInt()</code>やPythonの<code>int()</code>のように、例外を返してくれるだろう、
-または変換不可ということでNaNを返すだろう、と勝手な予想をしながら実装したのですが、
-それがよくありませんでした。</p>
+<p>かなり観測範囲の狭い個人的な経験ですが、前職・現職ともにおんなじ状況でしたね。
+ござ先輩の観測範囲も多分同様なことが起きている気がしますが、
+他の環境はどうでしょう。。</p>
 
-<p>他の言語で使い慣れているAPIのルールが、そのまま他の言語でも通じるだろう、
-という思い込みは捨てて、ちゃんとAPIの挙動を調べて使うべきだ、と改めて痛感しました。</p>
+<blockquote><p>対応したログが残らず、どんな意思決定をしたのか見えなくなる</p></blockquote>
 
-<p>そもそもバリデーションですが、
-バリデーションライブラリを使うか、
-HTML5前提でIE 9を無視してよいのであれば、HTML5のForm Validationを使うのが便利かと思います。
-今回のケースのように独自実装で頑張ると不具合混入しやすいですしね。
-残念ながら私はまだこれらを使ったことがないので、ポインタだけ示しておきます。</p>
+<p>に含まれているとは思いますが、新規メンバーが過去の情報にアクセス出来ない件については
+ちゃんと書いておいたほうがいいと思ったので、蛇足的に書かせていただきました。</p>
 
-<p><a href="http://jqueryvalidation.org/">jQuery Validation Plugin</a></p>
-
-<p><a href="http://girliemac.com/blog/2012/12/01/html5-form-validation-jp/">HTML5 Form Validation のカスタマイズ</a></p>
+<p>合わせて読みたい： <a href="http://blog.kentarok.org/entries/2014/02/11">情報共有の必要性について</a></p>
 
     </div>
   </div>
@@ -160,7 +168,7 @@ HTML5前提でIE 9を無視してよいのであれば、HTML5のForm Validation
 
 
 
-  <a href="/blog/categories/javascript/"><span class="badge">JavaScript</span></a>
+  <a href="/blog/categories/misc/"><span class="badge">Misc</span></a>
 
 
 
@@ -194,10 +202,8 @@ HTML5前提でIE 9を無視してよいのであれば、HTML5のForm Validation
       <div class="span12">
         <p class="meta">
           
-            <a class="basic-alignment left" href="/blog/2014/02/07/small-web-api-integration-to-python33/" title="Previous Post: ちっちゃいWeb APIをPython 3.3に移行する">&laquo; ちっちゃいWeb APIをPython 3.3に移行する</a>
+            <a class="basic-alignment left" href="/blog/2014/02/10/parseint-in-javascript/" title="Previous Post: JavaScriptのparseIntを数値入力の妥当性検証に使うと失敗する話">&laquo; JavaScriptのparseIntを数値入力の妥当性検証に使うと失敗する話</a>
           
-          
-            <a class="basic-alignment right" href="/blog/2014/02/12/email-one-more-suck/" title="Next Post: Emailがコラボレーションツールに適していないもう1点">Emailがコラボレーションツールに適していないもう1点 &raquo;</a>
           
         </p>
       </div>

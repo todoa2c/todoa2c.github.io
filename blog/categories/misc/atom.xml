@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Misc | 技術情報棚卸し(平日限定)]]></title>
+  <link href="http://todoa2c.github.io/blog/categories/misc/atom.xml" rel="self"/>
+  <link href="http://todoa2c.github.io/"/>
+  <updated>2014-02-12T19:05:22+09:00</updated>
+  <id>http://todoa2c.github.io/</id>
+  <author>
+    <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Emailがコラボレーションツールに適していないもう1点]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/02/12/email-one-more-suck/"/>
+    <updated>2014-02-12T18:45:30+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/02/12/email-one-more-suck</id>
+    <content type="html"><![CDATA[<p><a href="http://gothedistance.hatenadiary.jp/">ござ先輩</a>による
+<a href="http://gothedistance.hatenadiary.jp/entry/2014/02/10/120745">Eメールで作業内容を管理するのはやめましょう</a>
+の記事が非常に共感できたのですが、一点だけハッキリ書きたかったことがあったので、書いておきます。</p>
+
+<h1>新規に参加したメンバーが過去の情報にアクセス出来ない</h1>
+
+<p>私が一番Eメール・メーリングリストによるコラボレーションに不満を持っているのはこの点です。
+Eメールは各人のローカルPCに保存され、各人が管理していくことになります。
+メーリングリストも、何らかのサービスを使わなければ、基本的に同様です。</p>
+
+<p>そして一度送られたEメールは、どこか共通の場所に格納される、ということはありません。
+情報が適切に蓄積されないわけですね。
+その結果、新規に参加したメンバーが、過去の情報にアクセスできなくなります。
+これは新規参加メンバーからすると、非常にツラいのです。</p>
+
+<ul>
+<li>どのような議論の場所があるのか</li>
+<li>過去にどのような議論がなされていたか</li>
+<li>社内ではどのような用語が使われているか</li>
+</ul>
+
+
+<p>などの情報に、新規参加メンバーはアクセスすることが出来ないからツラい。</p>
+
+<p>しかもたちが悪いことに、昔からいた人たちは、過去の情報を持っているため、
+過去の情報にアクセス出来ないという問題に気付かないのです。
+そのため、昔から人たちからは、新しい情報共有の仕組みについて
+議論されることが滅多にありません。</p>
+
+<p>かなり観測範囲の狭い個人的な経験ですが、前職・現職ともにおんなじ状況でしたね。
+ござ先輩の観測範囲も多分同様なことが起きている気がしますが、
+他の環境はどうでしょう。。</p>
+
+<blockquote><p>対応したログが残らず、どんな意思決定をしたのか見えなくなる</p></blockquote>
+
+<p>に含まれているとは思いますが、新規メンバーが過去の情報にアクセス出来ない件については
+ちゃんと書いておいたほうがいいと思ったので、蛇足的に書かせていただきました。</p>
+
+<p>合わせて読みたい： <a href="http://blog.kentarok.org/entries/2014/02/11">情報共有の必要性について</a></p>
+]]></content>
+  </entry>
+  
+</feed>
