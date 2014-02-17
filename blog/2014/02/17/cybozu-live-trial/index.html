@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>App EngineのDatastoreについて調査中 - 技術情報棚卸し(平日限定)</title>
+  <title>サイボウズLiveを試用する - 技術情報棚卸し(平日限定)</title>
   <meta name="author" content="Atsushi Kanaya (todoa2c)">
 
    
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://todoa2c.github.io/blog/2014/02/14/appengine-datastore-references">
+  <link rel="canonical" href="http://todoa2c.github.io/blog/2014/02/17/cybozu-live-trial">
   <link href="/favicon.png" rel="icon">
   <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
@@ -93,7 +93,7 @@
 
   <header>
   <div class="jumbotron">
-    App EngineのDatastoreについて調査中
+    サイボウズLiveを試用する
 	<h5>
 
 
@@ -106,54 +106,51 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-02-14T17:23:07+09:00" pubdate data-updated="true">2014-02-14</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-02-17T19:24:53+09:00" pubdate data-updated="true">2014-02-17</time></h5>
   </div>
 </header>
   <div class="row-fluid">
     <div class="span12">
-      <p>Google App EngineのDatastore周りを学習すべく、いくつか参考にしたサイトをまとめておきます。</p>
+      <p><a href="http://todoa2c.github.io/blog/2014/02/12/email-one-more-suck/">Emailがコラボレーションツールに適していないもう1点</a>で書いたことを実践する機会ができまして。
+諸事情により地域の会合に参加することになったのですが、
+そこでの議論の結果がメールで回されることになりそうだったのです。
+Emailはコラボレーションツールに適してないと主張する私としては
+黙って見ているわけにはいきません。</p>
+
+<p>「メールでのやりとりは議論が残せないので、別の場所を設けましょう。私が提案します！」</p>
+
+<p>と手を上げて、実際に導入するところまでを面倒見ることにしました。</p>
+
+<h1>評価ポイント</h1>
+
+<p>今回の地域の会合で、ある程度PCやスマホに慣れている男性陣が想定利用者です。
+評価ポイントは、ざっくり以下としました。</p>
 
 <ul>
-<li><p><a href="http://www.slideshare.net/devsumi/18c4google-app-engine-6969798">【18-C-4】Google App Engine &ndash; 無限の彼方へ</a></p>
-
-<ul>
-<li>Google松尾さんによる資料。2011年と古いが、Datastoreについての概要はここで学べると思う。</li>
-</ul>
-</li>
-<li><p><a href="http://appengine.keicode.com/gae/datastore.php">データストア &ndash; Google App Engine 入門</a></p>
-
-<ul>
-<li>Python, Javaの両方について記事がある模様。入門とだけあって分かりやすい気がする。</li>
-</ul>
-</li>
-<li><p><a href="http://proppy-appstats.appspot.com/">Google I/O 2012 &ndash; Optimizing Your Google App Engine App</a></p>
-
-<ul>
-<li>つい先程見つけたばかりなので確認中。解説はこちらも見たほうがよいのかな。</li>
-<li><a href="http://blog.vier.jp/2013/02/google-app-engine-appengine-ja-night-23.html">Blog @vierjp : 18.Google App Engineパターン (appengine ja night #23)</a></li>
-</ul>
-</li>
-<li><p><a href="https://developers.google.com/appengine/docs/go/datastore/">Go Datastore API &ndash; Google App Engine &ndash; Google Developers</a></p>
-
-<ul>
-<li>本家。Go版についてはやっぱりここを見ないと話にならないと思う。キーの設定方法が他のオブジェクト指向言語とどのように違うのかがようやく分かった(あくまで気がするレベル)。</li>
-</ul>
-</li>
+<li>無料である(まだ予算とかないので…)</li>
+<li>セキュアである</li>
+<li>スケジュール、議事録、TODO管理ができる</li>
+<li>スマホ対応している</li>
 </ul>
 
 
-<p>まぁ雰囲気だけ掴んだ感じで、まだよく分かってないことが多いです。
-土日に実際にDatastoreを使った実装に入ってみようかと思います。</p>
+<p>こういう条件で、限られた時間内で調べてみました。</p>
 
-<h1>余談</h1>
+<h1>評価対象</h1>
 
-<p>余談ですが、何故かF-SecureにGoソースコードのコンパイルをことごとく邪魔されるので、
-私物Macで同様の環境を構築しました。
-当初の話の通り、いちいちサーバーを再起動せずに変更が追従されるのがいいですね。</p>
+<ul>
+<li><a href="https://live.cybozu.co.jp/">サイボウズLive</a></li>
+<li><a href="https://groups.google.com/forum/?hl=ja#!overview">Googleグループ</a></li>
+<li><a href="http://ja.youroom.in/">youroom</a></li>
+<li><a href="https://www.atlassian.com/ja/software/confluence">Confluence</a></li>
+</ul>
 
-<p>思えば私のWindows環境だと、64bit版Goコンパイラがコンパイル直後に落ちるので、
-色々おかしいのかもしれないです。
-Windows Updateも失敗しまくるし…環境を作り直して1年経ってないのに、また環境の作り直しか…</p>
+
+<p>この中で、サイボウズLiveを第1候補としました。
+上記の評価ポイントをすべて押さえているからです。</p>
+
+<p>というわけで、サイボウズLiveに登録し、実際に試用してもらうことにしました。
+まだ1日しか経っていませんが、果たしてどうなることやら。</p>
 
     </div>
   </div>
@@ -172,7 +169,7 @@ Windows Updateも失敗しまくるし…環境を作り直して1年経って�
 
 
 
-  <a href="/blog/categories/appengine/"><span class="badge">AppEngine</span></a>
+  <a href="/blog/categories/misc/"><span class="badge">Misc</span></a>
 
 
 
@@ -206,10 +203,8 @@ Windows Updateも失敗しまくるし…環境を作り直して1年経って�
       <div class="span12">
         <p class="meta">
           
-            <a class="basic-alignment left" href="/blog/2014/02/13/beginning-appengine-go/" title="Previous Post: GoでGoogle App Engineを触るテスト">&laquo; GoでGoogle App Engineを触るテスト</a>
+            <a class="basic-alignment left" href="/blog/2014/02/14/appengine-datastore-references/" title="Previous Post: App EngineのDatastoreについて調査中">&laquo; App EngineのDatastoreについて調査中</a>
           
-          
-            <a class="basic-alignment right" href="/blog/2014/02/17/cybozu-live-trial/" title="Next Post: サイボウズLiveを試用する">サイボウズLiveを試用する &raquo;</a>
           
         </p>
       </div>

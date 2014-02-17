@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Misc | 技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/blog/categories/misc/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-02-14T17:58:21+09:00</updated>
+  <updated>2014-02-17T19:43:06+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,54 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[サイボウズLiveを試用する]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/02/17/cybozu-live-trial/"/>
+    <updated>2014-02-17T19:24:53+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/02/17/cybozu-live-trial</id>
+    <content type="html"><![CDATA[<p><a href="http://todoa2c.github.io/blog/2014/02/12/email-one-more-suck/">Emailがコラボレーションツールに適していないもう1点</a>で書いたことを実践する機会ができまして。
+諸事情により地域の会合に参加することになったのですが、
+そこでの議論の結果がメールで回されることになりそうだったのです。
+Emailはコラボレーションツールに適してないと主張する私としては
+黙って見ているわけにはいきません。</p>
+
+<p>「メールでのやりとりは議論が残せないので、別の場所を設けましょう。私が提案します！」</p>
+
+<p>と手を上げて、実際に導入するところまでを面倒見ることにしました。</p>
+
+<h1>評価ポイント</h1>
+
+<p>今回の地域の会合で、ある程度PCやスマホに慣れている男性陣が想定利用者です。
+評価ポイントは、ざっくり以下としました。</p>
+
+<ul>
+<li>無料である(まだ予算とかないので…)</li>
+<li>セキュアである</li>
+<li>スケジュール、議事録、TODO管理ができる</li>
+<li>スマホ対応している</li>
+</ul>
+
+
+<p>こういう条件で、限られた時間内で調べてみました。</p>
+
+<h1>評価対象</h1>
+
+<ul>
+<li><a href="https://live.cybozu.co.jp/">サイボウズLive</a></li>
+<li><a href="https://groups.google.com/forum/?hl=ja#!overview">Googleグループ</a></li>
+<li><a href="http://ja.youroom.in/">youroom</a></li>
+<li><a href="https://www.atlassian.com/ja/software/confluence">Confluence</a></li>
+</ul>
+
+
+<p>この中で、サイボウズLiveを第1候補としました。
+上記の評価ポイントをすべて押さえているからです。</p>
+
+<p>というわけで、サイボウズLiveに登録し、実際に試用してもらうことにしました。
+まだ1日しか経っていませんが、果たしてどうなることやら。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Emailがコラボレーションツールに適していないもう1点]]></title>
