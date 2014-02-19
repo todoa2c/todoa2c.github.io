@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | 技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-02-17T19:43:06+09:00</updated>
+  <updated>2014-02-19T12:25:11+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,75 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[大阪でPythonで集まろうの巻に参加した]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/02/19/osaka-python-meeting/"/>
+    <updated>2014-02-19T11:01:19+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/02/19/osaka-python-meeting</id>
+    <content type="html"><![CDATA[<h1>背景</h1>
+
+<p><a href="http://connpass.com/event/5201/">大阪でPythonで集まろうの巻</a>に参加してきました。
+参加してきましたというか、上記リンクの先を見ていただくとお分かりの通り、発端は私です。
+私なんですが、恐れ多くも増田さんにボールをぶん投げ、企画していただいたという次第です。</p>
+
+<p>私自身Pythonを初めて1年半。
+実際にそれなりの時間を割いて書くようになってきたのがここ数ヶ月くらいの話なのですが、
+私の周囲にPythonを書く人がいないんですね(最近少しだけ書く人が増えたけど)。
+Pythonについて相談できる相手がいないわけで、少々つらいこともあるわけです。
+そういう背景もあって関西のPythonコミュニティを探していたわけですが、
+ここ数年の活動は停滞気味だったとのことでした。</p>
+
+<p>まずはテーマとかないけれど、Pythonな人たちで顔合わせしましょうかね、
+合わせて勉強会とか開発合宿とか企画したいね、という感じで企画されたのが今回の会合です。
+増田さん、お忙しい中企画と会場をご提供いただき、ありがとうございます。</p>
+
+<h1>会合</h1>
+
+<p>会合ですが、各人の自己紹介を経て、勉強会のざっくり方針だけを決めて、
+会合自体は30分で終わり懇親会場になだれ込みましたｗ</p>
+
+<h1>メモ</h1>
+
+<p>以下はメモ。時系列などは無視のだらだら箇条書きです。</p>
+
+<ul>
+<li>大阪にはPythonの仕事もGoの仕事もある！</li>
+<li>ミッション・クリティカルなシステムにもPythonが使われており、構成次第では非常に大量のアクセスもさばける模様。</li>
+<li>Erlangの軽量プロセスの管理がGoよりも充実しており、子プロセス生成時に、子プロセスが異常終了した場合にどのように通知して親プロセスはそのまま生存するか一緒に終了するかの制御を明示的に指定できるらしい。
+
+<ul>
+<li>Erlang開発者の論文に、システムがどういう状況で障害を起こすのか、その対策は、という話が書かれているらしい。多分これっぽい。<a href="http://www.erlang.org/download/armstrong_thesis_2003.pdf">armstrong_thesis_2003.pdf</a></li>
+</ul>
+</li>
+<li>Seleniumのドライバーに、<a href="https://pypi.python.org/pypi/selenium/">Python用のSelenium Driver</a>がある。うちもJavaじゃなくてPythonを使ったほうがサクサク書けるんじゃないかな。</li>
+<li>スプリント・バックログを付箋化するのはひと目で分かって良い。ただチケットも別途発行しており、そのチケットが溢れる問題は解決しない。</li>
+<li>Web界隈だとGitHubでTravisCIで～という話をよく聞くが、CIも自動テストもない現場が普通にあるとのこと。おっとSVNの悪口はそこまでだ orz</li>
+<li>勉強会の運営についても幾つか。
+
+<ul>
+<li>会場の確保は、20～40人規模なら何とかなりそう。会場提供可能な方が結構多くてビックリ。</li>
+<li>開催日は、平日か土日かといえば、どちらかだけ都合がいいという人が一定数いる関係上、交互にやった方がいいんじゃないか。</li>
+<li>勉強会には参加する人は多いが発表してくれる人はかなり限られる。発表の敷居を下げるか、強制で発表できるような仕組みが必要？</li>
+<li>発表する側、企画する側も何らかの成果を得たい。案として、グループディスカッション形式の勉強会があっても面白いかもしれない。</li>
+</ul>
+</li>
+</ul>
+
+
+<p>最後に。大阪でPythonの勉強会を開催予定です。3月第2週あたりを予定しております。</p>
+
+<p>あぁぁ大阪Go勉強会もこんな感じでいい加減踏ん切りつけてやらないと… orz
+コミュニティ化しないといかんなぁ…。</p>
+
+<p>こちらからは以上です。皆様、昨日はありがとうございました！</p>
+
+<h1>そう言えば。</h1>
+
+<p>妻の同級生が居て腰抜かしそうになるほどびっくりしました。
+世の中広いようで、狭いです。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[ちっちゃいWeb APIをPython 3.3に移行する]]></title>

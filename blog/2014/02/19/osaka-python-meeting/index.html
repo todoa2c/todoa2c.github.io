@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>サイボウズLiveを試用する - 技術情報棚卸し(平日限定)</title>
+  <title>大阪でPythonで集まろうの巻に参加した - 技術情報棚卸し(平日限定)</title>
   <meta name="author" content="Atsushi Kanaya (todoa2c)">
 
    
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://todoa2c.github.io/blog/2014/02/17/cybozu-live-trial">
+  <link rel="canonical" href="http://todoa2c.github.io/blog/2014/02/19/osaka-python-meeting">
   <link href="/favicon.png" rel="icon">
   <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
@@ -93,7 +93,7 @@
 
   <header>
   <div class="jumbotron">
-    サイボウズLiveを試用する
+    大阪でPythonで集まろうの巻に参加した
 	<h5>
 
 
@@ -106,51 +106,72 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-02-17T19:24:53+09:00" pubdate data-updated="true">2014-02-17</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-02-19T11:01:19+09:00" pubdate data-updated="true">2014-02-19</time></h5>
   </div>
 </header>
   <div class="row-fluid">
     <div class="span12">
-      <p><a href="http://todoa2c.github.io/blog/2014/02/12/email-one-more-suck/">Emailがコラボレーションツールに適していないもう1点</a>で書いたことを実践する機会ができまして。
-諸事情により地域の会合に参加することになったのですが、
-そこでの議論の結果がメールで回されることになりそうだったのです。
-Emailはコラボレーションツールに適してないと主張する私としては
-黙って見ているわけにはいきません。</p>
+      <h1>背景</h1>
 
-<p>「メールでのやりとりは議論が残せないので、別の場所を設けましょう。私が提案します！」</p>
+<p><a href="http://connpass.com/event/5201/">大阪でPythonで集まろうの巻</a>に参加してきました。
+参加してきましたというか、上記リンクの先を見ていただくとお分かりの通り、発端は私です。
+私なんですが、恐れ多くも増田さんにボールをぶん投げ、企画していただいたという次第です。</p>
 
-<p>と手を上げて、実際に導入するところまでを面倒見ることにしました。</p>
+<p>私自身Pythonを初めて1年半。
+実際にそれなりの時間を割いて書くようになってきたのがここ数ヶ月くらいの話なのですが、
+私の周囲にPythonを書く人がいないんですね(最近少しだけ書く人が増えたけど)。
+Pythonについて相談できる相手がいないわけで、少々つらいこともあるわけです。
+そういう背景もあって関西のPythonコミュニティを探していたわけですが、
+ここ数年の活動は停滞気味だったとのことでした。</p>
 
-<h1>評価ポイント</h1>
+<p>まずはテーマとかないけれど、Pythonな人たちで顔合わせしましょうかね、
+合わせて勉強会とか開発合宿とか企画したいね、という感じで企画されたのが今回の会合です。
+増田さん、お忙しい中企画と会場をご提供いただき、ありがとうございます。</p>
 
-<p>今回の地域の会合で、ある程度PCやスマホに慣れている男性陣が想定利用者です。
-評価ポイントは、ざっくり以下としました。</p>
+<h1>会合</h1>
+
+<p>会合ですが、各人の自己紹介を経て、勉強会のざっくり方針だけを決めて、
+会合自体は30分で終わり懇親会場になだれ込みましたｗ</p>
+
+<h1>メモ</h1>
+
+<p>以下はメモ。時系列などは無視のだらだら箇条書きです。</p>
 
 <ul>
-<li>無料である(まだ予算とかないので…)</li>
-<li>セキュアである</li>
-<li>スケジュール、議事録、TODO管理ができる</li>
-<li>スマホ対応している</li>
+<li>大阪にはPythonの仕事もGoの仕事もある！</li>
+<li>ミッション・クリティカルなシステムにもPythonが使われており、構成次第では非常に大量のアクセスもさばける模様。</li>
+<li>Erlangの軽量プロセスの管理がGoよりも充実しており、子プロセス生成時に、子プロセスが異常終了した場合にどのように通知して親プロセスはそのまま生存するか一緒に終了するかの制御を明示的に指定できるらしい。
+
+<ul>
+<li>Erlang開発者の論文に、システムがどういう状況で障害を起こすのか、その対策は、という話が書かれているらしい。多分これっぽい。<a href="http://www.erlang.org/download/armstrong_thesis_2003.pdf">armstrong_thesis_2003.pdf</a></li>
+</ul>
+</li>
+<li>Seleniumのドライバーに、<a href="https://pypi.python.org/pypi/selenium/">Python用のSelenium Driver</a>がある。うちもJavaじゃなくてPythonを使ったほうがサクサク書けるんじゃないかな。</li>
+<li>スプリント・バックログを付箋化するのはひと目で分かって良い。ただチケットも別途発行しており、そのチケットが溢れる問題は解決しない。</li>
+<li>Web界隈だとGitHubでTravisCIで～という話をよく聞くが、CIも自動テストもない現場が普通にあるとのこと。おっとSVNの悪口はそこまでだ orz</li>
+<li>勉強会の運営についても幾つか。
+
+<ul>
+<li>会場の確保は、20～40人規模なら何とかなりそう。会場提供可能な方が結構多くてビックリ。</li>
+<li>開催日は、平日か土日かといえば、どちらかだけ都合がいいという人が一定数いる関係上、交互にやった方がいいんじゃないか。</li>
+<li>勉強会には参加する人は多いが発表してくれる人はかなり限られる。発表の敷居を下げるか、強制で発表できるような仕組みが必要？</li>
+<li>発表する側、企画する側も何らかの成果を得たい。案として、グループディスカッション形式の勉強会があっても面白いかもしれない。</li>
+</ul>
+</li>
 </ul>
 
 
-<p>こういう条件で、限られた時間内で調べてみました。</p>
+<p>最後に。大阪でPythonの勉強会を開催予定です。3月第2週あたりを予定しております。</p>
 
-<h1>評価対象</h1>
+<p>あぁぁ大阪Go勉強会もこんな感じでいい加減踏ん切りつけてやらないと… orz
+コミュニティ化しないといかんなぁ…。</p>
 
-<ul>
-<li><a href="https://live.cybozu.co.jp/">サイボウズLive</a></li>
-<li><a href="https://groups.google.com/forum/?hl=ja#!overview">Googleグループ</a></li>
-<li><a href="http://ja.youroom.in/">youroom</a></li>
-<li><a href="https://www.atlassian.com/ja/software/confluence">Confluence</a></li>
-</ul>
+<p>こちらからは以上です。皆様、昨日はありがとうございました！</p>
 
+<h1>そう言えば。</h1>
 
-<p>この中で、サイボウズLiveを第1候補としました。
-上記の評価ポイントをすべて押さえているからです。</p>
-
-<p>というわけで、サイボウズLiveに登録し、実際に試用してもらうことにしました。
-まだ1日しか経っていませんが、果たしてどうなることやら。</p>
+<p>妻の同級生が居て腰抜かしそうになるほどびっくりしました。
+世の中広いようで、狭いです。</p>
 
     </div>
   </div>
@@ -169,7 +190,9 @@ Emailはコラボレーションツールに適してないと主張する私と
 
 
 
-  <a href="/blog/categories/misc/"><span class="badge">Misc</span></a>
+  <a href="/blog/categories/community/"><span class="badge">Community</span></a>
+
+  <a href="/blog/categories/python/"><span class="badge">Python</span></a>
 
 
 
@@ -203,10 +226,8 @@ Emailはコラボレーションツールに適してないと主張する私と
       <div class="span12">
         <p class="meta">
           
-            <a class="basic-alignment left" href="/blog/2014/02/14/appengine-datastore-references/" title="Previous Post: App EngineのDatastoreについて調査中">&laquo; App EngineのDatastoreについて調査中</a>
+            <a class="basic-alignment left" href="/blog/2014/02/17/cybozu-live-trial/" title="Previous Post: サイボウズLiveを試用する">&laquo; サイボウズLiveを試用する</a>
           
-          
-            <a class="basic-alignment right" href="/blog/2014/02/19/osaka-python-meeting/" title="Next Post: 大阪でPythonで集まろうの巻に参加した">大阪でPythonで集まろうの巻に参加した &raquo;</a>
           
         </p>
       </div>
