@@ -4,7 +4,7 @@
   <title><![CDATA[技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-02-20T20:15:27+09:00</updated>
+  <updated>2014-02-24T19:58:07+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,35 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[CheckiOでPythonのお勉強]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/02/24/study-with-checkio/"/>
+    <updated>2014-02-24T19:47:30+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/02/24/study-with-checkio</id>
+    <content type="html"><![CDATA[<p><a href="http://www.checkio.org/">CheckiO</a>が楽しいので、少しずつクリアしています。</p>
+
+<p>CheckiOはPythonを使ったプログラミング学習サービスなのですが、
+ゲーム要素溢れるところが非常に特徴的です。</p>
+
+<p>ゲーム要素は、例えばこんな感じです。
+私自身のPython歴がそれほど長くないので、人のコードを読むのは非常に勉強になります。</p>
+
+<ul>
+<li>サインアップするためにもPythonコードを書く必要がある</li>
+<li>コードを書くことによって経験値が得られ、バッジや行ける場所が増える(行ける先はO&#8217;ReillyとかDropboxなどという見慣れた名前が…)</li>
+<li>コードの提出が完了したら、自分の書いたコードを公開できる(経験値ももらえるしレビューももらえる)</li>
+<li>人のコードを読むことが出来、レビューすることができる(レビューすると経験値がもらえる)</li>
+</ul>
+
+
+<p>サイトが重いとか、作りが分かりにくいとか不満点は少々ありますが、
+パズルを解く感覚でPythonを学ぶ事ができるのは、非常に楽しいです。
+下記が私のアカウントですので、よかったら私をフォローして下さい。</p>
+
+<p><a href="http://www.checkio.org/user/todogzm/">todogzm profile  :: CheckiO</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Sexy Little Numbersの和訳の賞味期限が短い件]]></title>
