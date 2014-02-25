@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>技術情報棚卸し(平日限定)</title>
+  <meta name="author" content="Atsushi Kanaya (todoa2c)">
+
+   
+  <meta name="description" content="">
+  
+  <meta name="keywords" content="">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://todoa2c.github.io/blog/page/2">
+  <link href="/favicon.png" rel="icon">
+  <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="技術情報棚卸し(平日限定)" type="application/atom+xml">
+  <script src="/js/jquery.js"></script>
+  <script src="/js/bootstrap-collapse.js"></script>
+  <script src="/js/modernizr-2.0.js"></script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+  <script src="/js/application.js"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47839845-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <div class="navbar navbar-inverse navbar-static-top">
+  	<div class="navbar-inner">
+  	  <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+          <span class="fui-menu-24"></span>
+        </a>
+  	  	<div class="nav-collapse collapse navbar-responsive-collapse" style="height:0;">
+  	      <ul class="nav">
+    
+</ul>
+
+<ul class="nav pull-right">
+    
+    <li><a href="http://github.com/todoa2c" title="Github Profile"><i class="icon-github-sign social-navbar"></i></a></li>
+    
+    
+    
+    
+    <li><a href="http://twitter.com/todogzm" title="Twitter Profile"><i class="icon-twitter-sign social-navbar"></i></a></li>
+    
+    
+    <li><a href="http://plus.google.com/+AtsushiKanaya" title="Google+ Profile"><i class="icon-google-plus-sign social-navbar"></i></a></li>
+    
+    
+    
+
+    
+</ul>
+
+  	    </div>
+  	  </div>
+  	</div>
+  </div>
+  <div class="container" id="main">
+      <div class="row-fluid">
+        <div id="content">
+          <div class="jumbotron">
+  <div class="container">
+    
+      技術情報棚卸し(平日限定)
+    
+    <h3 class="tagline">
+      
+        todoa2cの技術情報棚卸しです。平日限定ってことはアレだ。言わせんな恥ずかしい。
+      
+    </h3>
+  </div>
+</div>
+
+
+<div class="blog-index">
+  
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2014-02-06T16:46:42+09:00" pubdate data-updated="true">2014-02-06</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/python/"><span class="badge">Python</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2014/02/06/custom-bisect/">カスタム条件で二分探索したい</a></h1>
+      <p>Pythonの<a href="http://docs.python.jp/3/library/bisect.html">bisect</a>の返す結果に戸惑った、
+と同僚に話したところ、「いや他の言語のライブラリも大体同じですよ」
+と言われたわけです。</p>
+
+<p>戸惑った部分ですが、<a href="https://paiza.jp/poh/ec-campaign">新人プログラマー野田さんの課題</a>を
+解いている過程で、「指定した金額以下で一番大きい金額のインデックス」が欲しい、と思ったのですよね。
+結局それは<a href="http://docs.python.jp/3/library/bisect.html#bisect.bisect_left">bisect.bisect_left</a>を使って解決したんだけど、
+bisect_leftの場合「返り値のインデックスの更に1コ前」が欲しい値だったわけです。</p>
+
+<p>改めて二分探索の挙動について調べたところ、少なくともPython, Java共に、
+あるデータが「挿入されてもソート状態が保たれる箇所」を探索してくれるものらしい。</p>
+
+<p>例えば以下はPythonの例。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>import bisect
+</span><span class='line'>
+</span><span class='line'>a = [1, 2, 4, 8, 11]
+</span><span class='line'>data = 6
+</span><span class='line'>i = bisect.bisect(a, data)
+</span><span class='line'># i の値は 3
+</span><span class='line'>a.insert(i, data)
+</span><span class='line'># a の値は [1, 2, 4, 6, 8, 11]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>なるほど。納得。</p>
+
+<p>とは言え、カスタムの条件で二分探索したいケースもあると思うんですよね。例えば<a href="http://ja.wikipedia.org/wiki/%E6%8E%A5%E5%B0%BE%E8%BE%9E%E9%85%8D%E5%88%97">接尾辞配列</a>のように。</p>
+
+<p>超簡単な例だと、こういうイメージ。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>txt = 'banana'
+</span><span class='line'>suf = [i for i in range(len(txt))]
+</span><span class='line'># suf の値は [0, 1, 2, 3, 4, 5]
+</span><span class='line'>
+</span><span class='line'>suf.sort(key=lambda i: txt[i:])
+</span><span class='line'># suf の値は [5, 3, 1, 0, 4, 2]
+</span><span class='line'>
+</span><span class='line'>print([txt[i:] for i in suf])
+</span><span class='line'># ['a', 'ana', 'anana', 'banana', 'na', 'nana'] が出力される。
+</span><span class='line'># この結果は、全部分文字列がソートされた状態
+</span><span class='line'>## a
+</span><span class='line'>## ana
+</span><span class='line'>## anana
+</span><span class='line'>## banana
+</span><span class='line'>## na
+</span><span class='line'>## nana
+</span><span class='line'># sufにはソートされた状態の各部分文字列へのインデックスが格納されている。
+</span><span class='line'># この中から、例えば'an'が含まれる全ての箇所を探す、というのはbisectでは探索できない…</span></code></pre></td></tr></table></div></figure>
+
+
+<p>こういう用途用の二分探索は、接尾辞配列ライブラリに含まれてると思うんですけどね。</p>
+
+<p>少なくともPythonで言うと、リストの外の情報を使ってソートすることはできるけれど、
+それに対する二分探索による探索がないのはちょっと不便な気がしたのです。
+それを可能とするライブラリがあるのであれば、それを使うにして、
+なければそれを実現するライブラリを作ろうかしら。</p>
+
+<p>「それ～～でできるよ」情報があったらお教え下さいませ。</p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+  
+  <div class="pagination">
+    
+
+    
+    <a class="next" href="/">Newer &rarr;</a>
+    
+  </div>
+</div>
+
+
+        </div>
+      </div>
+      <div class="row-fluid">
+        <footer class="footer-page" role="contentinfo">
+          <p>
+  Copyright &copy; 2014 - Atsushi Kanaya (todoa2c) -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> - Theme by <a href="http://alexgaribay.com">Alex Garibay</a>
+</p>
+
+
+        </footer>
+      </div>
+  </div>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
