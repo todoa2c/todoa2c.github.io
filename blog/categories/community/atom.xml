@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Community | 技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/blog/categories/community/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-02-25T17:22:38+09:00</updated>
+  <updated>2014-02-28T11:57:34+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,43 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[大阪Pythonユーザの集まり 2014/03 を募集開始しました '#osakapy]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/02/28/osaka-python-study-session/"/>
+    <updated>2014-02-28T11:43:01+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/02/28/osaka-python-study-session</id>
+    <content type="html"><![CDATA[<p>前回の記事で書きました、大阪でPythonの勉強会を行う、という話ですが、
+本日ようやく募集開始しました。</p>
+
+<p><a href="http://connpass.com/event/5361/">大阪Pythonユーザの集まり 2014/03 &ndash; connpass</a></p>
+
+<ul>
+<li>日時 2014/03/13 19:00</li>
+<li>場所 堂島アバンザ21F</li>
+</ul>
+
+
+<p>Pythonユーザはもちろんのこと、
+Pythonに興味を持っていただいている方のご参加もお待ちしております。</p>
+
+<p>今時点では、下記3名が発表予定です。私も参加します。</p>
+
+<ul>
+<li><a href="https://twitter.com/whosaysni">@whosaysni</a> wxPythonの初心者向けのお話(仮) 15分</li>
+<li><a href="https://twitter.com/todogzm">@todogzm</a> scikit-learnを用いた機械学習チュートリアル 30分</li>
+<li><a href="https://twitter.com/heavenshell">@heavenshell</a> タイトル未定 10～15分</li>
+</ul>
+
+
+<p>また、当初の予定にはなかったのですが、とりあえずLT枠も作ってみました。
+誰か少しでも発表できることがありましたら、ご参加をお待ちしております。
+個人的にはPython 3.4の新機能を話せる人がいたら、ひとつピックアップして
+お話いただけると嬉しい次第です。</p>
+
+<p>懇親会も行う予定ですので、こちらも是非ご参加ください。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[関西のIT関連の勉強会・コミュニティ一覧を作ってみた]]></title>
