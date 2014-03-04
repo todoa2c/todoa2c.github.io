@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | 技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-03-03T17:23:18+09:00</updated>
+  <updated>2014-03-04T19:55:58+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,96 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Pythonで線形方程式を解く]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/03/04/linear-equations-in-python/"/>
+    <updated>2014-03-04T18:55:50+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/03/04/linear-equations-in-python</id>
+    <content type="html"><![CDATA[<p><a href="http://www.checkio.org/mission/how-much-gold/">How much gold :: CheckiO</a>を解く方法として、
+何か簡単な方法はあるんだろうなと思いながら、線形方程式を解く方法を採用したわけです。</p>
+
+<p>線形方程式を簡単に解く方法はないかな？と探したところ、
+<a href="http://sympy.org/">SymPy</a>を使って式を与えるだけで解くことが出来ました。
+テストその1をベタ書きしています。</p>
+
+<p>ソースコードおよびセットアップ方法は、
+<a href="http://qiita.com/ryosy383/items/e5e2ecb5976f98040d21">Pythonを使って一瞬で連立方程式を解く &ndash; Qiita</a>
+を参考にしています。
+要するに、右辺がゼロとなる方程式を、連立方程式を解くのに必要な分渡しているわけです。</p>
+
+<p>```
+from fractions import Fraction
+from sympy import *</p>
+
+<p>g, t, i, c = symbols(&lsquo;g t i c&rsquo;)
+out = solve([</p>
+
+<pre><code>g * Fraction(1, 1) + t * Fraction(1, 1) - Fraction(1, 2),
+g * Fraction(1, 1) + i * Fraction(1, 1) - Fraction(1, 3),
+g * Fraction(1, 1) + c * Fraction(1, 1) - Fraction(1, 4),
+g * Fraction(1, 1) + t * Fraction(1, 1) + i * Fraction(1, 1) + c * Fraction(1, 1) - Fraction(1, 1),
+</code></pre>
+
+<p>], [g, t, i, c])</p>
+
+<p>out[g]  # &ndash;> Fraction(1, 24)
+```</p>
+
+<p>ただ、CheckiOでは外部ライブラリの利用はできません。
+また、式を動的に生成する方法があるかも分かりませんので、
+複数ケースに対応する方法が分かりませんでした。</p>
+
+<p>結局、
+<a href="http://ja.wikipedia.org/wiki/%E3%82%AC%E3%82%A6%E3%82%B9%E3%81%AE%E6%B6%88%E5%8E%BB%E6%B3%95">ガウスの消去法 &ndash; Wikipedia</a>
+を使って、自前実装で解くことにしました。</p>
+
+<p>```
+def gauss_elimination(m):</p>
+
+<pre><code>'''mは[g, t, i, c, value]というベクトルを4本持つ行列'''
+n = len(m)
+# 前進消去
+for i in range(n):
+    v = m[i][i]
+    if v == 0:
+        # ゼロ以外の値を持つ行と交換する
+        for k in range(i + 1, n):
+            if m[k][i] != 0:
+                m[i], m[k] = m[k], m[i]
+                v = m[i][i]
+                break
+    for j in range(n + 1):
+        m[i][j] /= v
+    for k in range(i + 1, n):
+        v = -m[k][i]
+        for j in range(n + 1):
+            m[k][j] += m[i][j] * v
+
+# 後退代入
+for i in range(n-1, 0, -1):
+    v = m[i][i]
+    m[i][i] /= v
+    m[i][n] /= v
+    for k in range(i - 1, -1, -1):
+        v2 = m[k][i] * m[i][n]
+        m[k][n] -= v2
+        m[k][i] = Fraction(0, 1)
+return m
+</code></pre>
+
+<p>```</p>
+
+<p>これで<code>gauss_elimination()</code>が解けたときにはすべての変数の値が求められた状態になります。
+良かった良かった。</p>
+
+<p>…と思ったら、最短1行で書くことができるらしい。
+<code>G+T=a, G+I=b, G+C=c, G+T+I+C=1</code>から、<code>G = (a + b + c - 1) / 2</code>が導出できて、
+a, b, cを、それぞれGが含まれている場合の式に変換することで計算できると
+(テスト2の方は、1 &ndash; 式とすればGが含まれる方になる)。
+なるほど、勉強になりました。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[大阪Pythonユーザの集まり 2014/03 を募集開始しました '#osakapy]]></title>
@@ -238,91 +328,6 @@ Python 2.x系から3.x系では互換性が失われる変更が多数入った�
 規模が大きいプロジェクトの場合は移行が難しいかもしれませんが、
 小規模なプロジェクトの場合であれば、移行は意外と何とかなるんじゃないかな、
 というのが今回の感想でした。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[カスタム条件で二分探索したい]]></title>
-    <link href="http://todoa2c.github.io/blog/2014/02/06/custom-bisect/"/>
-    <updated>2014-02-06T16:46:42+09:00</updated>
-    <id>http://todoa2c.github.io/blog/2014/02/06/custom-bisect</id>
-    <content type="html"><![CDATA[<p>Pythonの<a href="http://docs.python.jp/3/library/bisect.html">bisect</a>の返す結果に戸惑った、
-と同僚に話したところ、「いや他の言語のライブラリも大体同じですよ」
-と言われたわけです。</p>
-
-<p>戸惑った部分ですが、<a href="https://paiza.jp/poh/ec-campaign">新人プログラマー野田さんの課題</a>を
-解いている過程で、「指定した金額以下で一番大きい金額のインデックス」が欲しい、と思ったのですよね。
-結局それは<a href="http://docs.python.jp/3/library/bisect.html#bisect.bisect_left">bisect.bisect_left</a>を使って解決したんだけど、
-bisect_leftの場合「返り値のインデックスの更に1コ前」が欲しい値だったわけです。</p>
-
-<p>改めて二分探索の挙動について調べたところ、少なくともPython, Java共に、
-あるデータが「挿入されてもソート状態が保たれる箇所」を探索してくれるものらしい。</p>
-
-<p>例えば以下はPythonの例。</p>
-
-<p>```
-import bisect</p>
-
-<p>a = [1, 2, 4, 8, 11]
-data = 6
-i = bisect.bisect(a, data)</p>
-
-<h1>i の値は 3</h1>
-
-<p>a.insert(i, data)</p>
-
-<h1>a の値は [1, 2, 4, 6, 8, 11]</h1>
-
-<p>```</p>
-
-<p>なるほど。納得。</p>
-
-<p>とは言え、カスタムの条件で二分探索したいケースもあると思うんですよね。例えば<a href="http://ja.wikipedia.org/wiki/%E6%8E%A5%E5%B0%BE%E8%BE%9E%E9%85%8D%E5%88%97">接尾辞配列</a>のように。</p>
-
-<p>超簡単な例だと、こういうイメージ。</p>
-
-<p>```
-txt = &lsquo;banana&rsquo;
-suf = [i for i in range(len(txt))]</p>
-
-<h1>suf の値は [0, 1, 2, 3, 4, 5]</h1>
-
-<p>suf.sort(key=lambda i: txt[i:])</p>
-
-<h1>suf の値は [5, 3, 1, 0, 4, 2]</h1>
-
-<p>print([txt[i:] for i in suf])</p>
-
-<h1>[&lsquo;a&rsquo;, &lsquo;ana&rsquo;, &lsquo;anana&rsquo;, &lsquo;banana&rsquo;, &lsquo;na&rsquo;, &lsquo;nana&rsquo;] が出力される。</h1>
-
-<h1>この結果は、全部分文字列がソートされた状態</h1>
-
-<h2>a</h2>
-
-<h2>ana</h2>
-
-<h2>anana</h2>
-
-<h2>banana</h2>
-
-<h2>na</h2>
-
-<h2>nana</h2>
-
-<h1>sufにはソートされた状態の各部分文字列へのインデックスが格納されている。</h1>
-
-<h1>この中から、例えば'an'が含まれる全ての箇所を探す、というのはbisectでは探索できない…</h1>
-
-<p>```</p>
-
-<p>こういう用途用の二分探索は、接尾辞配列ライブラリに含まれてると思うんですけどね。</p>
-
-<p>少なくともPythonで言うと、リストの外の情報を使ってソートすることはできるけれど、
-それに対する二分探索による探索がないのはちょっと不便な気がしたのです。
-それを可能とするライブラリがあるのであれば、それを使うにして、
-なければそれを実現するライブラリを作ろうかしら。</p>
-
-<p>「それ～～でできるよ」情報があったらお教え下さいませ。</p>
 ]]></content>
   </entry>
   
