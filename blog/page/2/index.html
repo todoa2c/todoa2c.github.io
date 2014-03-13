@@ -9,10 +9,7 @@
   <meta name="author" content="Atsushi Kanaya (todoa2c)">
 
   
-  <meta name="description" content="はじめに Google App Engineを初めて触ることにしました。
-しかもみんな大好きプログラミング言語Goで。
-ここ最近Gopher Tシャツを着てPythonコードを書くことが多かったので、
-リハビリも兼ねつつGoogle App Engineでのスピンアップ最速と言われるGoを &hellip;">
+  <meta name="description" content="Google App EngineのDatastore周りを学習すべく、いくつか参考にしたサイトをまとめておきます。 【18-C-4】Google App Engine &ndash; 無限の彼方へ Google松尾さんによる資料。2011年と古いが、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +77,84 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/14/appengine-datastore-references/">App EngineのDatastoreについて調査中</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-14T17:23:07+09:00" pubdate data-updated="true">2014-02-14</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Google App EngineのDatastore周りを学習すべく、いくつか参考にしたサイトをまとめておきます。</p>
+
+<ul>
+<li><p><a href="http://www.slideshare.net/devsumi/18c4google-app-engine-6969798">【18-C-4】Google App Engine &ndash; 無限の彼方へ</a></p>
+
+<ul>
+<li>Google松尾さんによる資料。2011年と古いが、Datastoreについての概要はここで学べると思う。</li>
+</ul>
+</li>
+<li><p><a href="http://appengine.keicode.com/gae/datastore.php">データストア &ndash; Google App Engine 入門</a></p>
+
+<ul>
+<li>Python, Javaの両方について記事がある模様。入門とだけあって分かりやすい気がする。</li>
+</ul>
+</li>
+<li><p><a href="http://proppy-appstats.appspot.com/">Google I/O 2012 &ndash; Optimizing Your Google App Engine App</a></p>
+
+<ul>
+<li>つい先程見つけたばかりなので確認中。解説はこちらも見たほうがよいのかな。</li>
+<li><a href="http://blog.vier.jp/2013/02/google-app-engine-appengine-ja-night-23.html">Blog @vierjp : 18.Google App Engineパターン (appengine ja night #23)</a></li>
+</ul>
+</li>
+<li><p><a href="https://developers.google.com/appengine/docs/go/datastore/">Go Datastore API &ndash; Google App Engine &ndash; Google Developers</a></p>
+
+<ul>
+<li>本家。Go版についてはやっぱりここを見ないと話にならないと思う。キーの設定方法が他のオブジェクト指向言語とどのように違うのかがようやく分かった(あくまで気がするレベル)。</li>
+</ul>
+</li>
+</ul>
+
+
+<p>まぁ雰囲気だけ掴んだ感じで、まだよく分かってないことが多いです。
+土日に実際にDatastoreを使った実装に入ってみようかと思います。</p>
+
+<h1>余談</h1>
+
+<p>余談ですが、何故かF-SecureにGoソースコードのコンパイルをことごとく邪魔されるので、
+私物Macで同様の環境を構築しました。
+当初の話の通り、いちいちサーバーを再起動せずに変更が追従されるのがいいですね。</p>
+
+<p>思えば私のWindows環境だと、64bit版Goコンパイラがコンパイル直後に落ちるので、
+色々おかしいのかもしれないです。
+Windows Updateも失敗しまくるし…環境を作り直して1年経ってないのに、また環境の作り直しか…</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -776,6 +851,10 @@ bisect_leftの場合「返り値のインデックスの更に1コ前」が欲�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/03/13/python-priority-queue-and-rich-comparison-method/">PythonのPriorityQueueとobjectの拡張比較メソッド</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/03/10/checkio-level-10/">Check iOでレベル10に到達した</a>
       </li>
     
@@ -789,10 +868,6 @@ bisect_leftの場合「返り値のインデックスの更に1コ前」が欲�
     
       <li class="post">
         <a href="/blog/2014/02/28/osaka-python-study-session/">大阪Pythonユーザの集まり 2014/03 を募集開始しました &#8216;#osakapy</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/02/25/kansai-it-communities/">関西のIT関連の勉強会・コミュニティ一覧を作ってみた</a>
       </li>
     
   </ul>

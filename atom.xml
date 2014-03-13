@@ -4,7 +4,7 @@
   <title><![CDATA[技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-03-12T10:48:56+09:00</updated>
+  <updated>2014-03-13T11:40:11+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,66 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[PythonのPriorityQueueとobjectの拡張比較メソッド]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/03/13/python-priority-queue-and-rich-comparison-method/"/>
+    <updated>2014-03-13T11:22:42+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/03/13/python-priority-queue-and-rich-comparison-method</id>
+    <content type="html"><![CDATA[<p>優先順位付きキューを使おうとして、<a href="http://docs.python.jp/3/library/queue.html">17.7. queue — 同期キュークラス &ndash; Python 3.3.3 ドキュメント</a>を見たところ、よく分からない一文に遭遇した。</p>
+
+<blockquote><p>最小の値を持つ要素が最初に検索されます</p></blockquote>
+
+<p>書いていることの意味は分かるんですよ。分からないのは、「じゃあ比較はどうすればいいの？」という点。
+ちなみに、自作クラスのインスタンスを優先順位付きキューにそのまま入れてみたら、怒られました。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>from queue import PriorityQueue
+</span><span class='line'>
+</span><span class='line'>pq = PriorityQueue()
+</span><span class='line'>pq.put(A())</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>TypeError: unorderable types: A() &lt; A()</span></code></pre></td></tr></table></div></figure>
+
+
+<p>このエラーから察するに、PriorityQueue自身に比較用メソッドを渡してあげるのではなく、
+インスタンス間で大小を比較できるようにしなさい、ということなのだろうと推測しました。
+そうと分かれば話は早いってんで、
+<a href="http://docs.python.jp/3/reference/datamodel.html#object.__lt__">Python言語リファレンスの3. データモデル</a>
+を見ると、目的の情報を見つけることが出来ました。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>object.__lt__(self, other)
+</span><span class='line'>object.__le__(self, other)
+</span><span class='line'>object.__eq__(self, other)
+</span><span class='line'>object.__ne__(self, other)
+</span><span class='line'>object.__gt__(self, other)
+</span><span class='line'>object.__ge__(self, other)
+</span><span class='line'>
+</span><span class='line'>これらはいわゆる “拡張比較 (rich comparison)” メソッドです。</span></code></pre></td></tr></table></div></figure>
+
+
+<p>objectには特殊メソッド名がいくつかあるのですが、その中に比較に関するメソッドも
+用意されていたわけですね。</p>
+
+<p>今回のエラーから必要なのは、<code>__lt__</code> メソッドをオーバーライドしてあげれば良いと分かり、
+早速Aクラスに<code>__lt__</code>メソッドの詳細を実装したところ、うまく動きました。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Check iOでレベル10に到達した]]></title>
