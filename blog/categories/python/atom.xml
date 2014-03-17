@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | 技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-03-17T09:25:07+09:00</updated>
+  <updated>2014-03-17T19:16:57+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,52 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Pythonのインスタンスメソッドと関数実行]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/03/17/python-instance-method/"/>
+    <updated>2014-03-17T19:07:26+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/03/17/python-instance-method</id>
+    <content type="html"><![CDATA[<p><a href="http://docs.python.jp/3/reference/datamodel.html#the-standard-type-hierarchy">3.データモデルのうち「インスタンスメソッド」</a>を読んでいたのですが、興味深い一文を見つけました。</p>
+
+<blockquote><p>インスタンスメソッドオブジェクトが呼び出される際、根底にある関数 (<strong>func</strong>) が呼び出されます。このとき、クラスインスタンス (<strong>self</strong>) が引数リストの先頭に挿入されます。例えば、 C を関数 f() の定義を含むクラス、 x を C のインスタンスとすると、 x.f(1) の呼び出しは C.f(x, 1) の呼び出しと同じです。</p></blockquote>
+
+<p>これを使うと、あるクラスのインスタンスメソッドを列挙しておいて、
+リフレクションのように順次メソッドを実行しておくことが簡単に、かつオーバーヘッドがない状態で
+実行することができる模様です。</p>
+
+<p>こういう具合に書くと、</p>
+
+<p>```
+ops = [Puzzle.up, Puzzle.down]</p>
+
+<p>p = Puzzle()</p>
+
+<p>for op in ops:</p>
+
+<pre><code>op(p)
+</code></pre>
+
+<p>```</p>
+
+<p>こういう書き方をしたときと同じ挙動になるわけです。</p>
+
+<p><code>
+p = Puzzle()
+p.up()
+p.down()
+</code></p>
+
+<p>行数は後者の方が少ないですが、前者の書き方が必要なときもあるんですよ。
+特にメソッドをひたすら実行しまくる場合には、前者の書き方は便利です。
+しかもJavaでリフレクションを使った時のようなオーバーヘッドがないのは良いですね
+(普通Javaではこういう書き方せずにインターフェースとか使うけど)。</p>
+
+<p>クラスでメソッド定義をするときに、<code>def up(self):</code> と書くのは、
+インスタンスメソッドとして使った場合には、第1引数のselfにはオブジェクトそのものを勝手に
+指定してくれるような動きになっているのかな？</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[大阪Pythonユーザの集まり2014/03に参加＆発表してきた '#osakapy]]></title>
@@ -275,43 +321,6 @@ return m
 a, b, cを、それぞれGが含まれている場合の式に変換することで計算できると
 (テスト2の方は、1 &ndash; 式とすればGが含まれる方になる)。
 なるほど、勉強になりました。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[大阪Pythonユーザの集まり 2014/03 を募集開始しました '#osakapy]]></title>
-    <link href="http://todoa2c.github.io/blog/2014/02/28/osaka-python-study-session/"/>
-    <updated>2014-02-28T11:43:01+09:00</updated>
-    <id>http://todoa2c.github.io/blog/2014/02/28/osaka-python-study-session</id>
-    <content type="html"><![CDATA[<p>前回の記事で書きました、大阪でPythonの勉強会を行う、という話ですが、
-本日ようやく募集開始しました。</p>
-
-<p><a href="http://connpass.com/event/5361/">大阪Pythonユーザの集まり 2014/03 &ndash; connpass</a></p>
-
-<ul>
-<li>日時 2014/03/13 19:00</li>
-<li>場所 堂島アバンザ21F</li>
-</ul>
-
-
-<p>Pythonユーザはもちろんのこと、
-Pythonに興味を持っていただいている方のご参加もお待ちしております。</p>
-
-<p>今時点では、下記3名が発表予定です。私も参加します。</p>
-
-<ul>
-<li><a href="https://twitter.com/whosaysni">@whosaysni</a> wxPythonの初心者向けのお話(仮) 15分</li>
-<li><a href="https://twitter.com/todogzm">@todogzm</a> scikit-learnを用いた機械学習チュートリアル 30分</li>
-<li><a href="https://twitter.com/heavenshell">@heavenshell</a> タイトル未定 10～15分</li>
-</ul>
-
-
-<p>また、当初の予定にはなかったのですが、とりあえずLT枠も作ってみました。
-誰か少しでも発表できることがありましたら、ご参加をお待ちしております。
-個人的にはPython 3.4の新機能を話せる人がいたら、ひとつピックアップして
-お話いただけると嬉しい次第です。</p>
-
-<p>懇親会も行う予定ですので、こちらも是非ご参加ください。</p>
 ]]></content>
   </entry>
   

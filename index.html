@@ -9,10 +9,7 @@
   <meta name="author" content="Atsushi Kanaya (todoa2c)">
 
   
-  <meta name="description" content="まえがき 久々の勉強会企画である大阪Pythonユーザの集まり2014/03に
-行ってきて、ついでに発表もしてきました。
-勉強会でまともな話を発表するのは初めてで、ものすごく緊張しましたが、
-なんとか生きて帰ってこれました。 会場をご提供いただきましたシナジーマーケティングさんと@ &hellip;">
+  <meta name="description" content="3.データモデルのうち「インスタンスメソッド」を読んでいたのですが、興味深い一文を見つけました。 インスタンスメソッドオブジェクトが呼び出される際、根底にある関数 (func) が呼び出されます。このとき、クラスインスタンス (self) が引数リストの先頭に挿入されます。例えば、 C を関数 f &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +77,83 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/03/17/python-instance-method/">Pythonのインスタンスメソッドと関数実行</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-17T19:07:26+09:00" pubdate data-updated="true">2014-03-17</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://docs.python.jp/3/reference/datamodel.html#the-standard-type-hierarchy">3.データモデルのうち「インスタンスメソッド」</a>を読んでいたのですが、興味深い一文を見つけました。</p>
+
+<blockquote><p>インスタンスメソッドオブジェクトが呼び出される際、根底にある関数 (<strong>func</strong>) が呼び出されます。このとき、クラスインスタンス (<strong>self</strong>) が引数リストの先頭に挿入されます。例えば、 C を関数 f() の定義を含むクラス、 x を C のインスタンスとすると、 x.f(1) の呼び出しは C.f(x, 1) の呼び出しと同じです。</p></blockquote>
+
+<p>これを使うと、あるクラスのインスタンスメソッドを列挙しておいて、
+リフレクションのように順次メソッドを実行しておくことが簡単に、かつオーバーヘッドがない状態で
+実行することができる模様です。</p>
+
+<p>こういう具合に書くと、</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ops = [Puzzle.up, Puzzle.down]
+</span><span class='line'>
+</span><span class='line'>p = Puzzle()
+</span><span class='line'>
+</span><span class='line'>for op in ops:
+</span><span class='line'>    op(p)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>こういう書き方をしたときと同じ挙動になるわけです。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>p = Puzzle()
+</span><span class='line'>p.up()
+</span><span class='line'>p.down()</span></code></pre></td></tr></table></div></figure>
+
+
+<p>行数は後者の方が少ないですが、前者の書き方が必要なときもあるんですよ。
+特にメソッドをひたすら実行しまくる場合には、前者の書き方は便利です。
+しかもJavaでリフレクションを使った時のようなオーバーヘッドがないのは良いですね
+(普通Javaではこういう書き方せずにインターフェースとか使うけど)。</p>
+
+<p>クラスでメソッド定義をするときに、<code>def up(self):</code> と書くのは、
+インスタンスメソッドとして使った場合には、第1引数のselfにはオブジェクトそのものを勝手に
+指定してくれるような動きになっているのかな？</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -922,109 +996,6 @@ Pythonに興味を持っていただいている方のご参加もお待ちし�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/02/19/osaka-python-meeting/">大阪でPythonで集まろうの巻に参加した</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-02-19T11:01:19+09:00" pubdate data-updated="true">2014-02-19</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>背景</h1>
-
-<p><a href="http://connpass.com/event/5201/">大阪でPythonで集まろうの巻</a>に参加してきました。
-参加してきましたというか、上記リンクの先を見ていただくとお分かりの通り、発端は私です。
-私なんですが、恐れ多くも増田さんにボールをぶん投げ、企画していただいたという次第です。</p>
-
-<p>私自身Pythonを初めて1年半。
-実際にそれなりの時間を割いて書くようになってきたのがここ数ヶ月くらいの話なのですが、
-私の周囲にPythonを書く人がいないんですね(最近少しだけ書く人が増えたけど)。
-Pythonについて相談できる相手がいないわけで、少々つらいこともあるわけです。
-そういう背景もあって関西のPythonコミュニティを探していたわけですが、
-ここ数年の活動は停滞気味だったとのことでした。</p>
-
-<p>まずはテーマとかないけれど、Pythonな人たちで顔合わせしましょうかね、
-合わせて勉強会とか開発合宿とか企画したいね、という感じで企画されたのが今回の会合です。
-増田さん、お忙しい中企画と会場をご提供いただき、ありがとうございます。</p>
-
-<h1>会合</h1>
-
-<p>会合ですが、各人の自己紹介を経て、勉強会のざっくり方針だけを決めて、
-会合自体は30分で終わり懇親会場になだれ込みましたｗ</p>
-
-<h1>メモ</h1>
-
-<p>以下はメモ。時系列などは無視のだらだら箇条書きです。</p>
-
-<ul>
-<li>大阪にはPythonの仕事もGoの仕事もある！</li>
-<li>ミッション・クリティカルなシステムにもPythonが使われており、構成次第では非常に大量のアクセスもさばける模様。</li>
-<li>Erlangの軽量プロセスの管理がGoよりも充実しており、子プロセス生成時に、子プロセスが異常終了した場合にどのように通知して親プロセスはそのまま生存するか一緒に終了するかの制御を明示的に指定できるらしい。
-
-<ul>
-<li>Erlang開発者の論文に、システムがどういう状況で障害を起こすのか、その対策は、という話が書かれているらしい。多分これっぽい。<a href="http://www.erlang.org/download/armstrong_thesis_2003.pdf">armstrong_thesis_2003.pdf</a></li>
-</ul>
-</li>
-<li>Seleniumのドライバーに、<a href="https://pypi.python.org/pypi/selenium/">Python用のSelenium Driver</a>がある。うちもJavaじゃなくてPythonを使ったほうがサクサク書けるんじゃないかな。</li>
-<li>スプリント・バックログを付箋化するのはひと目で分かって良い。ただチケットも別途発行しており、そのチケットが溢れる問題は解決しない。</li>
-<li>Web界隈だとGitHubでTravisCIで～という話をよく聞くが、CIも自動テストもない現場が普通にあるとのこと。おっとSVNの悪口はそこまでだ orz</li>
-<li>勉強会の運営についても幾つか。
-
-<ul>
-<li>会場の確保は、20～40人規模なら何とかなりそう。会場提供可能な方が結構多くてビックリ。</li>
-<li>開催日は、平日か土日かといえば、どちらかだけ都合がいいという人が一定数いる関係上、交互にやった方がいいんじゃないか。</li>
-<li>勉強会には参加する人は多いが発表してくれる人はかなり限られる。発表の敷居を下げるか、強制で発表できるような仕組みが必要？</li>
-<li>発表する側、企画する側も何らかの成果を得たい。案として、グループディスカッション形式の勉強会があっても面白いかもしれない。</li>
-</ul>
-</li>
-</ul>
-
-
-<p>最後に。大阪でPythonの勉強会を開催予定です。3月第2週あたりを予定しております。</p>
-
-<p>あぁぁ大阪Go勉強会もこんな感じでいい加減踏ん切りつけてやらないと… orz
-コミュニティ化しないといかんなぁ…。</p>
-
-<p>こちらからは以上です。皆様、昨日はありがとうございました！</p>
-
-<h1>そう言えば。</h1>
-
-<p>妻の同級生が居て腰抜かしそうになるほどびっくりしました。
-世の中広いようで、狭いです。</p>
-
-<h1>追記 2014-02-19 12:55</h1>
-
-<p><a href="https://twitter.com/ikegami__">@ikegami__</a>さんから教えていただいたのですが、
-Python for Kidsという本の訳本が今月末発売予定とのことです。</p>
-
-<p><a href="http://ssl.ohmsha.co.jp/cgi-bin/menu.cgi?ISBN=978-4-274-06944-4">たのしいプログラミング　Pythonではじめよう！</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1040,6 +1011,10 @@ Python for Kidsという本の訳本が今月末発売予定とのことです�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/03/17/python-instance-method/">Pythonのインスタンスメソッドと関数実行</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/03/14/attended-osaka-python-study-session/">大阪Pythonユーザの集まり2014/03に参加＆発表してきた &#8216;#osakapy</a>
       </li>
     
@@ -1053,10 +1028,6 @@ Python for Kidsという本の訳本が今月末発売予定とのことです�
     
       <li class="post">
         <a href="/blog/2014/03/06/coaching-session-impression/">コーチング実践してみた感想とロールモデルの距離感</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/04/linear-equations-in-python/">Pythonで線形方程式を解く</a>
       </li>
     
   </ul>
