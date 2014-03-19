@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | 技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-03-17T19:16:57+09:00</updated>
+  <updated>2014-03-19T10:05:47+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -56,6 +56,12 @@ p.down()
 <p>クラスでメソッド定義をするときに、<code>def up(self):</code> と書くのは、
 インスタンスメソッドとして使った場合には、第1引数のselfにはオブジェクトそのものを勝手に
 指定してくれるような動きになっているのかな？</p>
+
+<h1>追記 (2014-03-19)</h1>
+
+<p>メソッドはレシーバを第1引数に受け取るただの関数、ということだそうです。</p>
+
+<p><a href="https://twitter.com/hnakamur2/status/445565910149918721">https://twitter.com/hnakamur2/status/445565910149918721</a>">https://twitter.com/hnakamur2/status/445565910149918721">https://twitter.com/hnakamur2/status/445565910149918721</a></a></p>
 ]]></content>
   </entry>
   

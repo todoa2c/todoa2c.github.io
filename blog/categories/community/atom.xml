@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Community | 技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/blog/categories/community/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-03-17T19:16:57+09:00</updated>
+  <updated>2014-03-19T10:05:47+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,106 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[大阪Pythonユーザの集まり2014/03に参加＆発表してきた '#osakapy]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/03/14/attended-osaka-python-study-session/"/>
+    <updated>2014-03-14T11:44:25+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/03/14/attended-osaka-python-study-session</id>
+    <content type="html"><![CDATA[<h1>まえがき</h1>
+
+<p>久々の勉強会企画である<a href="http://connpass.com/event/5361/">大阪Pythonユーザの集まり2014/03</a>に
+行ってきて、ついでに発表もしてきました。
+勉強会でまともな話を発表するのは初めてで、ものすごく緊張しましたが、
+なんとか生きて帰ってこれました。</p>
+
+<p>会場をご提供いただきましたシナジーマーケティングさんと<a href="https://twitter.com/kawaken">@kawaken</a>さん、
+ありがとうございます！
+増田さん、司会進行ありがとうございます！
+そして、お足元の悪い中ご参加いただきました皆様、ありがとうございます！</p>
+
+<h1>発表内容</h1>
+
+<h2>scikit-learnを用いた機械学習チュートリアル</h2>
+
+<p><a href="http://www.slideshare.net/AtsushiKanaya/scikitlearn">http://www.slideshare.net/AtsushiKanaya/scikitlearn</a>">http://www.slideshare.net/AtsushiKanaya/scikitlearn">http://www.slideshare.net/AtsushiKanaya/scikitlearn</a></a></p>
+
+<p>私の発表です。
+機械学習を使う上での取っ掛かりの考え方、それを実際にscikit-learnで実装するには
+どうすればよいかを、テキスト分類の例を交えながら説明したつもりです。</p>
+
+<h2>wxPython入門</h2>
+
+<p><a href="http://www.slideshare.net/YasushiMasuda/wxpythonpython201403">http://www.slideshare.net/YasushiMasuda/wxpythonpython201403</a>">http://www.slideshare.net/YasushiMasuda/wxpythonpython201403">http://www.slideshare.net/YasushiMasuda/wxpythonpython201403</a></a></p>
+
+<p>増田さん(<a href="https://twitter.com/whosaysni">@whosaysni</a>)によるwxPythonのお話。
+クロスプラットフォームで各OSのネイティブなコンポーネントを使うあたり、
+Swingより好感が持てる(JavaFXはすみませんが不勉強で…)。</p>
+
+<p>あとで調べてみましたが、Python 3対応はまだみたいですね。</p>
+
+<h2>Autodocについて</h2>
+
+<p><a href="https://speakerdeck.com/heavenshell/autodoc">https://speakerdeck.com/heavenshell/autodoc</a>">https://speakerdeck.com/heavenshell/autodoc">https://speakerdeck.com/heavenshell/autodoc</a></a></p>
+
+<p><a href="https://twitter.com/heavenshell">@heavenshell</a> さんによる、Ruby発
+<a href="http://r7kamura.github.io/2013/12/01/autodoc.html">Autodoc &ndash; r7kamura per second</a>の
+Python版を作った、というお話。
+Web APIサーバーに対するテストを書くと、テストからドキュメントが自動生成されるとのこと。</p>
+
+<p>docstringを使うという選択肢もあったが、的な設計思想に関する質疑応答も聞けて
+Pythonな人の考え方がかいま見えた気がしました。</p>
+
+<p>「我々Pythonistaは〜」というフレーズを何回か聞きました。
+Pythonの勉強会に参加するのは初めてなので、Pythonはそういうノリなのかしら？</p>
+
+<h2>kurokoについて (LT)</h2>
+
+<p><a href="http://www.hexacosa.net/documents/osakapy-20140313-lt_kuroko/#/">kurokoについて</a>  (2014-03-17 URL追加)</p>
+
+<p><a href="https://twitter.com/hhatto">@hhatto</a> さんによる、定期実行するタスクを扱うための
+<a href="https://pypi.python.org/pypi/kuroko">kuroko</a>についてのLT。</p>
+
+<p>デコレーターいいね、な人が今日の勉強会で2名。
+まだデコレーターを使ったことがないので、使ってみようっと。</p>
+
+<h2>ちょっとした黒魔術でライブラリのバグを回避した話 (LT)</h2>
+
+<p><a href="https://twitter.com/soundkitchen">@soundkitchen</a> さんによる、Pythonの黒魔術のお話。
+使ってるライブラリのコンストラクタ周りにバグがあったので
+コンストラクタを差し替えたという荒業のお話をしてくれました。</p>
+
+<p>Pythonは黒魔術的な実装はあまり好かれないそうですが、
+それでも最終手段としてこういうことができる余地を残してくれているのは素晴らしい、
+とのことです。</p>
+
+<h1>懇親会</h1>
+
+<p>懇親会は9名、うち7名が、本勉強会を企画するに当って集まっていただいた方々でした。
+個人的には、懇親会までが勉強会だと思っていますので(ブログを書くまでが勉強会、という話もあるけど)、
+面白い話をもっと聞きたければ懇親会に参加すべきですよ〜と思っています。</p>
+
+<p>今回懇親会に参加されなかった方々も、次回はご参加ください。
+前の会社の後輩にも懇親会に参加していただきましたが、色々楽しい話が聞けてよかった、
+と言ってくれていました。</p>
+
+<h1>感想、反省点など</h1>
+
+<ul>
+<li>事前の準備は周囲の協力をいただきながら、ぼちぼちの出来だったかな？</li>
+<li>一方、懇親会の案内はもっと早くに出すべきだった</li>
+<li>肝心の発表は反省点だらけ。もっと練習しなきゃいけなかったし、スライドも洗練させるべきだった</li>
+</ul>
+
+
+<h1>今後</h1>
+
+<p>関西Pythonのメーリングリストあたりで相談しながら、次回を決めていく予定です。
+私も企画に絡んでいきます。
+ハッカソンしたいなぁ。Pythonの開発をもう少しやってみたいし、
+開発スタイルが多分オレオレ感満載なことになっていると思うので…。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[大阪Pythonユーザの集まり 2014/03 を募集開始しました '#osakapy]]></title>
