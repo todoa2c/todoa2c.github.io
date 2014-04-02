@@ -4,7 +4,7 @@
   <title><![CDATA[技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-03-28T12:19:22+09:00</updated>
+  <updated>2014-04-02T14:48:40+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,54 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Chromeで元タブとは異なるプロセスで新規タブを開く方法]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/04/02/chrome-tabs-and-process/"/>
+    <updated>2014-04-02T14:28:06+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/04/02/chrome-tabs-and-process</id>
+    <content type="html"><![CDATA[<p>Google Chromeは基本的に1タブごとに1プロセスを立ち上げるマルチプロセスのアーキテクチャを採用しています。
+マルチプロセスであることにより、下記のメリットが生まれるわけです。</p>
+
+<ol>
+<li>ブラウザ本体のメモリ使用量肥大化を防ぐ</li>
+<li>1つのタブがクラッシュしてもブラウザ全体に影響を及ぼさない</li>
+</ol>
+
+
+<p>ただし、厳密に言うと1タブごとに1プロセス、というわけではありません。
+具体的に言いますと、ある元タブからリンクをクリックした際に開かれるタブ、これは元タブと同じプロセスで
+開かれます。
+ですので、この2つのタブのうちどちらかがクラッシュすると、両方のタブがクラッシュすることになります。
+また、この方法で開き続けると、1つのプロセスで何枚ものタブを開くことになるので、
+最終的には1つのタブのプロセスがメモリ肥大化します。</p>
+
+<p>個人的に、嫌なんですよね。常駐したいタブのメモリが肥大化するのって。
+Twitterなどのサービスのタブを常駐させたまま各種リンクをクリックして見てた結果、
+気がつけばTwitterタブを開いているプロセスのメモリが肥大化しているわけです。</p>
+
+<p>という神経質な私のために、どうしたら別プロセスで新しいタブを開くのか確認しました。
+結論から言いますと、「リンクを右クリックして新しいタブで開く」と新規タブが新しいプロセスで開けます。</p>
+
+<p>以下、検証方法。ブラウザにはWindows版Chrome 33.0.1750.154mを使用しました。
+新規タブで開くリンクに対して、下記の操作を行いました。</p>
+
+<ol>
+<li>左クリックで開く</li>
+<li>中央クリックで開く</li>
+<li>右クリックでコンテキストメニューを出し、「新しいタブで開く」を使って開く</li>
+</ol>
+
+
+<p>結果は以下のとおり、3.の右クリックして新しいタブで開く方法だけが、新しいプロセスで新規タブを
+開くことが出来ました。</p>
+
+<p><img src="http://todoa2c.github.io/images/contents/20140402-chrome-tabs-and-process.png" alt="3つの方法で新規タブを開いた場合のプロセス" /></p>
+
+<p>最近のマシンではそれほどメモリ使用量を気にすることはないかと思いますが、
+私のような神経質さを持つ方には、是非右クリック→新しいタブで開く、をおすすめします。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[今週はまともにブログを書けなかった…(読む価値なし日記)]]></title>
@@ -1461,98 +1509,6 @@ Python 2.x系から3.x系では互換性が失われる変更が多数入った�
 規模が大きいプロジェクトの場合は移行が難しいかもしれませんが、
 小規模なプロジェクトの場合であれば、移行は意外と何とかなるんじゃないかな、
 というのが今回の感想でした。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[カスタム条件で二分探索したい]]></title>
-    <link href="http://todoa2c.github.io/blog/2014/02/06/custom-bisect/"/>
-    <updated>2014-02-06T16:46:42+09:00</updated>
-    <id>http://todoa2c.github.io/blog/2014/02/06/custom-bisect</id>
-    <content type="html"><![CDATA[<p>Pythonの<a href="http://docs.python.jp/3/library/bisect.html">bisect</a>の返す結果に戸惑った、
-と同僚に話したところ、「いや他の言語のライブラリも大体同じですよ」
-と言われたわけです。</p>
-
-<p>戸惑った部分ですが、<a href="https://paiza.jp/poh/ec-campaign">新人プログラマー野田さんの課題</a>を
-解いている過程で、「指定した金額以下で一番大きい金額のインデックス」が欲しい、と思ったのですよね。
-結局それは<a href="http://docs.python.jp/3/library/bisect.html#bisect.bisect_left">bisect.bisect_left</a>を使って解決したんだけど、
-bisect_leftの場合「返り値のインデックスの更に1コ前」が欲しい値だったわけです。</p>
-
-<p>改めて二分探索の挙動について調べたところ、少なくともPython, Java共に、
-あるデータが「挿入されてもソート状態が保たれる箇所」を探索してくれるものらしい。</p>
-
-<p>例えば以下はPythonの例。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>import bisect
-</span><span class='line'>
-</span><span class='line'>a = [1, 2, 4, 8, 11]
-</span><span class='line'>data = 6
-</span><span class='line'>i = bisect.bisect(a, data)
-</span><span class='line'># i の値は 3
-</span><span class='line'>a.insert(i, data)
-</span><span class='line'># a の値は [1, 2, 4, 6, 8, 11]</span></code></pre></td></tr></table></div></figure>
-
-
-<p>なるほど。納得。</p>
-
-<p>とは言え、カスタムの条件で二分探索したいケースもあると思うんですよね。例えば<a href="http://ja.wikipedia.org/wiki/%E6%8E%A5%E5%B0%BE%E8%BE%9E%E9%85%8D%E5%88%97">接尾辞配列</a>のように。</p>
-
-<p>超簡単な例だと、こういうイメージ。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>txt = 'banana'
-</span><span class='line'>suf = [i for i in range(len(txt))]
-</span><span class='line'># suf の値は [0, 1, 2, 3, 4, 5]
-</span><span class='line'>
-</span><span class='line'>suf.sort(key=lambda i: txt[i:])
-</span><span class='line'># suf の値は [5, 3, 1, 0, 4, 2]
-</span><span class='line'>
-</span><span class='line'>print([txt[i:] for i in suf])
-</span><span class='line'># ['a', 'ana', 'anana', 'banana', 'na', 'nana'] が出力される。
-</span><span class='line'># この結果は、全部分文字列がソートされた状態
-</span><span class='line'>## a
-</span><span class='line'>## ana
-</span><span class='line'>## anana
-</span><span class='line'>## banana
-</span><span class='line'>## na
-</span><span class='line'>## nana
-</span><span class='line'># sufにはソートされた状態の各部分文字列へのインデックスが格納されている。
-</span><span class='line'># この中から、例えば'an'が含まれる全ての箇所を探す、というのはbisectでは探索できない…</span></code></pre></td></tr></table></div></figure>
-
-
-<p>こういう用途用の二分探索は、接尾辞配列ライブラリに含まれてると思うんですけどね。</p>
-
-<p>少なくともPythonで言うと、リストの外の情報を使ってソートすることはできるけれど、
-それに対する二分探索による探索がないのはちょっと不便な気がしたのです。
-それを可能とするライブラリがあるのであれば、それを使うにして、
-なければそれを実現するライブラリを作ろうかしら。</p>
-
-<p>「それ～～でできるよ」情報があったらお教え下さいませ。</p>
 ]]></content>
   </entry>
   

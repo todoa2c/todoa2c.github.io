@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Misc | 技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/blog/categories/misc/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-03-28T12:19:22+09:00</updated>
+  <updated>2014-04-02T14:48:40+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,54 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Chromeで元タブとは異なるプロセスで新規タブを開く方法]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/04/02/chrome-tabs-and-process/"/>
+    <updated>2014-04-02T14:28:06+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/04/02/chrome-tabs-and-process</id>
+    <content type="html"><![CDATA[<p>Google Chromeは基本的に1タブごとに1プロセスを立ち上げるマルチプロセスのアーキテクチャを採用しています。
+マルチプロセスであることにより、下記のメリットが生まれるわけです。</p>
+
+<ol>
+<li>ブラウザ本体のメモリ使用量肥大化を防ぐ</li>
+<li>1つのタブがクラッシュしてもブラウザ全体に影響を及ぼさない</li>
+</ol>
+
+
+<p>ただし、厳密に言うと1タブごとに1プロセス、というわけではありません。
+具体的に言いますと、ある元タブからリンクをクリックした際に開かれるタブ、これは元タブと同じプロセスで
+開かれます。
+ですので、この2つのタブのうちどちらかがクラッシュすると、両方のタブがクラッシュすることになります。
+また、この方法で開き続けると、1つのプロセスで何枚ものタブを開くことになるので、
+最終的には1つのタブのプロセスがメモリ肥大化します。</p>
+
+<p>個人的に、嫌なんですよね。常駐したいタブのメモリが肥大化するのって。
+Twitterなどのサービスのタブを常駐させたまま各種リンクをクリックして見てた結果、
+気がつけばTwitterタブを開いているプロセスのメモリが肥大化しているわけです。</p>
+
+<p>という神経質な私のために、どうしたら別プロセスで新しいタブを開くのか確認しました。
+結論から言いますと、「リンクを右クリックして新しいタブで開く」と新規タブが新しいプロセスで開けます。</p>
+
+<p>以下、検証方法。ブラウザにはWindows版Chrome 33.0.1750.154mを使用しました。
+新規タブで開くリンクに対して、下記の操作を行いました。</p>
+
+<ol>
+<li>左クリックで開く</li>
+<li>中央クリックで開く</li>
+<li>右クリックでコンテキストメニューを出し、「新しいタブで開く」を使って開く</li>
+</ol>
+
+
+<p>結果は以下のとおり、3.の右クリックして新しいタブで開く方法だけが、新しいプロセスで新規タブを
+開くことが出来ました。</p>
+
+<p><img src="/images/contents/20140402-chrome-tabs-and-process.png" alt="3つの方法で新規タブを開いた場合のプロセス" /></p>
+
+<p>最近のマシンではそれほどメモリ使用量を気にすることはないかと思いますが、
+私のような神経質さを持つ方には、是非右クリック→新しいタブで開く、をおすすめします。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[今週はまともにブログを書けなかった…(読む価値なし日記)]]></title>
