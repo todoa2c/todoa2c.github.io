@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Community | 技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/blog/categories/community/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-04-02T14:48:40+09:00</updated>
+  <updated>2014-04-14T18:15:54+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,26 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[大阪Pythonユーザの集まりの意見募集中 '#osakapy]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/04/14/python-osaka-session-questionnaires/"/>
+    <updated>2014-04-14T18:08:41+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/04/14/python-osaka-session-questionnaires</id>
+    <content type="html"><![CDATA[<p>大阪Pythonユーザの集まりについて、GW明けにまた行おうと考えています。
+第1回は平日夜の開催で、発表形式の会でしたが、他にも色々やってみたいという声がありましたので、
+どの要望が一番多いかを調べるべく、アンケートを作成してみることにしました。</p>
+
+<p><a href="https://twitter.com/todogzm/status/455585461386625024">https://twitter.com/todogzm/status/455585461386625024</a>">https://twitter.com/todogzm/status/455585461386625024">https://twitter.com/todogzm/status/455585461386625024</a></a></p>
+
+<p>アンケートはGoogleドライブのフォーム作成機能を使って実現しています。
+簡単に作れて即公開できるのが便利ですね。</p>
+
+<p><a href="https://support.google.com/drive/topic/1360904?hl=ja&amp;ref_topic=2811744">フォーム &ndash; ドライブ ヘルプ</a>
+を見れば、大体の作り方は分かるかと思いますので、
+アンケートを作成する際には、候補のひとつに入れてみてもよいかと思います。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[大阪Pythonユーザの集まり2014/03に参加＆発表してきた '#osakapy]]></title>

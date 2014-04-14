@@ -9,10 +9,9 @@
   <meta name="author" content="Atsushi Kanaya (todoa2c)">
 
   
-  <meta name="description" content="Pythonのbisectの返す結果に戸惑った、
-と同僚に話したところ、「いや他の言語のライブラリも大体同じですよ」
-と言われたわけです。 戸惑った部分ですが、新人プログラマー野田さんの課題を
-解いている過程で、「指定した金額以下で一番大きい金額のインデックス」が欲しい、と思ったのですよね。 &hellip;">
+  <meta name="description" content="Python 2.6時代 2012年夏頃、ちょっとした自然言語処理用Web APIを作ることになったとき、
+実現方法を色々探した結果、Natural Language Toolkit (NLTK)に辿り着き、
+それからPythonを触るようになりました。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +79,119 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/07/small-web-api-integration-to-python33/">ちっちゃいWeb APIをPython 3.3に移行する</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-07T13:29:21+09:00" pubdate data-updated="true">2014-02-07</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Python 2.6時代</h1>
+
+<p>2012年夏頃、ちょっとした自然言語処理用Web APIを作ることになったとき、
+実現方法を色々探した結果、<a href="http://nltk.org/">Natural Language Toolkit (NLTK)</a>に辿り着き、
+それからPythonを触るようになりました。</p>
+
+<p>周囲には誰もPythonを使ったことのある人がいなかったので、
+独学でPythonやNLTKを学んだ結果、以下の様な構成になりました。</p>
+
+<ul>
+<li>Python 2.6 (EC2環境にデフォルトで入っていたものをそのまま利用…)</li>
+<li><a href="http://webpy.org/">web.py</a> (軽量Webアプリケーションフレームワーク)</li>
+<li><a href="http://nltk.org/">NLTK</a> (自然言語処理モジュール)</li>
+<li><a href="http://www.sqlalchemy.org/">SQLAlchemy</a> (ORM)</li>
+<li><a href="https://pypi.python.org/pypi/MySQL-python/">MySQL-Python</a> (MySQLドライバ)</li>
+</ul>
+
+
+<p>この構成はぼちぼちうまく動いていたのですが、文字列マルチバイト対応の面倒臭さや、
+<a href="http://www.python.org/download/releases/2.6.9/">Python 2.6.9が2.6系最後のリリース</a>
+とうことを知ってから、モジュールの構成を変えることを検討し始めたわけです。</p>
+
+<h1>Python 3.3時代</h1>
+
+<p>まず、無難に2.7系に行くか3.x系に行くかを検討しましたが、
+文字列マルチバイト対応の面倒臭さから逃げたかったため、
+Python 3.xを使うこと自体はあっさり決まりました。</p>
+
+<p>3.xを使うことを決めた次に、ライブラリがそのまま使えるかを調査しました。
+<a href="http://www.python-izm.com/contents/basis/difference_in_version.shtml">2系と3系の違い &ndash; Python入門から応用までの学習サイト</a>にも書かれているように、
+Python 2.x系から3.x系では互換性が失われる変更が多数入ったので、
+2.x系で使えていたライブラリが3.x系で使えない可能性があるのです。</p>
+
+<p>調査したところ、調査時点(2014年1月時点)ではこのような対応状況でした。
+主要なライブラリが1コしか対応していない…なかなかの難局です。</p>
+
+<ul>
+<li>web.py: 3.x系未対応(対応するためのPull Requestは出ているがここ数ヶ月動きなし)</li>
+<li>NLTK: 3.x系未対応(ただし<a href="http://www.nltk.org/nltk3-alpha/">NLTK 3.0 Alpha Releases</a>はある)</li>
+<li>SQLAlchemy: 対応済み</li>
+<li>MySQL-Python: 3.x系未対応</li>
+</ul>
+
+
+<p>結局それなりの時間を費やして調査比較検討した結果、下記のような環境に落ち着きました。</p>
+
+<ul>
+<li>Python 2.6 → Python 3.3</li>
+<li>web.py → <a href="http://flask.pocoo.org/">Flask</a> (web.py同様の軽量さに好感)</li>
+<li>NLTK → <a href="http://scikit-learn.org/">scikit-learn</a> (実際やっていたのはテキスト分類なので、機械学習ライブラリに移行)</li>
+<li>SQLAlchemy → そのままSQLAlchemy</li>
+<li>MySQL-Python → <a href="https://github.com/PyMySQL/PyMySQL">PyMySQL</a> (<a href="http://methane.hatenablog.jp/entry/2013/10/09/Python_3_%E3%81%AE_MySQL_%E3%83%89%E3%83%A9%E3%82%A4%E3%83%90%E4%BA%8B%E6%83%85">Python 3のMySQLドライバ事情</a>が参考になります)</li>
+</ul>
+
+
+<p>これにより、Web層とロジックの書き換えこそ必要になってしまいましたが、
+そもそも規模が小さいWeb APIなので、割と簡単に置き換えができました。</p>
+
+<p>MySQL-PythonからPyMySQLへの移行は、接続先のURLのschema部分を<code>mysql://</code>から<code>mysql+pymysql://</code>に
+変更するだけでOK。</p>
+
+<h1>移行してみて</h1>
+
+<p>Python 2.x系から3.x系に移行するには、やはり今まで使えたライブラリが使えない、
+という問題が出てきます。
+ですが、何かしら代替となりそうなライブラリはあるみたいですので、
+調査や移行に時間こそかかりますが、Python 3.xに移行できるのかなぁと思った次第です。</p>
+
+<p>また、本件では触れていませんが、Python 2.x系だけでしか動かなかったライブラリを
+2.x系、3.x系両方で動かす対応を経験したのも大きいかもしれません。</p>
+
+<p>代替ライブラリがない場合、最悪、フォークして自分でPython 3.x対応する、という手段もある、
+と思うようになったことも、Python 3.xに移行するきっかけになったと思っています。</p>
+
+<p>ちょっと話はそれましたが、まとめ。
+規模が大きいプロジェクトの場合は移行が難しいかもしれませんが、
+小規模なプロジェクトの場合であれば、移行は意外と何とかなるんじゃないかな、
+というのが今回の感想でした。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -215,6 +327,10 @@ bisect_leftの場合「返り値のインデックスの更に1コ前」が欲�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/04/14/python-osaka-session-questionnaires/">大阪Pythonユーザの集まりの意見募集中 &#8216;#osakapy</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/04/02/chrome-tabs-and-process/">Chromeで元タブとは異なるプロセスで新規タブを開く方法</a>
       </li>
     
@@ -228,10 +344,6 @@ bisect_leftの場合「返り値のインデックスの更に1コ前」が欲�
     
       <li class="post">
         <a href="/blog/2014/03/17/python-instance-method/">Pythonのインスタンスメソッドと関数実行</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/14/attended-osaka-python-study-session/">大阪Pythonユーザの集まり2014/03に参加＆発表してきた &#8216;#osakapy</a>
       </li>
     
   </ul>

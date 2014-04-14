@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | 技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-04-02T14:48:40+09:00</updated>
+  <updated>2014-04-14T18:15:54+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,26 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[大阪Pythonユーザの集まりの意見募集中 '#osakapy]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/04/14/python-osaka-session-questionnaires/"/>
+    <updated>2014-04-14T18:08:41+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/04/14/python-osaka-session-questionnaires</id>
+    <content type="html"><![CDATA[<p>大阪Pythonユーザの集まりについて、GW明けにまた行おうと考えています。
+第1回は平日夜の開催で、発表形式の会でしたが、他にも色々やってみたいという声がありましたので、
+どの要望が一番多いかを調べるべく、アンケートを作成してみることにしました。</p>
+
+<p><a href="https://twitter.com/todogzm/status/455585461386625024">https://twitter.com/todogzm/status/455585461386625024</a>">https://twitter.com/todogzm/status/455585461386625024">https://twitter.com/todogzm/status/455585461386625024</a></a></p>
+
+<p>アンケートはGoogleドライブのフォーム作成機能を使って実現しています。
+簡単に作れて即公開できるのが便利ですね。</p>
+
+<p><a href="https://support.google.com/drive/topic/1360904?hl=ja&amp;ref_topic=2811744">フォーム &ndash; ドライブ ヘルプ</a>
+を見れば、大体の作り方は分かるかと思いますので、
+アンケートを作成する際には、候補のひとつに入れてみてもよいかと思います。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Pythonのインスタンスメソッドと関数実行]]></title>
@@ -237,96 +257,6 @@ object.<strong>ge</strong>(self, other)</p>
 
 <p>競技プログラミング用のアルゴリズムの学習も、今後はしていきたいですね。
 一応本も一冊持っていることですし(ざっとは読んだけど理解は…ってレベル)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Pythonで線形方程式を解く]]></title>
-    <link href="http://todoa2c.github.io/blog/2014/03/04/linear-equations-in-python/"/>
-    <updated>2014-03-04T18:55:50+09:00</updated>
-    <id>http://todoa2c.github.io/blog/2014/03/04/linear-equations-in-python</id>
-    <content type="html"><![CDATA[<p><a href="http://www.checkio.org/mission/how-much-gold/">How much gold :: CheckiO</a>を解く方法として、
-何か簡単な方法はあるんだろうなと思いながら、線形方程式を解く方法を採用したわけです。</p>
-
-<p>線形方程式を簡単に解く方法はないかな？と探したところ、
-<a href="http://sympy.org/">SymPy</a>を使って式を与えるだけで解くことが出来ました。
-テストその1をベタ書きしています。</p>
-
-<p>ソースコードおよびセットアップ方法は、
-<a href="http://qiita.com/ryosy383/items/e5e2ecb5976f98040d21">Pythonを使って一瞬で連立方程式を解く &ndash; Qiita</a>
-を参考にしています。
-要するに、右辺がゼロとなる方程式を、連立方程式を解くのに必要な分渡しているわけです。</p>
-
-<p>```
-from fractions import Fraction
-from sympy import *</p>
-
-<p>g, t, i, c = symbols(&lsquo;g t i c&rsquo;)
-out = solve([</p>
-
-<pre><code>g * Fraction(1, 1) + t * Fraction(1, 1) - Fraction(1, 2),
-g * Fraction(1, 1) + i * Fraction(1, 1) - Fraction(1, 3),
-g * Fraction(1, 1) + c * Fraction(1, 1) - Fraction(1, 4),
-g * Fraction(1, 1) + t * Fraction(1, 1) + i * Fraction(1, 1) + c * Fraction(1, 1) - Fraction(1, 1),
-</code></pre>
-
-<p>], [g, t, i, c])</p>
-
-<p>out[g]  # &ndash;> Fraction(1, 24)
-```</p>
-
-<p>ただ、CheckiOでは外部ライブラリの利用はできません。
-また、式を動的に生成する方法があるかも分かりませんので、
-複数ケースに対応する方法が分かりませんでした。</p>
-
-<p>結局、
-<a href="http://ja.wikipedia.org/wiki/%E3%82%AC%E3%82%A6%E3%82%B9%E3%81%AE%E6%B6%88%E5%8E%BB%E6%B3%95">ガウスの消去法 &ndash; Wikipedia</a>
-を使って、自前実装で解くことにしました。</p>
-
-<p>```
-def gauss_elimination(m):</p>
-
-<pre><code>'''mは[g, t, i, c, value]というベクトルを4本持つ行列'''
-n = len(m)
-# 前進消去
-for i in range(n):
-    v = m[i][i]
-    if v == 0:
-        # ゼロ以外の値を持つ行と交換する
-        for k in range(i + 1, n):
-            if m[k][i] != 0:
-                m[i], m[k] = m[k], m[i]
-                v = m[i][i]
-                break
-    for j in range(n + 1):
-        m[i][j] /= v
-    for k in range(i + 1, n):
-        v = -m[k][i]
-        for j in range(n + 1):
-            m[k][j] += m[i][j] * v
-
-# 後退代入
-for i in range(n-1, 0, -1):
-    v = m[i][i]
-    m[i][i] /= v
-    m[i][n] /= v
-    for k in range(i - 1, -1, -1):
-        v2 = m[k][i] * m[i][n]
-        m[k][n] -= v2
-        m[k][i] = Fraction(0, 1)
-return m
-</code></pre>
-
-<p>```</p>
-
-<p>これで<code>gauss_elimination()</code>が解けたときにはすべての変数の値が求められた状態になります。
-良かった良かった。</p>
-
-<p>…と思ったら、最短1行で書くことができるらしい。
-<code>G+T=a, G+I=b, G+C=c, G+T+I+C=1</code>から、<code>G = (a + b + c - 1) / 2</code>が導出できて、
-a, b, cを、それぞれGが含まれている場合の式に変換することで計算できると
-(テスト2の方は、1 &ndash; 式とすればGが含まれる方になる)。
-なるほど、勉強になりました。</p>
 ]]></content>
   </entry>
   
