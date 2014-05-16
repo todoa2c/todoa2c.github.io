@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | 技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-05-12T19:45:53+09:00</updated>
+  <updated>2014-05-16T13:53:35+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,68 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[App Engine用言語をPythonにした件…]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/05/16/beginning-appengine-python/"/>
+    <updated>2014-05-16T11:19:49+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/05/16/beginning-appengine-python</id>
+    <content type="html"><![CDATA[<h1>はじめに</h1>
+
+<p><a href="http://todoa2c.github.io/blog/2014/02/13/beginning-appengine-go/">GoでGoogle App Engineを触るテスト</a>を
+書いておきながら、諸般の事情により、Pythonで書きなおすことにしました。
+書き直すと言っても、大した進んでいないので、また1から書き直しという感じですね。</p>
+
+<h2>準備</h2>
+
+<p>今回はMacで開発しているので、ライブラリはここからダウンロードし、インストール＆実行すればOK。</p>
+
+<p><a href="https://developers.google.com/appengine/downloads?hl=ja">Download the Google App Engine SDK &ndash; Google App Engine &ndash; Google Developers</a></p>
+
+<p>Pythonはvirtualenv経由だとうまく動かないもようなので、Pyenvで特定の2.7系バージョンを作る。</p>
+
+<p>開発環境は<a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a>のPythonプラグイン + App Engineサポートを利用。
+間違ってもFlaskを使いたいからと言って、Flask Templateを選んではいけない。あとで自分でライブラリを
+ダウンロードすること。そうしなければ、App EngineのライブラリがIntelliJ IDEA側で認識してくれなかった
+(別途不具合報告予定)。</p>
+
+<h2>書いてみる</h2>
+
+<p>ライブラリは requirements.txt あたりを用意し、下記コマンドを実行することで、
+ライブラリがlibフォルダに置かれる。</p>
+
+<p><code>
+pip install -r requirements.txt -t lib
+</code></p>
+
+<p>また、appengine_config.py を用意し、上記のlibフォルダをライブラリフォルダとして認識するように、
+下記を記述する。</p>
+
+<p><code>
+import os
+import sys
+ROOTPATH = os.path.dirname(__file__)
+LIBPATH = os.path.join(ROOTPATH, 'lib')
+sys.path.append(LIBPATH)
+</code></p>
+
+<p>その他コードは割愛するけれど、Flaskのフレームワークとしての薄さと
+3rd-partyライブラリによる拡張性の高さは結構好み。
+とは言えDjangoをまじめに学習したことがないので、別途
+<a href="http://connpass.com/event/6369/">大阪Pythonユーザの集まり 2014/05</a>の
+Djangoセッションで学習してみようかと思う。</p>
+
+<h2>デプロイ</h2>
+
+<p>デプロイは、ローカル＆本番環境ともに、とりあえず簡単に、IntelliJ IDEAから試す。
+ローカル環境の場合は、App Engine Serverから起動する事ができる。</p>
+
+<p>本番環境は、メニューのToolsからGoogle App Engine → Upload App Engine app&hellip; から
+アップロードできる。簡単。</p>
+
+<p>簡単だけど、継続的デリバリーができなくなるので、別途デプロイ方法を検討する。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[大阪Pythonユーザの集まり 2014/05 を募集開始しました '#osakapy]]></title>
@@ -224,54 +286,6 @@ Pythonの勉強会に参加するのは初めてなので、Pythonはそうい�
 私も企画に絡んでいきます。
 ハッカソンしたいなぁ。Pythonの開発をもう少しやってみたいし、
 開発スタイルが多分オレオレ感満載なことになっていると思うので…。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[PythonのPriorityQueueとobjectの拡張比較メソッド]]></title>
-    <link href="http://todoa2c.github.io/blog/2014/03/13/python-priority-queue-and-rich-comparison-method/"/>
-    <updated>2014-03-13T11:22:42+09:00</updated>
-    <id>http://todoa2c.github.io/blog/2014/03/13/python-priority-queue-and-rich-comparison-method</id>
-    <content type="html"><![CDATA[<p>優先順位付きキューを使おうとして、<a href="http://docs.python.jp/3/library/queue.html">17.7. queue — 同期キュークラス &ndash; Python 3.3.3 ドキュメント</a>を見たところ、よく分からない一文に遭遇した。</p>
-
-<blockquote><p>最小の値を持つ要素が最初に検索されます</p></blockquote>
-
-<p>書いていることの意味は分かるんですよ。分からないのは、「じゃあ比較はどうすればいいの？」という点。
-ちなみに、自作クラスのインスタンスを優先順位付きキューにそのまま入れてみたら、怒られました。</p>
-
-<p>```
-from queue import PriorityQueue</p>
-
-<p>pq = PriorityQueue()
-pq.put(A())
-```</p>
-
-<p><code>
-TypeError: unorderable types: A() &lt; A()
-</code></p>
-
-<p>このエラーから察するに、PriorityQueue自身に比較用メソッドを渡してあげるのではなく、
-インスタンス間で大小を比較できるようにしなさい、ということなのだろうと推測しました。
-そうと分かれば話は早いってんで、
-<a href="http://docs.python.jp/3/reference/datamodel.html#object.__lt__">Python言語リファレンスの3. データモデル</a>
-を見ると、目的の情報を見つけることが出来ました。</p>
-
-<p>```
-object.<strong>lt</strong>(self, other)
-object.<strong>le</strong>(self, other)
-object.<strong>eq</strong>(self, other)
-object.<strong>ne</strong>(self, other)
-object.<strong>gt</strong>(self, other)
-object.<strong>ge</strong>(self, other)</p>
-
-<p>これらはいわゆる “拡張比較 (rich comparison)” メソッドです。
-```</p>
-
-<p>objectには特殊メソッド名がいくつかあるのですが、その中に比較に関するメソッドも
-用意されていたわけですね。</p>
-
-<p>今回のエラーから必要なのは、<code>__lt__</code> メソッドをオーバーライドしてあげれば良いと分かり、
-早速Aクラスに<code>__lt__</code>メソッドの詳細を実装したところ、うまく動きました。</p>
 ]]></content>
   </entry>
   

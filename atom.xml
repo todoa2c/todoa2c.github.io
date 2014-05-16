@@ -4,7 +4,7 @@
   <title><![CDATA[技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-05-12T19:45:53+09:00</updated>
+  <updated>2014-05-16T13:53:35+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,72 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[App Engine用言語をPythonにした件…]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/05/16/beginning-appengine-python/"/>
+    <updated>2014-05-16T11:19:49+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/05/16/beginning-appengine-python</id>
+    <content type="html"><![CDATA[<h1>はじめに</h1>
+
+<p><a href="http://todoa2c.github.io/blog/2014/02/13/beginning-appengine-go/">GoでGoogle App Engineを触るテスト</a>を
+書いておきながら、諸般の事情により、Pythonで書きなおすことにしました。
+書き直すと言っても、大した進んでいないので、また1から書き直しという感じですね。</p>
+
+<h2>準備</h2>
+
+<p>今回はMacで開発しているので、ライブラリはここからダウンロードし、インストール＆実行すればOK。</p>
+
+<p><a href="https://developers.google.com/appengine/downloads?hl=ja">Download the Google App Engine SDK &ndash; Google App Engine &ndash; Google Developers</a></p>
+
+<p>Pythonはvirtualenv経由だとうまく動かないもようなので、Pyenvで特定の2.7系バージョンを作る。</p>
+
+<p>開発環境は<a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a>のPythonプラグイン + App Engineサポートを利用。
+間違ってもFlaskを使いたいからと言って、Flask Templateを選んではいけない。あとで自分でライブラリを
+ダウンロードすること。そうしなければ、App EngineのライブラリがIntelliJ IDEA側で認識してくれなかった
+(別途不具合報告予定)。</p>
+
+<h2>書いてみる</h2>
+
+<p>ライブラリは requirements.txt あたりを用意し、下記コマンドを実行することで、
+ライブラリがlibフォルダに置かれる。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pip install -r requirements.txt -t lib</span></code></pre></td></tr></table></div></figure>
+
+
+<p>また、appengine_config.py を用意し、上記のlibフォルダをライブラリフォルダとして認識するように、
+下記を記述する。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>import os
+</span><span class='line'>import sys
+</span><span class='line'>ROOTPATH = os.path.dirname(__file__)
+</span><span class='line'>LIBPATH = os.path.join(ROOTPATH, 'lib')
+</span><span class='line'>sys.path.append(LIBPATH)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>その他コードは割愛するけれど、Flaskのフレームワークとしての薄さと
+3rd-partyライブラリによる拡張性の高さは結構好み。
+とは言えDjangoをまじめに学習したことがないので、別途
+<a href="http://connpass.com/event/6369/">大阪Pythonユーザの集まり 2014/05</a>の
+Djangoセッションで学習してみようかと思う。</p>
+
+<h2>デプロイ</h2>
+
+<p>デプロイは、ローカル＆本番環境ともに、とりあえず簡単に、IntelliJ IDEAから試す。
+ローカル環境の場合は、App Engine Serverから起動する事ができる。</p>
+
+<p>本番環境は、メニューのToolsからGoogle App Engine → Upload App Engine app&hellip; から
+アップロードできる。簡単。</p>
+
+<p>簡単だけど、継続的デリバリーができなくなるので、別途デプロイ方法を検討する。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[大阪Pythonユーザの集まり 2014/05 を募集開始しました '#osakapy]]></title>
@@ -1403,53 +1469,6 @@ GAE環境用HTTP clientを取得するように変更した。</p>
 <li>これまた関係ないけどF-SecureがひたすらWebアプリの実行を邪魔してツラい。</li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Emailがコラボレーションツールに適していないもう1点]]></title>
-    <link href="http://todoa2c.github.io/blog/2014/02/12/email-one-more-suck/"/>
-    <updated>2014-02-12T18:45:30+09:00</updated>
-    <id>http://todoa2c.github.io/blog/2014/02/12/email-one-more-suck</id>
-    <content type="html"><![CDATA[<p><a href="http://gothedistance.hatenadiary.jp/">ござ先輩</a>による
-<a href="http://gothedistance.hatenadiary.jp/entry/2014/02/10/120745">Eメールで作業内容を管理するのはやめましょう</a>
-の記事が非常に共感できたのですが、一点だけハッキリ書きたかったことがあったので、書いておきます。</p>
-
-<h1>新規に参加したメンバーが過去の情報にアクセス出来ない</h1>
-
-<p>私が一番Eメール・メーリングリストによるコラボレーションに不満を持っているのはこの点です。
-Eメールは各人のローカルPCに保存され、各人が管理していくことになります。
-メーリングリストも、何らかのサービスを使わなければ、基本的に同様です。</p>
-
-<p>そして一度送られたEメールは、どこか共通の場所に格納される、ということはありません。
-情報が適切に蓄積されないわけですね。
-その結果、新規に参加したメンバーが、過去の情報にアクセスできなくなります。
-これは新規参加メンバーからすると、非常にツラいのです。</p>
-
-<ul>
-<li>どのような議論の場所があるのか</li>
-<li>過去にどのような議論がなされていたか</li>
-<li>社内ではどのような用語が使われているか</li>
-</ul>
-
-
-<p>などの情報に、新規参加メンバーはアクセスすることが出来ないからツラい。</p>
-
-<p>しかもたちが悪いことに、昔からいた人たちは、過去の情報を持っているため、
-過去の情報にアクセス出来ないという問題に気付かないのです。
-そのため、昔から人たちからは、新しい情報共有の仕組みについて
-議論されることが滅多にありません。</p>
-
-<p>かなり観測範囲の狭い個人的な経験ですが、前職・現職ともにおんなじ状況でしたね。
-ござ先輩の観測範囲も多分同様なことが起きている気がしますが、
-他の環境はどうでしょう。。</p>
-
-<blockquote><p>対応したログが残らず、どんな意思決定をしたのか見えなくなる</p></blockquote>
-
-<p>に含まれているとは思いますが、新規メンバーが過去の情報にアクセス出来ない件については
-ちゃんと書いておいたほうがいいと思ったので、蛇足的に書かせていただきました。</p>
-
-<p>合わせて読みたい： <a href="http://blog.kentarok.org/entries/2014/02/11">情報共有の必要性について</a></p>
 ]]></content>
   </entry>
   
