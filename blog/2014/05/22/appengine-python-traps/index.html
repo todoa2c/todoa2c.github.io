@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: AppEngine - 技術情報棚卸し(平日限定)</title>
+  <title>App Engine/Pythonでハマった初心者向けトラップ - 技術情報棚卸し(平日限定)</title>
   <meta name="author" content="Atsushi Kanaya (todoa2c)">
 
   
-  <meta name="description" content="Category: AppEngine">
+  <meta name="description" content="早速いくつかトラップにハマりました。 requestsパッケージがApp Engineで動かない App Engine/PythonはURL Fetch Python API Overview
+にあるように、標準ライブラリのurllib, urllib2, httplibであればそのままURL &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://todoa2c.github.ioblog/categories/appengine">
+  <link rel="canonical" href="http://todoa2c.github.io/blog/2014/05/22/appengine-python-traps">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="技術情報棚卸し(平日限定)" type="application/atom+xml">
@@ -76,78 +77,122 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: AppEngine</h1>
+    
+      <h1 class="entry-title">App Engine/Pythonでハマった初心者向けトラップ</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-22T20:08:31+09:00" pubdate data-updated="true">2014-05-22</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>早速いくつかトラップにハマりました。</p>
 
-  
-  <h2>2014</h2>
+<h1>requestsパッケージがApp Engineで動かない</h1>
 
-<article>
-  
-<h1><a href="/blog/2014/05/22/appengine-python-traps/">App Engine/Pythonでハマった初心者向けトラップ</a></h1>
-<time datetime="2014-05-22T20:08:31+09:00" pubdate><span class='month'>May</span> <span class='day'>22</span> <span class='year'>2014</span></time>
+<p>App Engine/Pythonは<a href="https://developers.google.com/appengine/docs/python/urlfetch/?hl=ja">URL Fetch Python API Overview</a>
+にあるように、標準ライブラリのurllib, urllib2, httplibであればそのままURL Fetchが使えました。</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/appengine/'>AppEngine</a>, <a class='category' href='/blog/categories/python/'>Python</a></span>
-</footer>
+<p>一方、GitHubのAPIを叩く際に使っていた<a href="https://github.com/sigmavirus24/github3.py">github3.py</a>は
+内部的に<a href="https://github.com/kennethreitz/requests">requests</a>ライブラリを使用しているわけですが、
+このrequestsライブラリですと、App Engineでは動かないのです。
+更にこのrequestsライブラリの中で使われているurllib3はApp Engine内で動くらしいのですが…動かず。無念。</p>
 
+<p>結局他のGitHub APIライブラリを使用しました。</p>
 
-</article>
+<h1>GoogleAppEngineLauncher.appアップデート後の罠</h1>
 
+<p>GoogleAppEngineLauncher.appアップデート後は、一度は起動しないと最新モジュールが
+適用されないみたいです。
+私はIntelliJ IDEAを使っており、そのIntelliJ IDEAが参照する<code>google_appengine</code>フォルダは
+<code>/usr/local/google_appengine</code> ではなく、GoogleAppEngineLauncher.app内の結構深いところにある
+<code>google_appengine</code>フォルダを参照します。</p>
 
+<p>で、GoogleAppEngineLauncher.app がアップデートされたあとは、この <code>google_appengine</code>フォルダが
+見当たらないのです。その代わり、google_appengine.zip はある。
+一度起動することにより、google_appengine.zipが解凍されて <code>google_appengine</code>フォルダが
+作られる模様ですね。。。気づかんわこれ。</p>
 
-<article>
-  
-<h1><a href="/blog/2014/05/16/beginning-appengine-python/">App Engine用言語をPythonにした件…</a></h1>
-<time datetime="2014-05-16T11:19:49+09:00" pubdate><span class='month'>May</span> <span class='day'>16</span> <span class='year'>2014</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/appengine/'>AppEngine</a>, <a class='category' href='/blog/categories/python/'>Python</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2014/02/14/appengine-datastore-references/">App EngineのDatastoreについて調査中</a></h1>
-<time datetime="2014-02-14T17:23:07+09:00" pubdate><span class='month'>Feb</span> <span class='day'>14</span> <span class='year'>2014</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/appengine/'>AppEngine</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2014/02/13/beginning-appengine-go/">GoでGoogle App Engineを触るテスト</a></h1>
-<time datetime="2014-02-13T16:50:18+09:00" pubdate><span class='month'>Feb</span> <span class='day'>13</span> <span class='year'>2014</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/appengine/'>AppEngine</a>, <a class='category' href='/blog/categories/go/'>Go</a></span>
-</footer>
-
-
-</article>
-
+<p>こちらからは以上です。</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Atsushi Kanaya (todoa2c)</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-22T20:08:31+09:00" pubdate data-updated="true">2014-05-22</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/appengine/'>AppEngine</a>, <a class='category' href='/blog/categories/python/'>Python</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://todoa2c.github.io/blog/2014/05/22/appengine-python-traps/" data-via="todogzm" data-counturl="http://todoa2c.github.io/blog/2014/05/22/appengine-python-traps/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/05/16/beginning-appengine-python/" title="Previous Post: App Engine用言語をPythonにした件…">&laquo; App Engine用言語をPythonにした件…</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -245,7 +290,10 @@
       var disqus_shortname = 'todoa2c-github-io';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://todoa2c.github.io/blog/2014/05/22/appengine-python-traps/';
+        var disqus_url = 'http://todoa2c.github.io/blog/2014/05/22/appengine-python-traps/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
