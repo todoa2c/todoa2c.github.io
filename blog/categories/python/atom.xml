@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | 技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-05-22T20:32:11+09:00</updated>
+  <updated>2014-05-30T11:54:57+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,60 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Codeshipを使ったApp Engineへの継続的デリバリー]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/05/30/codeship-appengine-continuous-delivery/"/>
+    <updated>2014-05-30T11:13:17+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/05/30/codeship-appengine-continuous-delivery</id>
+    <content type="html"><![CDATA[<p>IntelliJ IDEAからApp Engineへのデプロイが簡単にできることは以前書いたのですが、
+自分のIntelliJ IDEAのローカルフォルダの情報がそのままデプロイされてしまうので、
+コミットしていないコードがそのままデプロイされてしまう危険性があります。
+また、デプロイの作業が自分しかできない、暗黙知化されるのも良くないわけです。</p>
+
+<p>こういった問題の解決策として継続的デリバリーを行うべく、
+実現できるサービスを探したところ、ありました。
+<a href="https://www.codeship.io/">Codeship</a>というサービスです。</p>
+
+<p>Codeshipは、扱えるコード、コードのホスト先だけでなく、
+コードを動かすクラウド環境(AWSやDigital Oceanなど)も選べるし、その際に必要となる
+デプロイやプロビジョニングツールも提供されており、
+テストから環境構築してデプロイまでを一手に引き受けてくれるサービスです。</p>
+
+<p>今回は、Bitbucketに置いてある自分のプライベートリポジトリを監視し、
+コードのPushがあったタイミングでテストを行い、
+かつmasterブランチに対するコミットがあった時点でApp Engineにデプロイする、
+というところまでをやってみました。</p>
+
+<p>基本的な実現方法は、下記をご参照ください。こっちの方が分かりやすいです。</p>
+
+<p><a href="http://blog.codeship.io/2014/01/21/continuous-deployment-google-app-engine-bitbucket-python-django.html">Continuous Deployment for Django apps from Bitbucket to Google App Engine &ndash; Codeship</a></p>
+
+<p>工夫した点は、設定面の工夫は特にありませんが、デプロイの仕方だけは少し工夫しています。
+GitのブランチをGit-flow風にして、developを開発用ブランチ、masterをリリース用ブランチにして、
+リリース時には、developの変更点をmasterにマージしてもらうようなPull Requestを
+Bitbucket上で作成します。</p>
+
+<p><img src="/images/contents/20140530-bitbucket-deploy-pr.png" alt="デプロイ用Pull Requestの変更点" /></p>
+
+<p>こうすることで、どのコミットがリリースに含まれるかが、リリース用Pull Requestを見れば
+一目瞭然になるわけです。</p>
+
+<p>※アイデアは <a href="http://d.hatena.ne.jp/naoya/20140502/1399027655">GitHub 時代のデプロイ戦略 &ndash; naoyaのはてなダイアリー</a>です。</p>
+
+<p>あとはデプロイはCodeshipにお願いすると。</p>
+
+<p><img src="/images/contents/20140530-codeship-deploy.png" alt="Codeshipによるデプロイ" /></p>
+
+<p>これでBitbucket上からのリリースもできるようになり、非常に快適になりました。
+あとは、今はまだステージング環境のようなものを用意していないのですが、
+developブランチにコミットがあった場合にステージング環境にデプロイもする、という設定を
+追加すると良いかもしれないですね。</p>
+
+<p>Codeshipは1ヶ月に50回のビルドまでであれば無料で使うことが出来ますので、
+ご興味のある方は、是非是非お試しください。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[App Engine/Pythonでハマった初心者向けトラップ]]></title>
@@ -170,58 +224,6 @@ Pythonに興味を持っていただいている方のご参加もお待ちし�
 <p><a href="https://support.google.com/drive/topic/1360904?hl=ja&amp;ref_topic=2811744">フォーム &ndash; ドライブ ヘルプ</a>
 を見れば、大体の作り方は分かるかと思いますので、
 アンケートを作成する際には、候補のひとつに入れてみてもよいかと思います。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Pythonのインスタンスメソッドと関数実行]]></title>
-    <link href="http://todoa2c.github.io/blog/2014/03/17/python-instance-method/"/>
-    <updated>2014-03-17T19:07:26+09:00</updated>
-    <id>http://todoa2c.github.io/blog/2014/03/17/python-instance-method</id>
-    <content type="html"><![CDATA[<p><a href="http://docs.python.jp/3/reference/datamodel.html#the-standard-type-hierarchy">3.データモデルのうち「インスタンスメソッド」</a>を読んでいたのですが、興味深い一文を見つけました。</p>
-
-<blockquote><p>インスタンスメソッドオブジェクトが呼び出される際、根底にある関数 (<strong>func</strong>) が呼び出されます。このとき、クラスインスタンス (<strong>self</strong>) が引数リストの先頭に挿入されます。例えば、 C を関数 f() の定義を含むクラス、 x を C のインスタンスとすると、 x.f(1) の呼び出しは C.f(x, 1) の呼び出しと同じです。</p></blockquote>
-
-<p>これを使うと、あるクラスのインスタンスメソッドを列挙しておいて、
-リフレクションのように順次メソッドを実行しておくことが簡単に、かつオーバーヘッドがない状態で
-実行することができる模様です。</p>
-
-<p>こういう具合に書くと、</p>
-
-<p>```
-ops = [Puzzle.up, Puzzle.down]</p>
-
-<p>p = Puzzle()</p>
-
-<p>for op in ops:</p>
-
-<pre><code>op(p)
-</code></pre>
-
-<p>```</p>
-
-<p>こういう書き方をしたときと同じ挙動になるわけです。</p>
-
-<p><code>
-p = Puzzle()
-p.up()
-p.down()
-</code></p>
-
-<p>行数は後者の方が少ないですが、前者の書き方が必要なときもあるんですよ。
-特にメソッドをひたすら実行しまくる場合には、前者の書き方は便利です。
-しかもJavaでリフレクションを使った時のようなオーバーヘッドがないのは良いですね
-(普通Javaではこういう書き方せずにインターフェースとか使うけど)。</p>
-
-<p>クラスでメソッド定義をするときに、<code>def up(self):</code> と書くのは、
-インスタンスメソッドとして使った場合には、第1引数のselfにはオブジェクトそのものを勝手に
-指定してくれるような動きになっているのかな？</p>
-
-<h1>追記 (2014-03-19)</h1>
-
-<p>メソッドはレシーバを第1引数に受け取るただの関数、ということだそうです。</p>
-
-<p><a href="https://twitter.com/hnakamur2/status/445565910149918721">https://twitter.com/hnakamur2/status/445565910149918721</a>">https://twitter.com/hnakamur2/status/445565910149918721">https://twitter.com/hnakamur2/status/445565910149918721</a></a></p>
 ]]></content>
   </entry>
   

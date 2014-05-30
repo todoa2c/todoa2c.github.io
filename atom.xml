@@ -4,7 +4,7 @@
   <title><![CDATA[技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-05-22T20:32:11+09:00</updated>
+  <updated>2014-05-30T11:54:57+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,60 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Codeshipを使ったApp Engineへの継続的デリバリー]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/05/30/codeship-appengine-continuous-delivery/"/>
+    <updated>2014-05-30T11:13:17+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/05/30/codeship-appengine-continuous-delivery</id>
+    <content type="html"><![CDATA[<p>IntelliJ IDEAからApp Engineへのデプロイが簡単にできることは以前書いたのですが、
+自分のIntelliJ IDEAのローカルフォルダの情報がそのままデプロイされてしまうので、
+コミットしていないコードがそのままデプロイされてしまう危険性があります。
+また、デプロイの作業が自分しかできない、暗黙知化されるのも良くないわけです。</p>
+
+<p>こういった問題の解決策として継続的デリバリーを行うべく、
+実現できるサービスを探したところ、ありました。
+<a href="https://www.codeship.io/">Codeship</a>というサービスです。</p>
+
+<p>Codeshipは、扱えるコード、コードのホスト先だけでなく、
+コードを動かすクラウド環境(AWSやDigital Oceanなど)も選べるし、その際に必要となる
+デプロイやプロビジョニングツールも提供されており、
+テストから環境構築してデプロイまでを一手に引き受けてくれるサービスです。</p>
+
+<p>今回は、Bitbucketに置いてある自分のプライベートリポジトリを監視し、
+コードのPushがあったタイミングでテストを行い、
+かつmasterブランチに対するコミットがあった時点でApp Engineにデプロイする、
+というところまでをやってみました。</p>
+
+<p>基本的な実現方法は、下記をご参照ください。こっちの方が分かりやすいです。</p>
+
+<p><a href="http://blog.codeship.io/2014/01/21/continuous-deployment-google-app-engine-bitbucket-python-django.html">Continuous Deployment for Django apps from Bitbucket to Google App Engine &ndash; Codeship</a></p>
+
+<p>工夫した点は、設定面の工夫は特にありませんが、デプロイの仕方だけは少し工夫しています。
+GitのブランチをGit-flow風にして、developを開発用ブランチ、masterをリリース用ブランチにして、
+リリース時には、developの変更点をmasterにマージしてもらうようなPull Requestを
+Bitbucket上で作成します。</p>
+
+<p><img src="http://todoa2c.github.io/images/contents/20140530-bitbucket-deploy-pr.png" alt="デプロイ用Pull Requestの変更点" /></p>
+
+<p>こうすることで、どのコミットがリリースに含まれるかが、リリース用Pull Requestを見れば
+一目瞭然になるわけです。</p>
+
+<p>※アイデアは <a href="http://d.hatena.ne.jp/naoya/20140502/1399027655">GitHub 時代のデプロイ戦略 &ndash; naoyaのはてなダイアリー</a>です。</p>
+
+<p>あとはデプロイはCodeshipにお願いすると。</p>
+
+<p><img src="http://todoa2c.github.io/images/contents/20140530-codeship-deploy.png" alt="Codeshipによるデプロイ" /></p>
+
+<p>これでBitbucket上からのリリースもできるようになり、非常に快適になりました。
+あとは、今はまだステージング環境のようなものを用意していないのですが、
+developブランチにコミットがあった場合にステージング環境にデプロイもする、という設定を
+追加すると良いかもしれないですね。</p>
+
+<p>Codeshipは1ヶ月に50回のビルドまでであれば無料で使うことが出来ますので、
+ご興味のある方は、是非是非お試しください。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[App Engine/Pythonでハマった初心者向けトラップ]]></title>
@@ -1173,57 +1227,6 @@ Emailはコラボレーションツールに適してないと主張する私と
 
 <p>というわけで、サイボウズLiveに登録し、実際に試用してもらうことにしました。
 まだ1日しか経っていませんが、果たしてどうなることやら。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[App EngineのDatastoreについて調査中]]></title>
-    <link href="http://todoa2c.github.io/blog/2014/02/14/appengine-datastore-references/"/>
-    <updated>2014-02-14T17:23:07+09:00</updated>
-    <id>http://todoa2c.github.io/blog/2014/02/14/appengine-datastore-references</id>
-    <content type="html"><![CDATA[<p>Google App EngineのDatastore周りを学習すべく、いくつか参考にしたサイトをまとめておきます。</p>
-
-<ul>
-<li><p><a href="http://www.slideshare.net/devsumi/18c4google-app-engine-6969798">【18-C-4】Google App Engine &ndash; 無限の彼方へ</a></p>
-
-<ul>
-<li>Google松尾さんによる資料。2011年と古いが、Datastoreについての概要はここで学べると思う。</li>
-</ul>
-</li>
-<li><p><a href="http://appengine.keicode.com/gae/datastore.php">データストア &ndash; Google App Engine 入門</a></p>
-
-<ul>
-<li>Python, Javaの両方について記事がある模様。入門とだけあって分かりやすい気がする。</li>
-</ul>
-</li>
-<li><p><a href="http://proppy-appstats.appspot.com/">Google I/O 2012 &ndash; Optimizing Your Google App Engine App</a></p>
-
-<ul>
-<li>つい先程見つけたばかりなので確認中。解説はこちらも見たほうがよいのかな。</li>
-<li><a href="http://blog.vier.jp/2013/02/google-app-engine-appengine-ja-night-23.html">Blog @vierjp : 18.Google App Engineパターン (appengine ja night #23)</a></li>
-</ul>
-</li>
-<li><p><a href="https://developers.google.com/appengine/docs/go/datastore/">Go Datastore API &ndash; Google App Engine &ndash; Google Developers</a></p>
-
-<ul>
-<li>本家。Go版についてはやっぱりここを見ないと話にならないと思う。キーの設定方法が他のオブジェクト指向言語とどのように違うのかがようやく分かった(あくまで気がするレベル)。</li>
-</ul>
-</li>
-</ul>
-
-
-<p>まぁ雰囲気だけ掴んだ感じで、まだよく分かってないことが多いです。
-土日に実際にDatastoreを使った実装に入ってみようかと思います。</p>
-
-<h1>余談</h1>
-
-<p>余談ですが、何故かF-SecureにGoソースコードのコンパイルをことごとく邪魔されるので、
-私物Macで同様の環境を構築しました。
-当初の話の通り、いちいちサーバーを再起動せずに変更が追従されるのがいいですね。</p>
-
-<p>思えば私のWindows環境だと、64bit版Goコンパイラがコンパイル直後に落ちるので、
-色々おかしいのかもしれないです。
-Windows Updateも失敗しまくるし…環境を作り直して1年経ってないのに、また環境の作り直しか…</p>
 ]]></content>
   </entry>
   

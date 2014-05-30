@@ -5,12 +5,14 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>大阪Pythonユーザの集まり 2014/05 を募集開始しました '#osakapy - 技術情報棚卸し(平日限定)</title>
+  <title>Codeshipを使ったApp Engineへの継続的デリバリー - 技術情報棚卸し(平日限定)</title>
   <meta name="author" content="Atsushi Kanaya (todoa2c)">
 
   
-  <meta name="description" content="第2回の大阪Pythonユーザの集まりを、5月29日に行います。 大阪Pythonユーザの集まり 2014/05 &ndash; connpass 日時 2014/05/29 19:00
-場所 堂島アバンザ21F Pythonユーザはもちろんのこと、 &hellip;">
+  <meta name="description" content="IntelliJ IDEAからApp Engineへのデプロイが簡単にできることは以前書いたのですが、
+自分のIntelliJ IDEAのローカルフォルダの情報がそのままデプロイされてしまうので、
+コミットしていないコードがそのままデプロイされてしまう危険性があります。
+また、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +21,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://todoa2c.github.io/blog/2014/05/12/osaka-python-study-session">
+  <link rel="canonical" href="http://todoa2c.github.io/blog/2014/05/30/codeship-appengine-continuous-delivery">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="技術情報棚卸し(平日限定)" type="application/atom+xml">
@@ -81,7 +83,7 @@
   
   <header>
     
-      <h1 class="entry-title">大阪Pythonユーザの集まり 2014/05 を募集開始しました '#osakapy</h1>
+      <h1 class="entry-title">Codeshipを使ったApp Engineへの継続的デリバリー</h1>
     
     
       <p class="meta">
@@ -97,47 +99,59 @@
   
 
 
-<time datetime="2014-05-12T19:37:12+09:00" pubdate data-updated="true">2014-05-12</time>
+<time datetime="2014-05-30T11:13:17+09:00" pubdate data-updated="true">2014-05-30</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>第2回の大阪Pythonユーザの集まりを、5月29日に行います。</p>
+<div class="entry-content"><p>IntelliJ IDEAからApp Engineへのデプロイが簡単にできることは以前書いたのですが、
+自分のIntelliJ IDEAのローカルフォルダの情報がそのままデプロイされてしまうので、
+コミットしていないコードがそのままデプロイされてしまう危険性があります。
+また、デプロイの作業が自分しかできない、暗黙知化されるのも良くないわけです。</p>
 
-<p><a href="http://connpass.com/event/6369/">大阪Pythonユーザの集まり 2014/05 &ndash; connpass</a></p>
+<p>こういった問題の解決策として継続的デリバリーを行うべく、
+実現できるサービスを探したところ、ありました。
+<a href="https://www.codeship.io/">Codeship</a>というサービスです。</p>
 
-<ul>
-<li>日時 2014/05/29 19:00</li>
-<li>場所 堂島アバンザ21F</li>
-</ul>
+<p>Codeshipは、扱えるコード、コードのホスト先だけでなく、
+コードを動かすクラウド環境(AWSやDigital Oceanなど)も選べるし、その際に必要となる
+デプロイやプロビジョニングツールも提供されており、
+テストから環境構築してデプロイまでを一手に引き受けてくれるサービスです。</p>
 
+<p>今回は、Bitbucketに置いてある自分のプライベートリポジトリを監視し、
+コードのPushがあったタイミングでテストを行い、
+かつmasterブランチに対するコミットがあった時点でApp Engineにデプロイする、
+というところまでをやってみました。</p>
 
-<p>Pythonユーザはもちろんのこと、
-Pythonに興味を持っていただいている方のご参加もお待ちしております。</p>
+<p>基本的な実現方法は、下記をご参照ください。こっちの方が分かりやすいです。</p>
 
-<p>今時点では、下記3名が発表予定です。私も参加します。</p>
+<p><a href="http://blog.codeship.io/2014/01/21/continuous-deployment-google-app-engine-bitbucket-python-django.html">Continuous Deployment for Django apps from Bitbucket to Google App Engine &ndash; Codeship</a></p>
 
-<ul>
-<li><a href="https://twitter.com/whosaysni">@whosaysni</a> Django関連</li>
-<li><a href="https://twitter.com/todogzm">@todogzm</a> とりあえず何か。多分Python 2/3移行関連？</li>
-<li><a href="https://twitter.com/Ido">@Ido</a> GAE/PyについてLT</li>
-</ul>
+<p>工夫した点は、設定面の工夫は特にありませんが、デプロイの仕方だけは少し工夫しています。
+GitのブランチをGit-flow風にして、developを開発用ブランチ、masterをリリース用ブランチにして、
+リリース時には、developの変更点をmasterにマージしてもらうようなPull Requestを
+Bitbucket上で作成します。</p>
 
+<p><img src="/images/contents/20140530-bitbucket-deploy-pr.png" alt="デプロイ用Pull Requestの変更点" /></p>
 
-<p>誰か少しでも発表できることがありましたら、ご参加をお待ちしております。
-個人的にはPython 3.4の新機能を話せる人がいたら、お話いただけると嬉しい次第です。</p>
+<p>こうすることで、どのコミットがリリースに含まれるかが、リリース用Pull Requestを見れば
+一目瞭然になるわけです。</p>
 
-<p>また、発表者が少なかった場合には、グループディスカッションを考えています。
-何についてディスカッションしていただくかはまだ考えていませんが、
-結果として参加者も勉強会に貢献したぜ感を感じられるような勉強会にできればなぁと
-漠然と考えております。</p>
+<p>※アイデアは <a href="http://d.hatena.ne.jp/naoya/20140502/1399027655">GitHub 時代のデプロイ戦略 &ndash; naoyaのはてなダイアリー</a>です。</p>
 
-<p>懇親会も行う予定ですので、こちらも是非ご参加ください。
-前回の反省(?)を踏まえ、早めにアナウンスします。</p>
+<p>あとはデプロイはCodeshipにお願いすると。</p>
 
-<p>ちなみに、アンケートを募集したものの、サンプル数が少なすぎました…。</p>
+<p><img src="/images/contents/20140530-codeship-deploy.png" alt="Codeshipによるデプロイ" /></p>
+
+<p>これでBitbucket上からのリリースもできるようになり、非常に快適になりました。
+あとは、今はまだステージング環境のようなものを用意していないのですが、
+developブランチにコミットがあった場合にステージング環境にデプロイもする、という設定を
+追加すると良いかもしれないですね。</p>
+
+<p>Codeshipは1ヶ月に50回のビルドまでであれば無料で使うことが出来ますので、
+ご興味のある方は、是非是非お試しください。</p>
 </div>
 
 
@@ -160,12 +174,12 @@ Pythonに興味を持っていただいている方のご参加もお待ちし�
   
 
 
-<time datetime="2014-05-12T19:37:12+09:00" pubdate data-updated="true">2014-05-12</time>
+<time datetime="2014-05-30T11:13:17+09:00" pubdate data-updated="true">2014-05-30</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/community/'>Community</a>, <a class='category' href='/blog/categories/python/'>Python</a>
+    <a class='category' href='/blog/categories/appengine/'>AppEngine</a>, <a class='category' href='/blog/categories/ci/'>CI</a>, <a class='category' href='/blog/categories/python/'>Python</a>
   
 </span>
 
@@ -174,7 +188,7 @@ Pythonに興味を持っていただいている方のご参加もお待ちし�
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://todoa2c.github.io/blog/2014/05/12/osaka-python-study-session/" data-via="todogzm" data-counturl="http://todoa2c.github.io/blog/2014/05/12/osaka-python-study-session/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://todoa2c.github.io/blog/2014/05/30/codeship-appengine-continuous-delivery/" data-via="todogzm" data-counturl="http://todoa2c.github.io/blog/2014/05/30/codeship-appengine-continuous-delivery/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -187,10 +201,8 @@ Pythonに興味を持っていただいている方のご参加もお待ちし�
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/04/14/python-osaka-session-questionnaires/" title="Previous Post: 大阪Pythonユーザの集まりの意見募集中 '#osakapy">&laquo; 大阪Pythonユーザの集まりの意見募集中 '#osakapy</a>
+        <a class="basic-alignment left" href="/blog/2014/05/22/appengine-python-traps/" title="Previous Post: App Engine/Pythonでハマった初心者向けトラップ">&laquo; App Engine/Pythonでハマった初心者向けトラップ</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/05/16/beginning-appengine-python/" title="Next Post: App Engine用言語をPythonにした件…">App Engine用言語をPythonにした件… &raquo;</a>
       
     </p>
   </footer>
@@ -299,8 +311,8 @@ Pythonに興味を持っていただいている方のご参加もお待ちし�
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://todoa2c.github.io/blog/2014/05/12/osaka-python-study-session/';
-        var disqus_url = 'http://todoa2c.github.io/blog/2014/05/12/osaka-python-study-session/';
+        var disqus_identifier = 'http://todoa2c.github.io/blog/2014/05/30/codeship-appengine-continuous-delivery/';
+        var disqus_url = 'http://todoa2c.github.io/blog/2014/05/30/codeship-appengine-continuous-delivery/';
         var disqus_script = 'embed.js';
       
     (function () {

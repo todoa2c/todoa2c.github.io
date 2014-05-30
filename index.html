@@ -9,8 +9,10 @@
   <meta name="author" content="Atsushi Kanaya (todoa2c)">
 
   
-  <meta name="description" content="早速いくつかトラップにハマりました。 requestsパッケージがApp Engineで動かない App Engine/PythonはURL Fetch Python API Overview
-にあるように、標準ライブラリのurllib, urllib2, httplibであればそのままURL &hellip;">
+  <meta name="description" content="IntelliJ IDEAからApp Engineへのデプロイが簡単にできることは以前書いたのですが、
+自分のIntelliJ IDEAのローカルフォルダの情報がそのままデプロイされてしまうので、
+コミットしていないコードがそのままデプロイされてしまう危険性があります。
+また、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +80,87 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/30/codeship-appengine-continuous-delivery/">Codeshipを使ったApp Engineへの継続的デリバリー</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-30T11:13:17+09:00" pubdate data-updated="true">2014-05-30</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>IntelliJ IDEAからApp Engineへのデプロイが簡単にできることは以前書いたのですが、
+自分のIntelliJ IDEAのローカルフォルダの情報がそのままデプロイされてしまうので、
+コミットしていないコードがそのままデプロイされてしまう危険性があります。
+また、デプロイの作業が自分しかできない、暗黙知化されるのも良くないわけです。</p>
+
+<p>こういった問題の解決策として継続的デリバリーを行うべく、
+実現できるサービスを探したところ、ありました。
+<a href="https://www.codeship.io/">Codeship</a>というサービスです。</p>
+
+<p>Codeshipは、扱えるコード、コードのホスト先だけでなく、
+コードを動かすクラウド環境(AWSやDigital Oceanなど)も選べるし、その際に必要となる
+デプロイやプロビジョニングツールも提供されており、
+テストから環境構築してデプロイまでを一手に引き受けてくれるサービスです。</p>
+
+<p>今回は、Bitbucketに置いてある自分のプライベートリポジトリを監視し、
+コードのPushがあったタイミングでテストを行い、
+かつmasterブランチに対するコミットがあった時点でApp Engineにデプロイする、
+というところまでをやってみました。</p>
+
+<p>基本的な実現方法は、下記をご参照ください。こっちの方が分かりやすいです。</p>
+
+<p><a href="http://blog.codeship.io/2014/01/21/continuous-deployment-google-app-engine-bitbucket-python-django.html">Continuous Deployment for Django apps from Bitbucket to Google App Engine &ndash; Codeship</a></p>
+
+<p>工夫した点は、設定面の工夫は特にありませんが、デプロイの仕方だけは少し工夫しています。
+GitのブランチをGit-flow風にして、developを開発用ブランチ、masterをリリース用ブランチにして、
+リリース時には、developの変更点をmasterにマージしてもらうようなPull Requestを
+Bitbucket上で作成します。</p>
+
+<p><img src="/images/contents/20140530-bitbucket-deploy-pr.png" alt="デプロイ用Pull Requestの変更点" /></p>
+
+<p>こうすることで、どのコミットがリリースに含まれるかが、リリース用Pull Requestを見れば
+一目瞭然になるわけです。</p>
+
+<p>※アイデアは <a href="http://d.hatena.ne.jp/naoya/20140502/1399027655">GitHub 時代のデプロイ戦略 &ndash; naoyaのはてなダイアリー</a>です。</p>
+
+<p>あとはデプロイはCodeshipにお願いすると。</p>
+
+<p><img src="/images/contents/20140530-codeship-deploy.png" alt="Codeshipによるデプロイ" /></p>
+
+<p>これでBitbucket上からのリリースもできるようになり、非常に快適になりました。
+あとは、今はまだステージング環境のようなものを用意していないのですが、
+developブランチにコミットがあった場合にステージング環境にデプロイもする、という設定を
+追加すると良いかもしれないですね。</p>
+
+<p>Codeshipは1ヶ月に50回のビルドまでであれば無料で使うことが出来ますので、
+ご興味のある方は、是非是非お試しください。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -869,93 +952,6 @@ Pythonの勉強会に参加するのは初めてなので、Pythonはそうい�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/03/13/python-priority-queue-and-rich-comparison-method/">PythonのPriorityQueueとobjectの拡張比較メソッド</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-13T11:22:42+09:00" pubdate data-updated="true">2014-03-13</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>優先順位付きキューを使おうとして、<a href="http://docs.python.jp/3/library/queue.html">17.7. queue — 同期キュークラス &ndash; Python 3.3.3 ドキュメント</a>を見たところ、よく分からない一文に遭遇した。</p>
-
-<blockquote><p>最小の値を持つ要素が最初に検索されます</p></blockquote>
-
-<p>書いていることの意味は分かるんですよ。分からないのは、「じゃあ比較はどうすればいいの？」という点。
-ちなみに、自作クラスのインスタンスを優先順位付きキューにそのまま入れてみたら、怒られました。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>from queue import PriorityQueue
-</span><span class='line'>
-</span><span class='line'>pq = PriorityQueue()
-</span><span class='line'>pq.put(A())</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>TypeError: unorderable types: A() &lt; A()</span></code></pre></td></tr></table></div></figure>
-
-
-<p>このエラーから察するに、PriorityQueue自身に比較用メソッドを渡してあげるのではなく、
-インスタンス間で大小を比較できるようにしなさい、ということなのだろうと推測しました。
-そうと分かれば話は早いってんで、
-<a href="http://docs.python.jp/3/reference/datamodel.html#object.__lt__">Python言語リファレンスの3. データモデル</a>
-を見ると、目的の情報を見つけることが出来ました。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>object.__lt__(self, other)
-</span><span class='line'>object.__le__(self, other)
-</span><span class='line'>object.__eq__(self, other)
-</span><span class='line'>object.__ne__(self, other)
-</span><span class='line'>object.__gt__(self, other)
-</span><span class='line'>object.__ge__(self, other)
-</span><span class='line'>
-</span><span class='line'>これらはいわゆる “拡張比較 (rich comparison)” メソッドです。</span></code></pre></td></tr></table></div></figure>
-
-
-<p>objectには特殊メソッド名がいくつかあるのですが、その中に比較に関するメソッドも
-用意されていたわけですね。</p>
-
-<p>今回のエラーから必要なのは、<code>__lt__</code> メソッドをオーバーライドしてあげれば良いと分かり、
-早速Aクラスに<code>__lt__</code>メソッドの詳細を実装したところ、うまく動きました。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -971,6 +967,10 @@ Pythonの勉強会に参加するのは初めてなので、Pythonはそうい�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/05/30/codeship-appengine-continuous-delivery/">Codeshipを使ったApp Engineへの継続的デリバリー</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/05/22/appengine-python-traps/">App Engine/Pythonでハマった初心者向けトラップ</a>
       </li>
     
@@ -984,10 +984,6 @@ Pythonの勉強会に参加するのは初めてなので、Pythonはそうい�
     
       <li class="post">
         <a href="/blog/2014/04/14/python-osaka-session-questionnaires/">大阪Pythonユーザの集まりの意見募集中 &#8216;#osakapy</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/04/02/chrome-tabs-and-process/">Chromeで元タブとは異なるプロセスで新規タブを開く方法</a>
       </li>
     
   </ul>
