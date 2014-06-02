@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Community | 技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/blog/categories/community/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-05-30T11:54:57+09:00</updated>
+  <updated>2014-06-02T19:38:56+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,102 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[大阪Pythonユーザの集まり2014/05に参加＆発表してきた '#osakapy]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/06/02/attended-osaka-python-study-session/"/>
+    <updated>2014-06-02T19:30:00+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/06/02/attended-osaka-python-study-session</id>
+    <content type="html"><![CDATA[<h1>まえがき</h1>
+
+<p><a href="http://osakapy.connpass.com/">大阪Pythonユーザの集まり</a>の勉強会、
+<a href="http://osakapy.connpass.com/event/6369/">大阪Pythonユーザの集まり 2014/05</a>の
+企画、参加、発表してきました。</p>
+
+<p>まさか開始前に、高専談義が行われるとは…(私含め3名の高専出身者が参加されていました)。</p>
+
+<h1>発表内容</h1>
+
+<h2>Djangoの黒魔術</h2>
+
+<p><a href="http://www.slideshare.net/YasushiMasuda/django-boodoo">http://www.slideshare.net/YasushiMasuda/django-boodoo</a>">http://www.slideshare.net/YasushiMasuda/django-boodoo">http://www.slideshare.net/YasushiMasuda/django-boodoo</a></a></p>
+
+<p>増田さん (<a href="https://twitter.com/whosaysni">@whosaysni</a>) による、
+Djangoを使う上での黒魔術的な工夫。
+Djangoは触ったことがなかったので、黒魔術自体は参考になることはなかったものの、
+内部実装を交えた話があることで、ずいぶんと興味深く聞くことができた。
+スコープがスタックとして実装されており、上から順番に探索しているので、
+ネストした名前の解決もうまくいくと。</p>
+
+<h2>オープンCAEとPython</h2>
+
+<p><a href="http://www.slideshare.net/TatsuyaKatayama/caepython-35353509">http://www.slideshare.net/TatsuyaKatayama/caepython-35353509</a>">http://www.slideshare.net/TatsuyaKatayama/caepython-35353509">http://www.slideshare.net/TatsuyaKatayama/caepython-35353509</a></a></p>
+
+<p><a href="http://ofbkansai.sakura.ne.jp/">オープンCAE勉強会@関西</a>幹事の片山さんによる、
+オープンCAEに関する実装とPythonとの関連について。
+CAEとは<a href="http://ja.wikipedia.org/wiki/CAE">CAE &ndash; Wikipedia</a>によると、</p>
+
+<blockquote><p>コンピュータ技術を活用して製品の設計、製造や工程設計の事前検討の支援を行うこと、またはそれを行うツールである</p></blockquote>
+
+<p>とのこと。
+今回は、数値解析・シミュレーションなどで使われる計算を行うソフトウェアの
+オープンソース実装と、Pythonがどのように関係しているかをご紹介いただいた。
+今回ご紹介いただいたオープンソース実装には何かしらPythonのインターフェースがあり、
+最終的には、これらの実装をPythonでつなぐことを検討中とのことです。</p>
+
+<h2>Python 3世代が考える(?) Python 2/3コード共存戦略</h2>
+
+<p><a href="http://www.slideshare.net/AtsushiKanaya/python-python3and2">http://www.slideshare.net/AtsushiKanaya/python-python3and2</a>">http://www.slideshare.net/AtsushiKanaya/python-python3and2">http://www.slideshare.net/AtsushiKanaya/python-python3and2</a></a></p>
+
+<p>私の発表です。知らぬ間にPython 2.7を使っており、int / int でfloatが返ってきてハマった話から、
+Python 2でも3でもコードをメンテナンスしなければならない場合の、
+取りうる戦略とメリット・デメリットについて発表しました。</p>
+
+<h1>LT</h1>
+
+<h2>GAEでスパイクを捌く</h2>
+
+<p><a href="http://www.slideshare.net/idoojosjp/gae-32257210">http://www.slideshare.net/idoojosjp/gae-32257210</a>">http://www.slideshare.net/idoojosjp/gae-32257210">http://www.slideshare.net/idoojosjp/gae-32257210</a></a></p>
+
+<p>会津さん (<a href="https://twitter.com/Ido">@Ido</a>) による、瞬間的な大量リクエスト(スパイク)を
+App Engineでどのように捌くかについて。
+あるインスタンスが1秒間に捌けるリクエスト数から、予想される最大リクエスト数に対する
+インスタンスを事前に起動しておくことで対処する。
+4桁台のインスタンスを起動する的な話も…これはApp Engineならではと言った感じですね。</p>
+
+<h2>とあるプロジェクトでのPython導入事例</h2>
+
+<p><a href="http://www.hexacosa.net/documents/osakapy-20140529-lt">http://www.hexacosa.net/documents/osakapy-20140529-lt</a>">http://www.hexacosa.net/documents/osakapy-20140529-lt">http://www.hexacosa.net/documents/osakapy-20140529-lt</a></a></p>
+
+<p>服部さん (<a href="https://twitter.com/hhatto">@hhatto</a>) による、
+ソーシャルゲーム開発・運用周りで作ったツールの紹介。
+あちこちで使われており、自分もまだまだ業務改善する余地がありそうだなぁと反省…。</p>
+
+<h1>懇親会</h1>
+
+<p>実は当日までお店すら決めていなかったのです。
+今回は参加人数も多くないし、大丈夫だろうと高をくくっていたのですが、
+蓋を開けると勉強会参加者は20名、懇親会参加者も11名に。</p>
+
+<p>当日のお昼に急いで店を探して予約して、飲み放題プランで料金3500円ポッキリ、
+当日の参加もOKよ！というかたちにしました。</p>
+
+<p>また、前回は自分の終電の都合もあって23時解散にしたのですが、
+もう少しゆっくりしたい方々もいらっしゃるかもしれないと思い、
+実際の会計は増田さんにお願いしました。増田さん、ありがとうございます。</p>
+
+<p>懇親会では、Javaのコミュニティの大移動の話や、フリーランスとしての活動の話など、
+Python以外にも色々ためになる話を聞くことが出来ました。
+そしてまた今回もErlangいいよ、という話が聞こえてきたので、
+そろそろErlangを真面目に触ってみたほうがよいのかも…(いやいやそんな時間ないわ…)。</p>
+
+<h1>次回</h1>
+
+<p>まだ未定ですが、多分勉強会は8月開催だと思います。
+また、数時間程度のハッカソンは別途検討したいと考えています。
+土日の合宿もやってみたいですが、まずは平日のハッカソンかなぁ…。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[大阪Pythonユーザの集まり 2014/05 を募集開始しました '#osakapy]]></title>
@@ -209,38 +305,6 @@ Pythonに興味を持っていただいている方のご参加もお待ちし�
 お話いただけると嬉しい次第です。</p>
 
 <p>懇親会も行う予定ですので、こちらも是非ご参加ください。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[関西のIT関連の勉強会・コミュニティ一覧を作ってみた]]></title>
-    <link href="http://todoa2c.github.io/blog/2014/02/25/kansai-it-communities/"/>
-    <updated>2014-02-25T16:58:10+09:00</updated>
-    <id>http://todoa2c.github.io/blog/2014/02/25/kansai-it-communities</id>
-    <content type="html"><![CDATA[<p><a href="http://d.hatena.ne.jp/nowokay/20140225#1393294814">コミュニティに入るか入らないかでエンジニアとしての幸福度がかわる &ndash; きしだのはてな</a>がホッテントリ入りしていたので、読んでみました。
-幸せの評価基準をバシッと1コに決めてしまう当たりに賛否両論はあるのかもしれませんが、
-少なくとも私は同意するところが多々あります。
-エンジニアですもの、技術力が上がることは成長しているってことで、嬉しいわけですよね。</p>
-
-<p><a href="http://doda.jp/engineer/guide/yosoku/06_1.html">計算機科学者、未踏統括PM 竹内郁雄が語るエンジニアに伝えたいこと | 三年予測 ｜IT・Web業界の転職ならDODAエンジニア IT</a>にも、下記のような話がありました。</p>
-
-<blockquote><p>「閉塞状況から脱出したいなら、コミュニティだ。それも、単に勉強会とかフォーラムに参加して情報を吸収するだけではなく、他人と交わることだ。できれば懇親会まで出て、人との交流を楽しんだほうがいい」</p></blockquote>
-
-<p>コミュニティには、似たようなものを作っている人や、まったく違うものを作っている人、
-様々なキャリアの人がいて、その人達と情報交換することにより、
-自分の知らなかった情報を得ることが出来ます。
-今まで知らなかったことを、存在だけでも知ることができれば、
-あとは自分で調べることができるようになります。
-これがコミュニティに参加する、一番最初に得られるメリットだと思います。</p>
-
-<p>とは言え、関西でコミュニティをどうやって探したらいいのか分からん、とゴネられても困るので、
-<a href="http://qiita.com/todogzm/items/c26aab6caa59d081d4f4">関西のIT関連の勉強会・コミュニティ一覧 &ndash; Qiita</a>を作ってみました。
-不足やカテゴリ変更など色々ツッコミたい部分はあると思いますので、
-是非コメントなり編集リクエストなりをお送りください。
-よろしくお願いします。</p>
-
-<p>なお、3月第2週くらいに、大阪でPythonの勉強会を企画中です。
-<a href="http://todoa2c.github.io/blog/2014/02/19/osaka-python-meeting/">大阪でPythonで集まろうの巻に参加した &ndash; 技術情報棚卸し(平日限定)</a>から上がった企画ですね。</p>
 ]]></content>
   </entry>
   
