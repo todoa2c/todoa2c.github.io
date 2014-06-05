@@ -9,9 +9,12 @@
   <meta name="author" content="Atsushi Kanaya (todoa2c)">
 
   
-  <meta name="description" content="まえがき 大阪Pythonユーザの集まりの勉強会、
-大阪Pythonユーザの集まり 2014/05の
-企画、参加、発表してきました。 まさか開始前に、高専談義が行われるとは…(私含め3名の高専出身者が参加されていました)。 発表内容 Djangoの黒魔術 Django boodoo from &hellip;">
+  <meta name="description" content="GitHubにRelease機能というのがあります。
+個人的にすごく好きな機能の一つなのですが、あまり使われていない模様でしたので、
+Qiitaに
+GitHubのリリース機能を使う &ndash; Qiita
+を投稿しました。 例えば同僚が作っている
+intercom-javaのreleases &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +82,58 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/05/github-release-feature/">GitHubのRelease機能についてQiitaに投稿した</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-05T20:33:24+09:00" pubdate data-updated="true">2014-06-05</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>GitHubにRelease機能というのがあります。
+個人的にすごく好きな機能の一つなのですが、あまり使われていない模様でしたので、
+Qiitaに
+<a href="http://qiita.com/todogzm/items/db9f5f2cedf976379f84">GitHubのリリース機能を使う &ndash; Qiita</a>
+を投稿しました。</p>
+
+<p>例えば同僚が作っている
+<a href="https://github.com/oohira/intercom-java/releases">intercom-javaのreleases</a> を見ると、
+ただタグを打っただけではなく、そのリリースに何が含まれているかが書かれており、
+リリースの内容が即座に分かって、非常にいいと思うんですね。</p>
+
+<p>特にリリース内容もアップロードできますので、
+Goでツールを作ってクロスプラットフォーム用バイナリを生成した場合には、
+Release機能を使ってバイナリもアップロードすれば、配布の手間が省けて便利になります。</p>
+
+<p>ちなみに私がGitHubのRelease機能を推しているのにはもうひとつ理由がありまして…。
+その理由は、また近いうちに書きますね。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -864,95 +919,6 @@ parallelは使えないと考えたほうがよいかもしれません。
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/03/17/python-instance-method/">Pythonのインスタンスメソッドと関数実行</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-17T19:07:26+09:00" pubdate data-updated="true">2014-03-17</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://docs.python.jp/3/reference/datamodel.html#the-standard-type-hierarchy">3.データモデルのうち「インスタンスメソッド」</a>を読んでいたのですが、興味深い一文を見つけました。</p>
-
-<blockquote><p>インスタンスメソッドオブジェクトが呼び出される際、根底にある関数 (<strong>func</strong>) が呼び出されます。このとき、クラスインスタンス (<strong>self</strong>) が引数リストの先頭に挿入されます。例えば、 C を関数 f() の定義を含むクラス、 x を C のインスタンスとすると、 x.f(1) の呼び出しは C.f(x, 1) の呼び出しと同じです。</p></blockquote>
-
-<p>これを使うと、あるクラスのインスタンスメソッドを列挙しておいて、
-リフレクションのように順次メソッドを実行しておくことが簡単に、かつオーバーヘッドがない状態で
-実行することができる模様です。</p>
-
-<p>こういう具合に書くと、</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ops = [Puzzle.up, Puzzle.down]
-</span><span class='line'>
-</span><span class='line'>p = Puzzle()
-</span><span class='line'>
-</span><span class='line'>for op in ops:
-</span><span class='line'>    op(p)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>こういう書き方をしたときと同じ挙動になるわけです。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>p = Puzzle()
-</span><span class='line'>p.up()
-</span><span class='line'>p.down()</span></code></pre></td></tr></table></div></figure>
-
-
-<p>行数は後者の方が少ないですが、前者の書き方が必要なときもあるんですよ。
-特にメソッドをひたすら実行しまくる場合には、前者の書き方は便利です。
-しかもJavaでリフレクションを使った時のようなオーバーヘッドがないのは良いですね
-(普通Javaではこういう書き方せずにインターフェースとか使うけど)。</p>
-
-<p>クラスでメソッド定義をするときに、<code>def up(self):</code> と書くのは、
-インスタンスメソッドとして使った場合には、第1引数のselfにはオブジェクトそのものを勝手に
-指定してくれるような動きになっているのかな？</p>
-
-<h1>追記 (2014-03-19)</h1>
-
-<p>メソッドはレシーバを第1引数に受け取るただの関数、ということだそうです。</p>
-
-<blockquote class="twitter-tweet"><p><a href="https://twitter.com/todogzm">@todogzm</a> <a href="https://twitter.com/kawaken">@kawaken</a> <a href="http://t.co/fVjQkdpxjq">http://t.co/fVjQkdpxjq</a> メソッドはレシーバを第一引数に受け取る只の関数、<a href="http://t.co/ba25AVfZuX">http://t.co/ba25AVfZuX</a> メソッドの第一引数をselfと書くのは単なる慣習で言語的に特別な意味は無いとのことなので出来るはずですよ</p>&mdash; Hiroaki Nakamura (@hnakamur2) <a href="https://twitter.com/hnakamur2/statuses/445565910149918721">March 17, 2014</a></blockquote>
-
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -968,6 +934,10 @@ parallelは使えないと考えたほうがよいかもしれません。
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/06/05/github-release-feature/">GitHubのRelease機能についてQiitaに投稿した</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/06/02/attended-osaka-python-study-session/">大阪Pythonユーザの集まり2014/05に参加＆発表してきた &#8216;#osakapy</a>
       </li>
     
@@ -981,10 +951,6 @@ parallelは使えないと考えたほうがよいかもしれません。
     
       <li class="post">
         <a href="/blog/2014/05/16/beginning-appengine-python/">App Engine用言語をPythonにした件…</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/12/osaka-python-study-session/">大阪Pythonユーザの集まり 2014/05 を募集開始しました &#8216;#osakapy</a>
       </li>
     
   </ul>

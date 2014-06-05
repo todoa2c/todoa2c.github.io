@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Misc | 技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/blog/categories/misc/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-06-02T19:38:56+09:00</updated>
+  <updated>2014-06-05T21:24:43+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,31 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[GitHubのRelease機能についてQiitaに投稿した]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/06/05/github-release-feature/"/>
+    <updated>2014-06-05T20:33:24+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/06/05/github-release-feature</id>
+    <content type="html"><![CDATA[<p>GitHubにRelease機能というのがあります。
+個人的にすごく好きな機能の一つなのですが、あまり使われていない模様でしたので、
+Qiitaに
+<a href="http://qiita.com/todogzm/items/db9f5f2cedf976379f84">GitHubのリリース機能を使う &ndash; Qiita</a>
+を投稿しました。</p>
+
+<p>例えば同僚が作っている
+<a href="https://github.com/oohira/intercom-java/releases">intercom-javaのreleases</a> を見ると、
+ただタグを打っただけではなく、そのリリースに何が含まれているかが書かれており、
+リリースの内容が即座に分かって、非常にいいと思うんですね。</p>
+
+<p>特にリリース内容もアップロードできますので、
+Goでツールを作ってクロスプラットフォーム用バイナリを生成した場合には、
+Release機能を使ってバイナリもアップロードすれば、配布の手間が省けて便利になります。</p>
+
+<p>ちなみに私がGitHubのRelease機能を推しているのにはもうひとつ理由がありまして…。
+その理由は、また近いうちに書きますね。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Chromeで元タブとは異なるプロセスで新規タブを開く方法]]></title>
@@ -243,53 +268,6 @@ Emailはコラボレーションツールに適してないと主張する私と
 
 <p>というわけで、サイボウズLiveに登録し、実際に試用してもらうことにしました。
 まだ1日しか経っていませんが、果たしてどうなることやら。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Emailがコラボレーションツールに適していないもう1点]]></title>
-    <link href="http://todoa2c.github.io/blog/2014/02/12/email-one-more-suck/"/>
-    <updated>2014-02-12T18:45:30+09:00</updated>
-    <id>http://todoa2c.github.io/blog/2014/02/12/email-one-more-suck</id>
-    <content type="html"><![CDATA[<p><a href="http://gothedistance.hatenadiary.jp/">ござ先輩</a>による
-<a href="http://gothedistance.hatenadiary.jp/entry/2014/02/10/120745">Eメールで作業内容を管理するのはやめましょう</a>
-の記事が非常に共感できたのですが、一点だけハッキリ書きたかったことがあったので、書いておきます。</p>
-
-<h1>新規に参加したメンバーが過去の情報にアクセス出来ない</h1>
-
-<p>私が一番Eメール・メーリングリストによるコラボレーションに不満を持っているのはこの点です。
-Eメールは各人のローカルPCに保存され、各人が管理していくことになります。
-メーリングリストも、何らかのサービスを使わなければ、基本的に同様です。</p>
-
-<p>そして一度送られたEメールは、どこか共通の場所に格納される、ということはありません。
-情報が適切に蓄積されないわけですね。
-その結果、新規に参加したメンバーが、過去の情報にアクセスできなくなります。
-これは新規参加メンバーからすると、非常にツラいのです。</p>
-
-<ul>
-<li>どのような議論の場所があるのか</li>
-<li>過去にどのような議論がなされていたか</li>
-<li>社内ではどのような用語が使われているか</li>
-</ul>
-
-
-<p>などの情報に、新規参加メンバーはアクセスすることが出来ないからツラい。</p>
-
-<p>しかもたちが悪いことに、昔からいた人たちは、過去の情報を持っているため、
-過去の情報にアクセス出来ないという問題に気付かないのです。
-そのため、昔から人たちからは、新しい情報共有の仕組みについて
-議論されることが滅多にありません。</p>
-
-<p>かなり観測範囲の狭い個人的な経験ですが、前職・現職ともにおんなじ状況でしたね。
-ござ先輩の観測範囲も多分同様なことが起きている気がしますが、
-他の環境はどうでしょう。。</p>
-
-<blockquote><p>対応したログが残らず、どんな意思決定をしたのか見えなくなる</p></blockquote>
-
-<p>に含まれているとは思いますが、新規メンバーが過去の情報にアクセス出来ない件については
-ちゃんと書いておいたほうがいいと思ったので、蛇足的に書かせていただきました。</p>
-
-<p>合わせて読みたい： <a href="http://blog.kentarok.org/entries/2014/02/11">情報共有の必要性について</a></p>
 ]]></content>
   </entry>
   
