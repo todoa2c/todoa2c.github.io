@@ -9,12 +9,8 @@
   <meta name="author" content="Atsushi Kanaya (todoa2c)">
 
   
-  <meta name="description" content="GitHubにRelease機能というのがあります。
-個人的にすごく好きな機能の一つなのですが、あまり使われていない模様でしたので、
-Qiitaに
-GitHubのリリース機能を使う &ndash; Qiita
-を投稿しました。 例えば同僚が作っている
-intercom-javaのreleases &hellip;">
+  <meta name="description" content="何度かハマるので、メモ的に書いておきました。 npm installでpeerinvalidエラーが出た時の解消方法 ところで、今作っているサービスのデプロイの際に、npmからモジュールを都度取ってきて
+処理を行う的な部分があるのですが、npmに上がっているモジュールに問題があった場合に &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +78,56 @@ intercom-javaのreleases &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/16/npm-update-peerinvalid/">Qiitaにnpm Installでpeerinvalidエラーが出た際のエラー解消方法を書いた＋α</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-16T19:11:45+09:00" pubdate data-updated="true">2014-06-16</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>何度かハマるので、メモ的に書いておきました。</p>
+
+<p><a href="http://qiita.com/todogzm/items/e965c47f888c23da1c0a">npm installでpeerinvalidエラーが出た時の解消方法</a></p>
+
+<p>ところで、今作っているサービスのデプロイの際に、npmからモジュールを都度取ってきて
+処理を行う的な部分があるのですが、npmに上がっているモジュールに問題があった場合に
+デプロイの処理が止まってしまう問題があります。
+対策としてはnpmに上がっているモジュールのバージョンを固定にしてしまうことだとは
+思うのですが、一方で開発の際には、なるべく最新のモジュールを使うべく、
+このバージョン以降を使う、という設定をしています(Qiitaに載せてるpackage.jsonみたいに)。</p>
+
+<p>ローカル開発環境と、ステージング＆本番環境では、package.jsonの管理方法を変えるのが良いか、
+はたまたどちらも統一してしまうべきか、少々悩ましいです。</p>
+
+<p>皆様がどうされているのか、教えていただければ嬉しいですね。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -742,183 +788,6 @@ Twitterなどのサービスのタブを常駐させたまま各種リンクを�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/03/20/java8-stream/">Java 8リリース & java.util.streamのお勉強</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-20T18:45:15+09:00" pubdate data-updated="true">2014-03-20</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>ようやくJava 8がリリースされましたね。
-正直Java飽きたと思っていたのですが、Java 8はかなり熱い機能が満載です。
-特に関数型ちっくに書けるのは大きいですね。</p>
-
-<p>とりあえず練習のため、1から100までに対するFizzBuzzを、今時点で知る限りの
-Java 8の機能を使って書いてみました。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>import java.util.stream.IntStream;
-</span><span class='line'>
-</span><span class='line'>public class Main {
-</span><span class='line'>  public static String fizzbuzz(int x) {
-</span><span class='line'>      if (x % 15 == 0)
-</span><span class='line'>          return "FizzBuzz";
-</span><span class='line'>      else if (x % 3 == 0)
-</span><span class='line'>          return "Fizz";
-</span><span class='line'>      else if (x % 5 == 0)
-</span><span class='line'>          return "Buzz";
-</span><span class='line'>      else
-</span><span class='line'>          return String.valueOf(x);
-</span><span class='line'>  }
-</span><span class='line'>
-</span><span class='line'>  public static void p(String fb) {
-</span><span class='line'>      System.out.println(fb);
-</span><span class='line'>  }
-</span><span class='line'>
-</span><span class='line'>  public static void main(String[] args) {
-</span><span class='line'>      IntStream.range(1, 101).boxed().map(Main::fizzbuzz).forEach(Main::p);
-</span><span class='line'>  }
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>もはや今までに見てきたJavaとは思えない書き方ですね。
-特にmain()部分は1行で色々やっているので、解説を書いていきますが、
-その前に、そもそもStreamってなに？ということで、Streamについて調べました。
-以下、<a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html">java.util.stream.Streamインターフェース</a>の最初の一文の引用です。</p>
-
-<blockquote><p>A sequence of elements supporting sequential and parallel aggregate operations.</p></blockquote>
-
-<p>つまり、直列処理も並列処理も行うことができる、連続したデータを集めたもの、のようです。
-今までのコレクションとの最大の違いは、並列処理も行うことができる、という部分でしょうね。
-また、関数型言語のような高階関数を多数用意しているところも特徴です。</p>
-
-<p>Streamが何となく雰囲気分かった気がしたところで、では1行ずつ見てみましょう。
-ちなみに、「模様です」と書いている部分は、まだ私自身の調査が及んでない部分です。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>IntStream.range(1, 101)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>IntStreamはprimitiveなint専用のStreamに関するインターフェース。
-IntStream.range(1, 101)により、1から100までのStreamを生成します。
-(IntStream.rangeClosed(1, 100)でもOKです)</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>IntStream.range(1, 101)
-</span><span class='line'>  .boxed()</span></code></pre></td></tr></table></div></figure>
-
-
-<p>.boxed()でprimitiveなintのStreamをStream&lt;Integer&gt;に変換。
-Pipelineにより、Stream内のデータが必要になった時点で変換する模様です。
-要するに一括変換ではない模様。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>IntStream.range(1, 101).boxed()
-</span><span class='line'>  .map(Main::fizzbuzz)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>map()にはFunctionを渡します。
-Function&lt;T,R&gt;は、型Tの入力を受け取り型Rの結果を返す関数インターフェース。
-map()は、型TのStreamを、引数に渡した関数を用いて型Rのストリームを変換(生成)します。</p>
-
-<p>今回map()に渡すFunctionはMainクラスのfizzbuzzメソッド。
-staticメソッドに対しては、特別にMain::fizzbuzzと書くことができるようになりました。
-この書き方をすることで、fizzbuzzメソッドはFunctionの匿名クラスに変換される模様です。</p>
-
-<p>map()の結果として、Stream&lt;String&gt;で、中身はFizzBuzzのStreamが生成されたことになります。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>IntStream.range(1, 101).boxed().map(Main::fizzbuzz)
-</span><span class='line'>  .forEach(Main::p);</span></code></pre></td></tr></table></div></figure>
-
-
-<p>forEach()にはConsumerを渡します。
-Consumer&lt;T&gt;は型Tの入力を受け取り何も返さない手続き(何も返さないから関数ではない)インターフェース。
-forEach()は、型TのStreamを用いて何かしらの処理をしますが、結果は返しません。
-今回のように、標準出力などの副作用を行う場合に使うことになるかと思います。</p>
-
-<p>map()が返した型はStream&lt;String&gt;なので、Main::pの引数はStringである必要があります。
-うっかりMain::pの引数をIntegerなどStringと互換のない型にした場合、
-型が違うとコンパイルエラーを返してくれるため、型で悩むことがなくなります。</p>
-
-<p>(System.out::println と書いてもOKですが、型の説明のためにわざわざMain::pを定義しました)。</p>
-
-<p>これでmain文の難解な1行を読み解くことが出来ました(消化不良もあるかと思いますが…)。</p>
-
-<p>ちなみに、Streamの説明のところで、並列処理もOKという話をしましたが、
-このFizzBuzzを並列処理しようとした場合、下記のように書けばOKです。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>IntStream.range(1, 101).boxed()
-</span><span class='line'>  .paraparallel()   // ここで並列処理化している
-</span><span class='line'>  .map(Main::fizzbuzz).forEach(Main::p);</span></code></pre></td></tr></table></div></figure>
-
-
-<p>直列処理の場合は、1, 2, Fizz, 4, &hellip;と表示されていたのですが、
-並列処理にすることにより、順番がバラバラになるのが分かるかと思います。
-これはmap()が、その前のStreamが並列化されたことに伴い、
-順不同で並列にデータが来るようになったためと考えられます。</p>
-
-<p>結果を集計するような場合にはparallelは強力ですが、順序が重要な場合には
-parallelは使えないと考えたほうがよいかもしれません。
-ちなみに集計には、Streamに<code>collect(), min(), max()</code>が定義されていました。
-最大値や最小値を、複数CPUを使って探してくれるのは、何か胸が熱くなりますね(?)。</p>
-
-<p>さて、いつから実戦投入できるようになるかな？それが一番の問題ですね！</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -934,6 +803,10 @@ parallelは使えないと考えたほうがよいかもしれません。
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/06/16/npm-update-peerinvalid/">Qiitaにnpm Installでpeerinvalidエラーが出た際のエラー解消方法を書いた＋α</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/06/05/github-release-feature/">GitHubのRelease機能についてQiitaに投稿した</a>
       </li>
     
@@ -947,10 +820,6 @@ parallelは使えないと考えたほうがよいかもしれません。
     
       <li class="post">
         <a href="/blog/2014/05/22/appengine-python-traps/">App Engine/Pythonでハマった初心者向けトラップ</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/16/beginning-appengine-python/">App Engine用言語をPythonにした件…</a>
       </li>
     
   </ul>
