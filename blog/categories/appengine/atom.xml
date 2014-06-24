@@ -4,7 +4,7 @@
   <title><![CDATA[Category: AppEngine | 技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/blog/categories/appengine/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-06-16T19:20:58+09:00</updated>
+  <updated>2014-06-24T20:06:53+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,43 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[OSS Release Checkerというサービスを開発しています]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/06/24/developing-oss-release-checker/"/>
+    <updated>2014-06-24T19:58:33+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/06/24/developing-oss-release-checker</id>
+    <content type="html"><![CDATA[<p>オープンソースのプロジェクトについて、リリース情報を収集して一覧するサービスを作っています。
+その名もOSS Release Checkerという、いかにも日本人が付けたような名前です。</p>
+
+<p><a href="http://osschecker.appspot.com/">http://osschecker.appspot.com/</a></p>
+
+<p>うちの会社の業務で、ライブラリやフレームワークのリリース情報をチェックして報告する業務があります。
+それ毎日見るの面倒だからリリース情報のチェックを一手に引き受けてくれるサービスを作ったらえぇやん、というのが発想ですね。</p>
+
+<p>機能的な話ですが、まずはリリース情報の収集先はGitHubをターゲットにしています。
+検索画面から気になるプロジェクトを検索してウォッチしていけば、あとは自動的にリリース情報を収集してくれます。
+そして収集した結果、最新のリリースおよびタグ付けされたリポジトリが、画面に一覧表示される、という寸法です。</p>
+
+<p>直近の目標はこんな感じです。
+GitHubのアカウントでOAuthした上で、自分のウォッチしたいリポジトリを登録しておきます。
+そして、ウォッチしているリポジトリに更新があればGitHubのメールアドレスに対してメール通知すると。
+これができたら、自分的にはいい感じですね。</p>
+
+<p>あとは見た目はもう少し何とかしたいですね。検索画面とか、Bootstrap感満載の画面とか…。
+ドメインを取ってみたもののApp Engineに適用しようと思ったらGoogle Appsが必要みたいで躊躇してたり…
+(Google Appsが必要じゃないケースもあるらしいが…)</p>
+
+<p>最後に、GitHubで何かしら開発されている方は、タグ付けだけでなく、GitHubのリリース機能を使用してください。
+リリース機能を使うことで、ただのタグ付けだけでなく、そのリリースがどういうものかを説明する場所と、モジュールの配布場所が提供されます。
+そして、私のサービスでも、リリース情報として取り込むことができるようになります。</p>
+
+<p>※ <a href="http://qiita.com/todogzm/items/db9f5f2cedf976379f84">GitHubのリリース機能を使う &ndash; Qiita</a> も
+合わせてご参照ください。</p>
+
+<p>こちらからは以上です。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Codeshipを使ったApp Engineへの継続的デリバリー]]></title>
@@ -213,221 +250,6 @@ Djangoセッションで学習してみようかと思う。</p>
 <p>思えば私のWindows環境だと、64bit版Goコンパイラがコンパイル直後に落ちるので、
 色々おかしいのかもしれないです。
 Windows Updateも失敗しまくるし…環境を作り直して1年経ってないのに、また環境の作り直しか…</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[GoでGoogle App Engineを触るテスト]]></title>
-    <link href="http://todoa2c.github.io/blog/2014/02/13/beginning-appengine-go/"/>
-    <updated>2014-02-13T16:50:18+09:00</updated>
-    <id>http://todoa2c.github.io/blog/2014/02/13/beginning-appengine-go</id>
-    <content type="html"><![CDATA[<h1>はじめに</h1>
-
-<p>Google App Engineを初めて触ることにしました。
-しかもみんな大好き<a href="http://golang.org/">プログラミング言語Go</a>で。
-ここ最近Gopher Tシャツを着てPythonコードを書くことが多かったので、
-リハビリも兼ねつつGoogle App Engineでのスピンアップ最速と言われるGoを
-採用することにしました。
-以下は作業メモです。</p>
-
-<h2>準備</h2>
-
-<p>開発環境は<a href="https://developers.google.com/appengine/docs/go/gettingstarted/devenvironment">The Development Environment</a>に書かれている。
-Goの環境はSDKに含まれているけれど、別途Python 2.7が必要。
-ローカルでサーバーを起動するなどで必要らしい。
-既にPython 2.7は入れていたので、そのまま次に進む。</p>
-
-<p><a href="https://developers.google.com/appengine/docs/go/gettingstarted/introduction">GAE/g のチュートリアル(英語)</a>を読む。噂に違わず、Goの標準APIで大体の事が書けそうな雰囲気を掴む。</p>
-
-<p><a href="https://developers.google.com/appengine/docs/go/gettingstarted/usingdatastore">Using the Datastore</a>の部分は正直よく分かっていない。</p>
-
-<p>あとはざっと<a href="https://developers.google.com/appengine/docs/go/apis">Go Service APIs</a>にも目を通す。</p>
-
-<h2>書いてみる</h2>
-
-<p>今回作ろうと思ったものは、GitHubに多少絡むものなので、
-GitHub APIも使ってみることにする。</p>
-
-<p>幸いGoogleが<a href="https://github.com/google/go-github">go-github</a>を公開しているので、
-下記のコマンドで使えるようにする。
-go-githubには書かれていなかったが、
-go-githubが<a href="https://github.com/google/go-querystring">go-querystring</a>に依存しているようなので、
-合わせて入れる。</p>
-
-<p><code>
-go get github.com/google/go-github
-go get github.com/google/go-querystring
-</code></p>
-
-<p>上記で取得できたライブラリを、プロジェクトフォルダと同じ場所に置く。
-環境変数GOPATHの参照先に置く、といういつものルールではないことに注意が必要。</p>
-
-<p>実際に、GitHub APIのSearch APIを叩いてみる。
-とりあえずgo-githubのサンプル通りに…</p>
-
-<p>```
-package front</p>
-
-<p>import (</p>
-
-<pre><code>"github.com/google/go-github/github"
-"html/template"
-"net/http"
-</code></pre>
-
-<p>)</p>
-
-<p>func init() {</p>
-
-<pre><code>http.HandleFunc("/", index)
-http.HandleFunc("/find", find)
-</code></pre>
-
-<p>}</p>
-
-<p>func index(w http.ResponseWriter, r *http.Request) {</p>
-
-<pre><code>if err := indexTemplate.Execute(w, nil); err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
-}
-</code></pre>
-
-<p>}</p>
-
-<p>var indexTemplate = template.Must(template.New(&ldquo;index&rdquo;).Parse(indexTemplateHTML))</p>
-
-<p>const indexTemplateHTML = `
-<html>
-  <body></p>
-
-<pre><code>&lt;form action="/find" method="get"&gt;
-  &lt;div&gt;&lt;input type="text" name="q"&gt;&lt;/div&gt;
-  &lt;div&gt;&lt;input type="submit" value="Search"&gt;&lt;/div&gt;
-&lt;/form&gt;
-</code></pre>
-
-<p>  </body>
-</html>
-`</p>
-
-<p>func find(w http.ResponseWriter, r *http.Request) {</p>
-
-<pre><code>client := github.NewClient(nil)
-query := r.FormValue("q")
-
-opts := &amp;github.SearchOptions{Sort: "forks", Order: "desc", ListOptions: github.ListOptions{Page: 1, PerPage: 20}}
-res, _, err := client.Search.Repositories(query, opts)
-
-if err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
-    return
-}
-
-if err := findTemplate.Execute(w, res); err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
-}
-</code></pre>
-
-<p>}</p>
-
-<p>var findTemplate = template.Must(template.New(&ldquo;find&rdquo;).Parse(findTemplateHTML))</p>
-
-<p>const findTemplateHTML = `
-<html>
-  <body></p>
-
-<pre><code>&lt;ul&gt;
-
-    &lt;li&gt;&lt;a href=""&gt;&lt;/a&gt;&lt;/li&gt;
-
-&lt;/ul&gt;
-</code></pre>
-
-<p>  </body>
-</html>
-`
-```</p>
-
-<p>で、<code>goapp serve</code>によりアプリを起動して、<code>http://localhost:8080/</code>にアクセスして、
-いざ検索実行！</p>
-
-<p><code>
-Get https://api.github.com/search/repositories?order=desc&amp;page=1&amp;per_page=20&amp;q=abc&amp;sort=forks:
-http.DefaultTransport and http.DefaultClient are not available in App Engine.
-See https://developers.google.com/appengine/docs/go/urlfetch/overview
-</code></p>
-
-<p>ちーん。エラーが返ってきた。
-そう言えば<a href="https://developers.google.com/appengine/docs/go/urlfetch/">URL Fetch Go API Overview</a>に、
-GAE環境用のHTTP clientを取得する必要があると書かれていたのを思い出す。</p>
-
-<p>で、import文とfind関数を以下のように変更する。
-appengine, appengine/urlfetchの2つをimportすることと、
-<code>appengine.NewContext(r)</code>でContextなるものを取得し、それを使って<code>urlfetch.Client(c)</code>で
-GAE環境用HTTP clientを取得するように変更した。</p>
-
-<p>```
-import (</p>
-
-<pre><code>"appengine"
-"appengine/urlfetch"
-"github.com/google/go-github/github"
-"html/template"
-"net/http"
-</code></pre>
-
-<p>)</p>
-
-<p>func find(w http.ResponseWriter, r *http.Request) {</p>
-
-<pre><code>// 下記の2行でApp Engine上でURL Fetchができる
-c := appengine.NewContext(r)  
-client := github.NewClient(urlfetch.Client(c))
-
-query := r.FormValue("q")
-
-opts := &amp;github.SearchOptions{Sort: "forks", Order: "desc", ListOptions: github.ListOptions{Page: 1, PerPage: 20}}
-res, _, err := client.Search.Repositories(query, opts)
-
-if err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
-    return
-}
-
-if err := findTemplate.Execute(w, res); err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
-}
-</code></pre>
-
-<p>}
-```</p>
-
-<p>これで何とか動いた。
-このくらいの内容であれば、あまり困らずにGoで書けることに驚き。</p>
-
-<h2>デプロイ</h2>
-
-<p>デプロイは事前に<a href="https://appengine.google.com/">Applications Overview</a>で
-アプリケーションを登録しておき、app.yamlのアプリケーション名と名前を合わせて(よく分かってない)、
-<code>goapp deploy</code>コマンドでデプロイできる。</p>
-
-<p>私は2段階認証を使っているので、事前にデプロイ用の固有パスワードを取得しておいた。</p>
-
-<p>デプロイは割とあっさり完了し、普通にGAE/Go環境が本番環境でも動いている。凄い…
-次はDatastoreまわりを学んでいこうっと。</p>
-
-<h2>分からない点</h2>
-
-<ul>
-<li>appengine.NewContextとは？</li>
-<li>go-githubのSearchOptionsの詳細</li>
-<li>Datastore</li>
-<li>スケジュール実行</li>
-<li>GAE/gに適したフレームワークってあるのかしら？</li>
-<li>関係ないけどそろそろシンタックスハイライトをこのブログでも使いたい</li>
-<li>これまた関係ないけどF-SecureがひたすらWebアプリの実行を邪魔してツラい。</li>
-</ul>
-
 ]]></content>
   </entry>
   

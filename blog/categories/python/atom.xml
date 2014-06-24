@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | 技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-06-16T19:20:58+09:00</updated>
+  <updated>2014-06-24T20:06:53+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,43 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[OSS Release Checkerというサービスを開発しています]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/06/24/developing-oss-release-checker/"/>
+    <updated>2014-06-24T19:58:33+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/06/24/developing-oss-release-checker</id>
+    <content type="html"><![CDATA[<p>オープンソースのプロジェクトについて、リリース情報を収集して一覧するサービスを作っています。
+その名もOSS Release Checkerという、いかにも日本人が付けたような名前です。</p>
+
+<p><a href="http://osschecker.appspot.com/">http://osschecker.appspot.com/</a></p>
+
+<p>うちの会社の業務で、ライブラリやフレームワークのリリース情報をチェックして報告する業務があります。
+それ毎日見るの面倒だからリリース情報のチェックを一手に引き受けてくれるサービスを作ったらえぇやん、というのが発想ですね。</p>
+
+<p>機能的な話ですが、まずはリリース情報の収集先はGitHubをターゲットにしています。
+検索画面から気になるプロジェクトを検索してウォッチしていけば、あとは自動的にリリース情報を収集してくれます。
+そして収集した結果、最新のリリースおよびタグ付けされたリポジトリが、画面に一覧表示される、という寸法です。</p>
+
+<p>直近の目標はこんな感じです。
+GitHubのアカウントでOAuthした上で、自分のウォッチしたいリポジトリを登録しておきます。
+そして、ウォッチしているリポジトリに更新があればGitHubのメールアドレスに対してメール通知すると。
+これができたら、自分的にはいい感じですね。</p>
+
+<p>あとは見た目はもう少し何とかしたいですね。検索画面とか、Bootstrap感満載の画面とか…。
+ドメインを取ってみたもののApp Engineに適用しようと思ったらGoogle Appsが必要みたいで躊躇してたり…
+(Google Appsが必要じゃないケースもあるらしいが…)</p>
+
+<p>最後に、GitHubで何かしら開発されている方は、タグ付けだけでなく、GitHubのリリース機能を使用してください。
+リリース機能を使うことで、ただのタグ付けだけでなく、そのリリースがどういうものかを説明する場所と、モジュールの配布場所が提供されます。
+そして、私のサービスでも、リリース情報として取り込むことができるようになります。</p>
+
+<p>※ <a href="http://qiita.com/todogzm/items/db9f5f2cedf976379f84">GitHubのリリース機能を使う &ndash; Qiita</a> も
+合わせてご参照ください。</p>
+
+<p>こちらからは以上です。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[大阪Pythonユーザの集まり2014/05に参加＆発表してきた '#osakapy]]></title>
@@ -258,48 +295,6 @@ Djangoセッションで学習してみようかと思う。</p>
 アップロードできる。簡単。</p>
 
 <p>簡単だけど、継続的デリバリーができなくなるので、別途デプロイ方法を検討する。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[大阪Pythonユーザの集まり 2014/05 を募集開始しました '#osakapy]]></title>
-    <link href="http://todoa2c.github.io/blog/2014/05/12/osaka-python-study-session/"/>
-    <updated>2014-05-12T19:37:12+09:00</updated>
-    <id>http://todoa2c.github.io/blog/2014/05/12/osaka-python-study-session</id>
-    <content type="html"><![CDATA[<p>第2回の大阪Pythonユーザの集まりを、5月29日に行います。</p>
-
-<p><a href="http://connpass.com/event/6369/">大阪Pythonユーザの集まり 2014/05 &ndash; connpass</a></p>
-
-<ul>
-<li>日時 2014/05/29 19:00</li>
-<li>場所 堂島アバンザ21F</li>
-</ul>
-
-
-<p>Pythonユーザはもちろんのこと、
-Pythonに興味を持っていただいている方のご参加もお待ちしております。</p>
-
-<p>今時点では、下記3名が発表予定です。私も参加します。</p>
-
-<ul>
-<li><a href="https://twitter.com/whosaysni">@whosaysni</a> Django関連</li>
-<li><a href="https://twitter.com/todogzm">@todogzm</a> とりあえず何か。多分Python 2/3移行関連？</li>
-<li><a href="https://twitter.com/Ido">@Ido</a> GAE/PyについてLT</li>
-</ul>
-
-
-<p>誰か少しでも発表できることがありましたら、ご参加をお待ちしております。
-個人的にはPython 3.4の新機能を話せる人がいたら、お話いただけると嬉しい次第です。</p>
-
-<p>また、発表者が少なかった場合には、グループディスカッションを考えています。
-何についてディスカッションしていただくかはまだ考えていませんが、
-結果として参加者も勉強会に貢献したぜ感を感じられるような勉強会にできればなぁと
-漠然と考えております。</p>
-
-<p>懇親会も行う予定ですので、こちらも是非ご参加ください。
-前回の反省(?)を踏まえ、早めにアナウンスします。</p>
-
-<p>ちなみに、アンケートを募集したものの、サンプル数が少なすぎました…。</p>
 ]]></content>
   </entry>
   

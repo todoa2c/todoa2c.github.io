@@ -4,7 +4,7 @@
   <title><![CDATA[技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-06-16T19:20:58+09:00</updated>
+  <updated>2014-06-24T20:06:53+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,43 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[OSS Release Checkerというサービスを開発しています]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/06/24/developing-oss-release-checker/"/>
+    <updated>2014-06-24T19:58:33+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/06/24/developing-oss-release-checker</id>
+    <content type="html"><![CDATA[<p>オープンソースのプロジェクトについて、リリース情報を収集して一覧するサービスを作っています。
+その名もOSS Release Checkerという、いかにも日本人が付けたような名前です。</p>
+
+<p><a href="http://osschecker.appspot.com/">http://osschecker.appspot.com/</a></p>
+
+<p>うちの会社の業務で、ライブラリやフレームワークのリリース情報をチェックして報告する業務があります。
+それ毎日見るの面倒だからリリース情報のチェックを一手に引き受けてくれるサービスを作ったらえぇやん、というのが発想ですね。</p>
+
+<p>機能的な話ですが、まずはリリース情報の収集先はGitHubをターゲットにしています。
+検索画面から気になるプロジェクトを検索してウォッチしていけば、あとは自動的にリリース情報を収集してくれます。
+そして収集した結果、最新のリリースおよびタグ付けされたリポジトリが、画面に一覧表示される、という寸法です。</p>
+
+<p>直近の目標はこんな感じです。
+GitHubのアカウントでOAuthした上で、自分のウォッチしたいリポジトリを登録しておきます。
+そして、ウォッチしているリポジトリに更新があればGitHubのメールアドレスに対してメール通知すると。
+これができたら、自分的にはいい感じですね。</p>
+
+<p>あとは見た目はもう少し何とかしたいですね。検索画面とか、Bootstrap感満載の画面とか…。
+ドメインを取ってみたもののApp Engineに適用しようと思ったらGoogle Appsが必要みたいで躊躇してたり…
+(Google Appsが必要じゃないケースもあるらしいが…)</p>
+
+<p>最後に、GitHubで何かしら開発されている方は、タグ付けだけでなく、GitHubのリリース機能を使用してください。
+リリース機能を使うことで、ただのタグ付けだけでなく、そのリリースがどういうものかを説明する場所と、モジュールの配布場所が提供されます。
+そして、私のサービスでも、リリース情報として取り込むことができるようになります。</p>
+
+<p>※ <a href="http://qiita.com/todogzm/items/db9f5f2cedf976379f84">GitHubのリリース機能を使う &ndash; Qiita</a> も
+合わせてご参照ください。</p>
+
+<p>こちらからは以上です。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Qiitaにnpm Installでpeerinvalidエラーが出た際のエラー解消方法を書いた＋α]]></title>
@@ -1171,35 +1208,6 @@ Pythonに興味を持っていただいている方のご参加もお待ちし�
 
 <p>なお、3月第2週くらいに、大阪でPythonの勉強会を企画中です。
 <a href="http://todoa2c.github.io/blog/2014/02/19/osaka-python-meeting/">大阪でPythonで集まろうの巻に参加した &ndash; 技術情報棚卸し(平日限定)</a>から上がった企画ですね。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[CheckiOでPythonのお勉強]]></title>
-    <link href="http://todoa2c.github.io/blog/2014/02/24/study-with-checkio/"/>
-    <updated>2014-02-24T19:47:30+09:00</updated>
-    <id>http://todoa2c.github.io/blog/2014/02/24/study-with-checkio</id>
-    <content type="html"><![CDATA[<p><a href="http://www.checkio.org/">CheckiO</a>が楽しいので、少しずつクリアしています。</p>
-
-<p>CheckiOはPythonを使ったプログラミング学習サービスなのですが、
-ゲーム要素溢れるところが非常に特徴的です。</p>
-
-<p>ゲーム要素は、例えばこんな感じです。
-私自身のPython歴がそれほど長くないので、人のコードを読むのは非常に勉強になります。</p>
-
-<ul>
-<li>サインアップするためにもPythonコードを書く必要がある</li>
-<li>コードを書くことによって経験値が得られ、バッジや行ける場所が増える(行ける先はO&#8217;ReillyとかDropboxなどという見慣れた名前が…)</li>
-<li>コードの提出が完了したら、自分の書いたコードを公開できる(経験値ももらえるしレビューももらえる)</li>
-<li>人のコードを読むことが出来、レビューすることができる(レビューすると経験値がもらえる)</li>
-</ul>
-
-
-<p>サイトが重いとか、作りが分かりにくいとか不満点は少々ありますが、
-パズルを解く感覚でPythonを学ぶ事ができるのは、非常に楽しいです。
-下記が私のアカウントですので、よかったら私をフォローして下さい。</p>
-
-<p><a href="http://www.checkio.org/user/todogzm/">todogzm profile  :: CheckiO</a></p>
 ]]></content>
   </entry>
   
