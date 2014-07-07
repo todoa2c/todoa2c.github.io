@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Qiita | 技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/blog/categories/qiita/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-06-24T20:06:53+09:00</updated>
+  <updated>2014-07-07T18:29:28+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,20 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[IntelliJ IDEAでGitのRevision Graphが表示できる]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/07/07/intellij-git-revision-graph/"/>
+    <updated>2014-07-07T18:23:34+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/07/07/intellij-git-revision-graph</id>
+    <content type="html"><![CDATA[<p>またQiita側への投稿ですが、こちらにもリンクを載せておきます。</p>
+
+<p><a href="http://qiita.com/todogzm/items/6d529098759359b13b2d">IntelliJ IDEAでGitのRevision Graphを見る &ndash; Qiita</a></p>
+
+<p>さりげなく未だにSubversionを使ってるアピールも欠かさないわけで、切ないですね。
+もっと気軽にブランチを切りたいです。。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Qiitaにnpm Installでpeerinvalidエラーが出た際のエラー解消方法を書いた＋α]]></title>
@@ -33,6 +47,31 @@
 はたまたどちらも統一してしまうべきか、少々悩ましいです。</p>
 
 <p>皆様がどうされているのか、教えていただければ嬉しいですね。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[GitHubのRelease機能についてQiitaに投稿した]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/06/05/github-release-feature/"/>
+    <updated>2014-06-05T20:33:24+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/06/05/github-release-feature</id>
+    <content type="html"><![CDATA[<p>GitHubにRelease機能というのがあります。
+個人的にすごく好きな機能の一つなのですが、あまり使われていない模様でしたので、
+Qiitaに
+<a href="http://qiita.com/todogzm/items/db9f5f2cedf976379f84">GitHubのリリース機能を使う &ndash; Qiita</a>
+を投稿しました。</p>
+
+<p>例えば同僚が作っている
+<a href="https://github.com/oohira/intercom-java/releases">intercom-javaのreleases</a> を見ると、
+ただタグを打っただけではなく、そのリリースに何が含まれているかが書かれており、
+リリースの内容が即座に分かって、非常にいいと思うんですね。</p>
+
+<p>特にリリース内容もアップロードできますので、
+Goでツールを作ってクロスプラットフォーム用バイナリを生成した場合には、
+Release機能を使ってバイナリもアップロードすれば、配布の手間が省けて便利になります。</p>
+
+<p>ちなみに私がGitHubのRelease機能を推しているのにはもうひとつ理由がありまして…。
+その理由は、また近いうちに書きますね。</p>
 ]]></content>
   </entry>
   

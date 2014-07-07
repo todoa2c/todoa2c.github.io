@@ -9,8 +9,9 @@
   <meta name="author" content="Atsushi Kanaya (todoa2c)">
 
   
-  <meta name="description" content="オープンソースのプロジェクトについて、リリース情報を収集して一覧するサービスを作っています。
-その名もOSS Release Checkerという、いかにも日本人が付けたような名前です。 http://osschecker.appspot.com/ うちの会社の業務で、 &hellip;">
+  <meta name="description" content="またQiita側への投稿ですが、こちらにもリンクを載せておきます。 IntelliJ IDEAでGitのRevision Graphを見る &ndash; Qiita さりげなく未だにSubversionを使ってるアピールも欠かさないわけで、切ないですね。
+もっと気軽にブランチを切りたいです。。
+">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +79,47 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/07/intellij-git-revision-graph/">IntelliJ IDEAでGitのRevision Graphが表示できる</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-07T18:23:34+09:00" pubdate data-updated="true">2014-07-07</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>またQiita側への投稿ですが、こちらにもリンクを載せておきます。</p>
+
+<p><a href="http://qiita.com/todogzm/items/6d529098759359b13b2d">IntelliJ IDEAでGitのRevision Graphを見る &ndash; Qiita</a></p>
+
+<p>さりげなく未だにSubversionを使ってるアピールも欠かさないわけで、切ないですね。
+もっと気軽にブランチを切りたいです。。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -737,81 +779,6 @@ Pythonに興味を持っていただいている方のご参加もお待ちし�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/04/02/chrome-tabs-and-process/">Chromeで元タブとは異なるプロセスで新規タブを開く方法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-02T14:28:06+09:00" pubdate data-updated="true">2014-04-02</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Google Chromeは基本的に1タブごとに1プロセスを立ち上げるマルチプロセスのアーキテクチャを採用しています。
-マルチプロセスであることにより、下記のメリットが生まれるわけです。</p>
-
-<ol>
-<li>ブラウザ本体のメモリ使用量肥大化を防ぐ</li>
-<li>1つのタブがクラッシュしてもブラウザ全体に影響を及ぼさない</li>
-</ol>
-
-
-<p>ただし、厳密に言うと1タブごとに1プロセス、というわけではありません。
-具体的に言いますと、ある元タブからリンクをクリックした際に開かれるタブ、これは元タブと同じプロセスで
-開かれます。
-ですので、この2つのタブのうちどちらかがクラッシュすると、両方のタブがクラッシュすることになります。
-また、この方法で開き続けると、1つのプロセスで何枚ものタブを開くことになるので、
-最終的には1つのタブのプロセスがメモリ肥大化します。</p>
-
-<p>個人的に、嫌なんですよね。常駐したいタブのメモリが肥大化するのって。
-Twitterなどのサービスのタブを常駐させたまま各種リンクをクリックして見てた結果、
-気がつけばTwitterタブを開いているプロセスのメモリが肥大化しているわけです。</p>
-
-<p>という神経質な私のために、どうしたら別プロセスで新しいタブを開くのか確認しました。
-結論から言いますと、「リンクを右クリックして新しいタブで開く」と新規タブが新しいプロセスで開けます。</p>
-
-<p>以下、検証方法。ブラウザにはWindows版Chrome 33.0.1750.154mを使用しました。
-新規タブで開くリンクに対して、下記の操作を行いました。</p>
-
-<ol>
-<li>左クリックで開く</li>
-<li>中央クリックで開く</li>
-<li>右クリックでコンテキストメニューを出し、「新しいタブで開く」を使って開く</li>
-</ol>
-
-
-<p>結果は以下のとおり、3.の右クリックして新しいタブで開く方法だけが、新しいプロセスで新規タブを
-開くことが出来ました。</p>
-
-<p><img src="/images/contents/20140402-chrome-tabs-and-process.png" alt="3つの方法で新規タブを開いた場合のプロセス" /></p>
-
-<p>最近のマシンではそれほどメモリ使用量を気にすることはないかと思いますが、
-私のような神経質さを持つ方には、是非右クリック→新しいタブで開く、をおすすめします。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -827,6 +794,10 @@ Twitterなどのサービスのタブを常駐させたまま各種リンクを�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/07/07/intellij-git-revision-graph/">IntelliJ IDEAでGitのRevision Graphが表示できる</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/06/24/developing-oss-release-checker/">OSS Release Checkerというサービスを開発しています</a>
       </li>
     
@@ -840,10 +811,6 @@ Twitterなどのサービスのタブを常駐させたまま各種リンクを�
     
       <li class="post">
         <a href="/blog/2014/06/02/attended-osaka-python-study-session/">大阪Pythonユーザの集まり2014/05に参加＆発表してきた &#8216;#osakapy</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/30/codeship-appengine-continuous-delivery/">Codeshipを使ったApp Engineへの継続的デリバリー</a>
       </li>
     
   </ul>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Git | 技術情報棚卸し(平日限定)]]></title>
+  <link href="http://todoa2c.github.io/blog/categories/git/atom.xml" rel="self"/>
+  <link href="http://todoa2c.github.io/"/>
+  <updated>2014-07-07T18:29:28+09:00</updated>
+  <id>http://todoa2c.github.io/</id>
+  <author>
+    <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[IntelliJ IDEAでGitのRevision Graphが表示できる]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/07/07/intellij-git-revision-graph/"/>
+    <updated>2014-07-07T18:23:34+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/07/07/intellij-git-revision-graph</id>
+    <content type="html"><![CDATA[<p>またQiita側への投稿ですが、こちらにもリンクを載せておきます。</p>
+
+<p><a href="http://qiita.com/todogzm/items/6d529098759359b13b2d">IntelliJ IDEAでGitのRevision Graphを見る &ndash; Qiita</a></p>
+
+<p>さりげなく未だにSubversionを使ってるアピールも欠かさないわけで、切ないですね。
+もっと気軽にブランチを切りたいです。。</p>
+]]></content>
+  </entry>
+  
+</feed>
