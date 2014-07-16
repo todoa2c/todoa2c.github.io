@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Mac | 技術情報棚卸し(平日限定)]]></title>
+  <link href="http://todoa2c.github.io/blog/categories/mac/atom.xml" rel="self"/>
+  <link href="http://todoa2c.github.io/"/>
+  <updated>2014-07-16T18:27:20+09:00</updated>
+  <id>http://todoa2c.github.io/</id>
+  <author>
+    <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[MacでJavaのバージョンを切り替える方法]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/07/16/mac-java-switch-version/"/>
+    <updated>2014-07-16T18:17:31+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/07/16/mac-java-switch-version</id>
+    <content type="html"><![CDATA[<p><a href="http://www.ipa.go.jp/security/ciadr/vul/20140716-jre.html">Oracle Java の脆弱性対策について(CVE-2014-4227等)</a>
+のアナウンスと共に、本脆弱性に対する修正プログラムがリリースされましたね。
+※実際には修正プログラムが出る前に、脆弱性の報告が上がってしまって肝を冷やしましたが…</p>
+
+<p>さて自分の開発環境のMacでもJDK 8 Update 11をインストールしたわけですが、
+インストール後に<code>java -version</code> と打っても、今まで使っていたバージョン情報しか出なかったわけで、少し焦りました。</p>
+
+<p>原因は、分かってしまえば何てことはなく、環境変数 <code>JAVA_HOME</code> の書き換えを忘れていた、というオチでした。</p>
+
+<p>というわけで、環境変数を下記のように書き換えればOK。</p>
+
+<p><code>
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_11.jdk/Contents/Home
+</code></p>
+
+<p>確認します。</p>
+
+<p><code>
+$ java -version
+java version "1.8.0_11"
+Java(TM) SE Runtime Environment (build 1.8.0_11-b12)
+Java HotSpot(TM) 64-Bit Server VM (build 25.11-b03, mixed mode)
+</code></p>
+
+<p>無事にバージョン切り替え完了！</p>
+]]></content>
+  </entry>
+  
+</feed>

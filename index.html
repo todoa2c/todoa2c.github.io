@@ -9,9 +9,9 @@
   <meta name="author" content="Atsushi Kanaya (todoa2c)">
 
   
-  <meta name="description" content="またQiita側への投稿ですが、こちらにもリンクを載せておきます。 IntelliJ IDEAでGitのRevision Graphを見る &ndash; Qiita さりげなく未だにSubversionを使ってるアピールも欠かさないわけで、切ないですね。
-もっと気軽にブランチを切りたいです。。
-">
+  <meta name="description" content="Oracle Java の脆弱性対策について(CVE-2014-4227等)
+のアナウンスと共に、本脆弱性に対する修正プログラムがリリースされましたね。
+※実際には修正プログラムが出る前に、脆弱性の報告が上がってしまって肝を冷やしましたが… さて自分の開発環境のMacでもJDK 8 Update &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +79,69 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/16/mac-java-switch-version/">MacでJavaのバージョンを切り替える方法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-16T18:17:31+09:00" pubdate data-updated="true">2014-07-16</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.ipa.go.jp/security/ciadr/vul/20140716-jre.html">Oracle Java の脆弱性対策について(CVE-2014-4227等)</a>
+のアナウンスと共に、本脆弱性に対する修正プログラムがリリースされましたね。
+※実際には修正プログラムが出る前に、脆弱性の報告が上がってしまって肝を冷やしましたが…</p>
+
+<p>さて自分の開発環境のMacでもJDK 8 Update 11をインストールしたわけですが、
+インストール後に<code>java -version</code> と打っても、今まで使っていたバージョン情報しか出なかったわけで、少し焦りました。</p>
+
+<p>原因は、分かってしまえば何てことはなく、環境変数 <code>JAVA_HOME</code> の書き換えを忘れていた、というオチでした。</p>
+
+<p>というわけで、環境変数を下記のように書き換えればOK。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_11.jdk/Contents/Home</span></code></pre></td></tr></table></div></figure>
+
+
+<p>確認します。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ java -version
+</span><span class='line'>java version "1.8.0_11"
+</span><span class='line'>Java(TM) SE Runtime Environment (build 1.8.0_11-b12)
+</span><span class='line'>Java HotSpot(TM) 64-Bit Server VM (build 25.11-b03, mixed mode)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>無事にバージョン切り替え完了！</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -728,57 +791,6 @@ Pythonに興味を持っていただいている方のご参加もお待ちし�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/04/14/python-osaka-session-questionnaires/">大阪Pythonユーザの集まりの意見募集中 &#8216;#osakapy</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-14T18:08:41+09:00" pubdate data-updated="true">2014-04-14</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>大阪Pythonユーザの集まりについて、GW明けにまた行おうと考えています。
-第1回は平日夜の開催で、発表形式の会でしたが、他にも色々やってみたいという声がありましたので、
-どの要望が一番多いかを調べるべく、アンケートを作成してみることにしました。</p>
-
-<blockquote class="twitter-tweet"><p>大阪Pythonユーザの集まり・企画アンケートを作成しました。よろしければ次回に向けての企画のためのご意見をお送りください。 <a href="https://twitter.com/search?q=%23osakapy&amp;src=hash">#osakapy</a> <a href="http://t.co/OqC4rWHUPy">http://t.co/OqC4rWHUPy</a></p>&mdash; Atsushi Kanaya (@todogzm) <a href="https://twitter.com/todogzm/statuses/455585461386625024">April 14, 2014</a></blockquote>
-
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-<p>アンケートはGoogleドライブのフォーム作成機能を使って実現しています。
-簡単に作れて即公開できるのが便利ですね。</p>
-
-<p><a href="https://support.google.com/drive/topic/1360904?hl=ja&amp;ref_topic=2811744">フォーム &ndash; ドライブ ヘルプ</a>
-を見れば、大体の作り方は分かるかと思いますので、
-アンケートを作成する際には、候補のひとつに入れてみてもよいかと思います。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -794,6 +806,10 @@ Pythonに興味を持っていただいている方のご参加もお待ちし�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/07/16/mac-java-switch-version/">MacでJavaのバージョンを切り替える方法</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/07/07/intellij-git-revision-graph/">IntelliJ IDEAでGitのRevision Graphが表示できる</a>
       </li>
     
@@ -807,10 +823,6 @@ Pythonに興味を持っていただいている方のご参加もお待ちし�
     
       <li class="post">
         <a href="/blog/2014/06/05/github-release-feature/">GitHubのRelease機能についてQiitaに投稿した</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/02/attended-osaka-python-study-session/">大阪Pythonユーザの集まり2014/05に参加＆発表してきた &#8216;#osakapy</a>
       </li>
     
   </ul>
