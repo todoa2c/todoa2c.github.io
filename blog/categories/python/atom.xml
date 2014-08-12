@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | 技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-07-16T18:27:20+09:00</updated>
+  <updated>2014-08-12T17:54:09+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,271 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Pythonで決定木を描いてみる]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/08/12/writing-decision-tree/"/>
+    <updated>2014-08-12T11:48:47+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/08/12/writing-decision-tree</id>
+    <content type="html"><![CDATA[<h1>はじめに</h1>
+
+<p>データ分析が必要な局面がぼちぼち出てきましたので、まずは簡単な決定木を用いて
+分析結果の可視化をしようじゃないか、というのが今回の目論見です。</p>
+
+<h2>決定木とは</h2>
+
+<p>決定木とは、scikit-learnの<a href="http://scikit-learn.org/stable/modules/tree.html">1.8. Decision Trees</a>によると、
+分類や回帰を行うために使われる、ノンパラメトリックな教師あり学習のひとつ、とあります。
+また、目的は、学習データ中の特徴(説明変数)を用いて、目的変数の推測を行えるモデルを作ること、だそうです。</p>
+
+<p>ナンノコッチャ？ですので例を挙げますと、例えばある有料サービスに申し込んでくれる人を増やすために、
+今までの履歴からどういったお客様が有料サービスに申し込んでくれたか、を調査するとします。
+無料サービスA, B, Cがあったとして、どれとどれをどのくらい使っている人が
+有料サービスを申し込んでくれるか、こういうことを考えたいわけですね。
+ここで言う無料サービスA, B, Cが説明変数で、有料サービスに申し込むかどうかが目的変数になります。</p>
+
+<p>決定木を使うことにより、Aのサービスを10回使って、かつCのサービスを1回以上使ったお客様は
+有料サービスを申し込んでくれる可能性が高い、というモデルを構築することが出来ます。
+また、モデルが構築できたら、そのモデルを用いて、有料サービスを申し込む前から
+今までの行動から、お客様が有料サービスに申し込んでくれるかどうかを推定することができるようになるわけです。</p>
+
+<h2>必要なライブラリ</h2>
+
+<ul>
+<li><a href="http://www.python.org/">Python</a> (今回使うライブラリは2/3互換です。私は3.3系を使っています)</li>
+<li><a href="http://scikit-learn.org/">scikit-learn</a> (インストール方法は<a href="http://scikit-learn.org/stable/install.html">Installing scikit-learn</a>参照)</li>
+<li><a href="http://pandas.pydata.org/">pandas</a> (インストール方法は<a href="http://pandas.pydata.org/pandas-docs/stable/install.html">Installation</a>参照)</li>
+<li><a href="http://www.graphviz.org/">Graphviz</a> (インストール方法は<a href="http://www.graphviz.org/Download..php">Download</a>またはMacなら<code>brew install graphviz</code>でOK)</li>
+</ul>
+
+
+<h1>分析の手順</h1>
+
+<h2>データの準備</h2>
+
+<p>まずは自分の分析したいデータを用意します。…といっても、すぐに用意できないことがあるかと思いますので、
+こちらに事前に調理しておいた…いやいや、日本語解説付きのデータセットがありますので、
+気になるデータを使用してみてください。
+<a href="http://d.hatena.ne.jp/hoxo_m/20120214/p1">統計を学びたい人へ贈る、統計解析に使えるデータセットまとめ</a></p>
+
+<p>ここでは、Irisデータを使用します。</p>
+
+<h2>決定木の作成</h2>
+
+<p>データの読み込み・選定あたりでpandasを使用し、実際の学習でscikit-learnを使用します。
+下記のようなコードを書き、実行してください。
+<code>graph.dot</code>というファイルが生成されます。</p>
+
+<p>```
+import pandas as pd
+from sklearn import tree</p>
+
+<h1>サンプルデータ(タブ区切り)の読み込み</h1>
+
+<p>data = pd.read_table(&lsquo;iris.txt&rsquo;)</p>
+
+<h1>説明変数</h1>
+
+<p>variables = [&lsquo;Sepal.Length&rsquo;, &lsquo;Sepal.Width&rsquo;, &lsquo;Petal.Length&rsquo;, &lsquo;Petal.Width&rsquo;]</p>
+
+<h1>決定木の分類器を作成。各種設定は引数に与える</h1>
+
+<p>classifier = tree.DecisionTreeClassifier()</p>
+
+<h1>決定木の分類器にサンプルデータを食わせて学習。目的変数はSpecies</h1>
+
+<p>classifier = classifier.fit(data[variables], data[&lsquo;Species&rsquo;])</p>
+
+<h1>学習した結果をGraphvizが認識できる形式にして出力する</h1>
+
+<p>with open(&lsquo;graph.dot&rsquo;, &lsquo;w&rsquo;) as f:</p>
+
+<pre><code>f = tree.export_graphviz(classifier, out_file=f)
+</code></pre>
+
+<p>```</p>
+
+<h2>PDFによる可視化</h2>
+
+<p>上記のコードより得られる結果は <code>graph.dot</code> というファイルなのですが、
+これだけ見てもよく分かりません。
+そこで、下記コマンドを実行し、PDF変換します。</p>
+
+<p><code>
+dot -Tpdf graph.dot -o graph.pdf
+</code></p>
+
+<p>結果を見てみましょう。</p>
+
+<p><img src="/images/contents/20140812-default-tree.png" alt="未設定で生成した決定木" /></p>
+
+<p>見方は、上から順番に、説明変数を0から数えて2番め(<code>Petal.Length</code>)が2.45以下か
+否かで、Yesなら左、Noなら右に進んでいくことで分類していきます。
+Yesならsetosa全データが入っているので、これは分類が容易だと分かります。
+Noなら、次は<code>Petal.Width</code>が1.75以下か否かで…というかたちで見ていけばよいです。</p>
+
+<p>決定木は分類ルールが生成されるので、人にとっても解釈しやすいですね。</p>
+
+<h2>分類ルールは機能するのか？ ： 交差検定</h2>
+
+<p>ところで今回得られた結果には、大きな問題が2つあります。
+ひとつは、未知のデータに対しても有効かどうかが分かりません。
+もうひとつは、過学習している可能性が高いことです。</p>
+
+<p>過学習とは、与えられた学習データにフィットしすぎた結果、
+未知のデータに対して正しい分類ができない状態のことです。
+今回の決定木も、非常に細かいところまで分類しています。
+例えば<code>Petal.Width &lt;= 1.75</code>のとき、90%の確率でversicolorになるはずなのですが、
+その条件下で<code>Petal.Width &gt; 1.65</code>のときはvirginicaである、と分類しています。
+要するに、<code>1.65 &lt; Petal.Width &lt;= 1.75</code>のときはvirginicaである、という
+細かい分類をしてしまうわけです。
+この結果は確かに与えられた学習データに対してはうまくいきますが、
+未知のデータに対しては、分類が細かすぎて誤分類してしまう可能性が高まります。</p>
+
+<p>そこで、分類データを何個かに分割して、大部分を決定木の作成に使用し、
+残る一部のデータを、その決定木の性能測定に使用します。
+この操作を「交差検定 (Cross-validation)」と言います。</p>
+
+<p>早速交差検定をやってみましょう。</p>
+
+<p>```
+import pandas as pd
+import numpy as np
+from sklearn import tree, cross_validation</p>
+
+<p>data = pd.read_table(&lsquo;iris.txt&rsquo;)</p>
+
+<h1>データがSpecies順になっているので、シャッフルする</h1>
+
+<p>data = data.reindex(np.random.permutation(data.index))
+variables = [&lsquo;Sepal.Length&rsquo;, &lsquo;Sepal.Width&rsquo;, &lsquo;Petal.Length&rsquo;, &lsquo;Petal.Width&rsquo;]</p>
+
+<p>classifier = tree.DecisionTreeClassifier()</p>
+
+<h1>ここが差分。交差検定を5分割して、4つのデータセットと1つの検証データに分けて精度を計算</h1>
+
+<h1>それを5回実施した結果を返す</h1>
+
+<p>scores = cross_validation.cross_val_score(classifier, data[variables], data[&lsquo;Species&rsquo;], cv=5)</p>
+
+<p>print(scores.mean(), scores)
+```</p>
+
+<p>結果は下記のように出力されます(データセットを本プログラム起動時にシャッフルしているため、
+結果は常に異なった値になります)。
+この場合、94.67%の精度で分類ができていることになります。何となく良さげな精度？ですが、
+100個のデータを与えたら、5〜6個は間違えるよ、という精度ですね。</p>
+
+<p><code>
+0.946666666667 [ 1.          0.93333333  1.          0.9         0.9       ]
+</code></p>
+
+<h2>過学習の対策</h2>
+
+<p>決定木の過学習を抑える対策は、大きく分けて2つあります。</p>
+
+<ol>
+<li>子ノードに存在するデータ数の最小値を設ける</li>
+<li>ツリーの深さを制限する</li>
+</ol>
+
+
+<p>1.の方は、先ほどの<code>Petal.Width</code>の例を防ぐ事ができるようになります。
+本設定を使用するには、<code>tree.DecisionTreeClassifier</code>のコンストラクタ引数で設定を入れましょう。</p>
+
+<p><code>
+classifier = tree.DecisionTreeClassifier(min_samples_leaf=2)  # 最低2件のデータが必要
+</code></p>
+
+<p>2.の方の設定は、下記のように行います。
+ルートノードを0として、子ノードまでが1、孫ノードまでが2…と設定します。</p>
+
+<p><code>
+classifier = tree.DecisionTreeClassifier(max_depth=3)
+</code></p>
+
+<p>そして、2つのパラメーターをどう設定するのが良いか…これはもう計算してもらいましょう。
+<code>min_samples_leaf</code>を1〜7、<code>max_depth</code>を2〜8、それぞれの組み合わせで精度を計算します。</p>
+
+<p>```
+import pandas as pd
+import numpy as np
+from sklearn import tree, cross_validation</p>
+
+<p>data = pd.read_table(&lsquo;iris.txt&rsquo;)
+data = data.reindex(np.random.permutation(data.index))
+variables = [&lsquo;Sepal.Length&rsquo;, &lsquo;Sepal.Width&rsquo;, &lsquo;Petal.Length&rsquo;, &lsquo;Petal.Width&rsquo;]</p>
+
+<p>for min_samples_leaf in range(1, 7):</p>
+
+<pre><code>for max_depth in range(2, 8):
+    classifier = tree.DecisionTreeClassifier(
+            min_samples_leaf=min_samples_leaf, max_depth=max_depth)
+    scores = cross_validation.cross_val_score(classifier, data[variables], data['Species'], cv=5)
+    print('{0:.3f}\t{1}\t{2}'.format(scores.mean(), min_samples_leaf, max_depth))
+</code></pre>
+
+<p>```</p>
+
+<p>結果はこちら。平均精度、<code>min_samples_leaf</code>、<code>max_depth</code>の順番です。
+<code>
+0.933   1   2
+0.953   1   3
+0.947   1   4
+0.953   1   5
+0.953   1   6
+0.940   1   7   # 未設定時
+0.933   2   2
+0.953   2   3
+0.940   2   4
+0.940   2   5
+0.940   2   6
+0.940   2   7
+0.933   3   2
+0.967   3   3   # 最良
+0.967   3   4
+0.967   3   5
+0.967   3   6
+0.967   3   7
+0.933   4   2
+0.960   4   3
+0.960   4   4
+0.960   4   5
+0.960   4   6
+0.960   4   7
+0.933   5   2
+0.960   5   3
+0.960   5   4
+0.960   5   5
+0.960   5   6
+0.960   5   7
+0.933   6   2
+0.947   6   3
+0.947   6   4
+0.947   6   5
+0.947   6   6
+0.947   6   7
+</code></p>
+
+<p>100個のデータを与えたら6個間違えるパラメーター未設定時と比較し、最良の場合は
+100個のデータを与えたら3〜4個間違える程度まで軽減されました。
+ちなみに<code>min_samples_leaf=3, max_depth=3</code>のときの決定木はこちら。</p>
+
+<p><img src="/images/contents/20140812-best-parameters.png" alt="最良のパラメーターで生成した決定木" /></p>
+
+<p>ちなみに、パラメーターの調整には、scikit-learnにGrid Searchなる機能があり、
+各種パラメーターを入れ替えながら検証してくれる仕組みがあります。
+今回は使いませんでしたが、次回試してみるつもりです。</p>
+
+<h1>まとめ</h1>
+
+<p>Python + pandas + scikit-learn で決定木を計算する方法をご紹介しました。
+また、精度の計算に交差検定を使う方法と、決定木で過学習を抑えるための方法をご紹介しました。</p>
+
+<p>実際のデータに対して試してみると、思わぬ発見が出てきて楽しいですよ。
+是非お試しください。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[OSS Release Checkerというサービスを開発しています]]></title>
@@ -233,68 +498,6 @@ developブランチにコミットがあった場合にステージング環境�
 作られる模様ですね。。。気づかんわこれ。</p>
 
 <p>こちらからは以上です。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[App Engine用言語をPythonにした件…]]></title>
-    <link href="http://todoa2c.github.io/blog/2014/05/16/beginning-appengine-python/"/>
-    <updated>2014-05-16T11:19:49+09:00</updated>
-    <id>http://todoa2c.github.io/blog/2014/05/16/beginning-appengine-python</id>
-    <content type="html"><![CDATA[<h1>はじめに</h1>
-
-<p><a href="http://todoa2c.github.io/blog/2014/02/13/beginning-appengine-go/">GoでGoogle App Engineを触るテスト</a>を
-書いておきながら、諸般の事情により、Pythonで書きなおすことにしました。
-書き直すと言っても、大した進んでいないので、また1から書き直しという感じですね。</p>
-
-<h2>準備</h2>
-
-<p>今回はMacで開発しているので、ライブラリはここからダウンロードし、インストール＆実行すればOK。</p>
-
-<p><a href="https://developers.google.com/appengine/downloads?hl=ja">Download the Google App Engine SDK &ndash; Google App Engine &ndash; Google Developers</a></p>
-
-<p>Pythonはvirtualenv経由だとうまく動かないもようなので、Pyenvで特定の2.7系バージョンを作る。</p>
-
-<p>開発環境は<a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a>のPythonプラグイン + App Engineサポートを利用。
-間違ってもFlaskを使いたいからと言って、Flask Templateを選んではいけない。あとで自分でライブラリを
-ダウンロードすること。そうしなければ、App EngineのライブラリがIntelliJ IDEA側で認識してくれなかった
-(別途不具合報告予定)。</p>
-
-<h2>書いてみる</h2>
-
-<p>ライブラリは requirements.txt あたりを用意し、下記コマンドを実行することで、
-ライブラリがlibフォルダに置かれる。</p>
-
-<p><code>
-pip install -r requirements.txt -t lib
-</code></p>
-
-<p>また、appengine_config.py を用意し、上記のlibフォルダをライブラリフォルダとして認識するように、
-下記を記述する。</p>
-
-<p><code>
-import os
-import sys
-ROOTPATH = os.path.dirname(__file__)
-LIBPATH = os.path.join(ROOTPATH, 'lib')
-sys.path.append(LIBPATH)
-</code></p>
-
-<p>その他コードは割愛するけれど、Flaskのフレームワークとしての薄さと
-3rd-partyライブラリによる拡張性の高さは結構好み。
-とは言えDjangoをまじめに学習したことがないので、別途
-<a href="http://connpass.com/event/6369/">大阪Pythonユーザの集まり 2014/05</a>の
-Djangoセッションで学習してみようかと思う。</p>
-
-<h2>デプロイ</h2>
-
-<p>デプロイは、ローカル＆本番環境ともに、とりあえず簡単に、IntelliJ IDEAから試す。
-ローカル環境の場合は、App Engine Serverから起動する事ができる。</p>
-
-<p>本番環境は、メニューのToolsからGoogle App Engine → Upload App Engine app&hellip; から
-アップロードできる。簡単。</p>
-
-<p>簡単だけど、継続的デリバリーができなくなるので、別途デプロイ方法を検討する。</p>
 ]]></content>
   </entry>
   

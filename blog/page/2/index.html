@@ -9,9 +9,8 @@
   <meta name="author" content="Atsushi Kanaya (todoa2c)">
 
   
-  <meta name="description" content="大阪Pythonユーザの集まりについて、GW明けにまた行おうと考えています。
-第1回は平日夜の開催で、発表形式の会でしたが、他にも色々やってみたいという声がありましたので、
-どの要望が一番多いかを調べるべく、アンケートを作成してみることにしました。 大阪Pythonユーザの集まり・ &hellip;">
+  <meta name="description" content="第2回の大阪Pythonユーザの集まりを、5月29日に行います。 大阪Pythonユーザの集まり 2014/05 &ndash; connpass 日時 2014/05/29 19:00
+場所 堂島アバンザ21F Pythonユーザはもちろんのこと、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +78,75 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/12/osaka-python-study-session/">大阪Pythonユーザの集まり 2014/05 を募集開始しました &#8216;#osakapy</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-12T19:37:12+09:00" pubdate data-updated="true">2014-05-12</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>第2回の大阪Pythonユーザの集まりを、5月29日に行います。</p>
+
+<p><a href="http://connpass.com/event/6369/">大阪Pythonユーザの集まり 2014/05 &ndash; connpass</a></p>
+
+<ul>
+<li>日時 2014/05/29 19:00</li>
+<li>場所 堂島アバンザ21F</li>
+</ul>
+
+
+<p>Pythonユーザはもちろんのこと、
+Pythonに興味を持っていただいている方のご参加もお待ちしております。</p>
+
+<p>今時点では、下記3名が発表予定です。私も参加します。</p>
+
+<ul>
+<li><a href="https://twitter.com/whosaysni">@whosaysni</a> Django関連</li>
+<li><a href="https://twitter.com/todogzm">@todogzm</a> とりあえず何か。多分Python 2/3移行関連？</li>
+<li><a href="https://twitter.com/Ido">@Ido</a> GAE/PyについてLT</li>
+</ul>
+
+
+<p>誰か少しでも発表できることがありましたら、ご参加をお待ちしております。
+個人的にはPython 3.4の新機能を話せる人がいたら、お話いただけると嬉しい次第です。</p>
+
+<p>また、発表者が少なかった場合には、グループディスカッションを考えています。
+何についてディスカッションしていただくかはまだ考えていませんが、
+結果として参加者も勉強会に貢献したぜ感を感じられるような勉強会にできればなぁと
+漠然と考えております。</p>
+
+<p>懇親会も行う予定ですので、こちらも是非ご参加ください。
+前回の反省(?)を踏まえ、早めにアナウンスします。</p>
+
+<p>ちなみに、アンケートを募集したものの、サンプル数が少なすぎました…。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -937,157 +1005,6 @@ Pythonの勉強会に参加するのは初めてなので、Pythonはそうい�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/03/04/linear-equations-in-python/">Pythonで線形方程式を解く</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-04T18:55:50+09:00" pubdate data-updated="true">2014-03-04</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.checkio.org/mission/how-much-gold/">How much gold :: CheckiO</a>を解く方法として、
-何か簡単な方法はあるんだろうなと思いながら、線形方程式を解く方法を採用したわけです。</p>
-
-<p>線形方程式を簡単に解く方法はないかな？と探したところ、
-<a href="http://sympy.org/">SymPy</a>を使って式を与えるだけで解くことが出来ました。
-テストその1をベタ書きしています。</p>
-
-<p>ソースコードおよびセットアップ方法は、
-<a href="http://qiita.com/ryosy383/items/e5e2ecb5976f98040d21">Pythonを使って一瞬で連立方程式を解く &ndash; Qiita</a>
-を参考にしています。
-要するに、右辺がゼロとなる方程式を、連立方程式を解くのに必要な分渡しているわけです。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>from fractions import Fraction
-</span><span class='line'>from sympy import *
-</span><span class='line'>
-</span><span class='line'>g, t, i, c = symbols('g t i c')
-</span><span class='line'>out = solve([
-</span><span class='line'>    g * Fraction(1, 1) + t * Fraction(1, 1) - Fraction(1, 2),
-</span><span class='line'>    g * Fraction(1, 1) + i * Fraction(1, 1) - Fraction(1, 3),
-</span><span class='line'>    g * Fraction(1, 1) + c * Fraction(1, 1) - Fraction(1, 4),
-</span><span class='line'>    g * Fraction(1, 1) + t * Fraction(1, 1) + i * Fraction(1, 1) + c * Fraction(1, 1) - Fraction(1, 1),
-</span><span class='line'>], [g, t, i, c])
-</span><span class='line'>
-</span><span class='line'>out[g]  # -&gt; Fraction(1, 24)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>ただ、CheckiOでは外部ライブラリの利用はできません。
-また、式を動的に生成する方法があるかも分かりませんので、
-複数ケースに対応する方法が分かりませんでした。</p>
-
-<p>結局、
-<a href="http://ja.wikipedia.org/wiki/%E3%82%AC%E3%82%A6%E3%82%B9%E3%81%AE%E6%B6%88%E5%8E%BB%E6%B3%95">ガウスの消去法 &ndash; Wikipedia</a>
-を使って、自前実装で解くことにしました。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>def gauss_elimination(m):
-</span><span class='line'>    '''mは[g, t, i, c, value]というベクトルを4本持つ行列'''
-</span><span class='line'>    n = len(m)
-</span><span class='line'>    # 前進消去
-</span><span class='line'>    for i in range(n):
-</span><span class='line'>        v = m[i][i]
-</span><span class='line'>        if v == 0:
-</span><span class='line'>            # ゼロ以外の値を持つ行と交換する
-</span><span class='line'>            for k in range(i + 1, n):
-</span><span class='line'>                if m[k][i] != 0:
-</span><span class='line'>                    m[i], m[k] = m[k], m[i]
-</span><span class='line'>                    v = m[i][i]
-</span><span class='line'>                    break
-</span><span class='line'>        for j in range(n + 1):
-</span><span class='line'>            m[i][j] /= v
-</span><span class='line'>        for k in range(i + 1, n):
-</span><span class='line'>            v = -m[k][i]
-</span><span class='line'>            for j in range(n + 1):
-</span><span class='line'>                m[k][j] += m[i][j] * v
-</span><span class='line'>
-</span><span class='line'>    # 後退代入
-</span><span class='line'>    for i in range(n-1, 0, -1):
-</span><span class='line'>        v = m[i][i]
-</span><span class='line'>        m[i][i] /= v
-</span><span class='line'>        m[i][n] /= v
-</span><span class='line'>        for k in range(i - 1, -1, -1):
-</span><span class='line'>            v2 = m[k][i] * m[i][n]
-</span><span class='line'>            m[k][n] -= v2
-</span><span class='line'>            m[k][i] = Fraction(0, 1)
-</span><span class='line'>    return m</span></code></pre></td></tr></table></div></figure>
-
-
-<p>これで<code>gauss_elimination()</code>が解けたときにはすべての変数の値が求められた状態になります。
-良かった良かった。</p>
-
-<p>…と思ったら、最短1行で書くことができるらしい。
-<code>G+T=a, G+I=b, G+C=c, G+T+I+C=1</code>から、<code>G = (a + b + c - 1) / 2</code>が導出できて、
-a, b, cを、それぞれGが含まれている場合の式に変換することで計算できると
-(テスト2の方は、1 &ndash; 式とすればGが含まれる方になる)。
-なるほど、勉強になりました。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -1105,6 +1022,10 @@ a, b, cを、それぞれGが含まれている場合の式に変換すること
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/08/12/writing-decision-tree/">Pythonで決定木を描いてみる</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/07/16/mac-java-switch-version/">MacでJavaのバージョンを切り替える方法</a>
       </li>
     
@@ -1118,10 +1039,6 @@ a, b, cを、それぞれGが含まれている場合の式に変換すること
     
       <li class="post">
         <a href="/blog/2014/06/16/npm-update-peerinvalid/">Qiitaにnpm Installでpeerinvalidエラーが出た際のエラー解消方法を書いた＋α</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/05/github-release-feature/">GitHubのRelease機能についてQiitaに投稿した</a>
       </li>
     
   </ul>
