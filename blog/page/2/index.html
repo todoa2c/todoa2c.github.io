@@ -9,8 +9,9 @@
   <meta name="author" content="Atsushi Kanaya (todoa2c)">
 
   
-  <meta name="description" content="第2回の大阪Pythonユーザの集まりを、5月29日に行います。 大阪Pythonユーザの集まり 2014/05 &ndash; connpass 日時 2014/05/29 19:00
-場所 堂島アバンザ21F Pythonユーザはもちろんのこと、 &hellip;">
+  <meta name="description" content="はじめに GoでGoogle App Engineを触るテストを
+書いておきながら、諸般の事情により、Pythonで書きなおすことにしました。
+書き直すと言っても、大した進んでいないので、また1から書き直しという感じですね。 準備 今回はMacで開発しているので、ライブラリはここからダウンロードし &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +79,99 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/16/beginning-appengine-python/">App Engine用言語をPythonにした件…</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-16T11:19:49+09:00" pubdate data-updated="true">2014-05-16</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>はじめに</h1>
+
+<p><a href="http://todoa2c.github.io/blog/2014/02/13/beginning-appengine-go/">GoでGoogle App Engineを触るテスト</a>を
+書いておきながら、諸般の事情により、Pythonで書きなおすことにしました。
+書き直すと言っても、大した進んでいないので、また1から書き直しという感じですね。</p>
+
+<h2>準備</h2>
+
+<p>今回はMacで開発しているので、ライブラリはここからダウンロードし、インストール＆実行すればOK。</p>
+
+<p><a href="https://developers.google.com/appengine/downloads?hl=ja">Download the Google App Engine SDK &ndash; Google App Engine &ndash; Google Developers</a></p>
+
+<p>Pythonはvirtualenv経由だとうまく動かないもようなので、Pyenvで特定の2.7系バージョンを作る。</p>
+
+<p>開発環境は<a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a>のPythonプラグイン + App Engineサポートを利用。
+間違ってもFlaskを使いたいからと言って、Flask Templateを選んではいけない。あとで自分でライブラリを
+ダウンロードすること。そうしなければ、App EngineのライブラリがIntelliJ IDEA側で認識してくれなかった
+(別途不具合報告予定)。</p>
+
+<h2>書いてみる</h2>
+
+<p>ライブラリは requirements.txt あたりを用意し、下記コマンドを実行することで、
+ライブラリがlibフォルダに置かれる。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pip install -r requirements.txt -t lib</span></code></pre></td></tr></table></div></figure>
+
+
+<p>また、appengine_config.py を用意し、上記のlibフォルダをライブラリフォルダとして認識するように、
+下記を記述する。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>import os
+</span><span class='line'>import sys
+</span><span class='line'>ROOTPATH = os.path.dirname(__file__)
+</span><span class='line'>LIBPATH = os.path.join(ROOTPATH, 'lib')
+</span><span class='line'>sys.path.append(LIBPATH)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>その他コードは割愛するけれど、Flaskのフレームワークとしての薄さと
+3rd-partyライブラリによる拡張性の高さは結構好み。
+とは言えDjangoをまじめに学習したことがないので、別途
+<a href="http://connpass.com/event/6369/">大阪Pythonユーザの集まり 2014/05</a>の
+Djangoセッションで学習してみようかと思う。</p>
+
+<h2>デプロイ</h2>
+
+<p>デプロイは、ローカル＆本番環境ともに、とりあえず簡単に、IntelliJ IDEAから試す。
+ローカル環境の場合は、App Engine Serverから起動する事ができる。</p>
+
+<p>本番環境は、メニューのToolsからGoogle App Engine → Upload App Engine app&hellip; から
+アップロードできる。簡単。</p>
+
+<p>簡単だけど、継続的デリバリーができなくなるので、別途デプロイ方法を検討する。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -854,157 +948,6 @@ Pythonの勉強会に参加するのは初めてなので、Pythonはそうい�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/03/06/coaching-session-impression/">コーチング実践してみた感想とロールモデルの距離感</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-06T17:41:18+09:00" pubdate data-updated="true">2014-03-06</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>前置き</h1>
-
-<p>最近、会社のチーム内でコーチング研修が何回かありました。
-コーチングとは何かについては、<a href="http://ja.wikipedia.org/wiki/%E3%82%B3%E3%83%BC%E3%83%81%E3%83%B3%E3%82%B0">コーチング &ndash; Wikipedia</a>から引用するに留めます。</p>
-
-<blockquote><p>コーチング（coaching）とは、人材開発の技法の1つ。対話によって相手の自己実現や目標達成を図る技術である。相手の話をよく聴き（傾聴）、感じたことを伝えて承認し、質問することで、自発的な行動を促す。</p></blockquote>
-
-<p>コーチング研修では、コーチングの基礎を学び、
-何度か演習(コーチングの時間をセッションと言うそうです)もこなしたのですが、
-どうしても短い時間(長くて15分)のセッションだと、
-答えを見つけるまでに到達できないことも多かったので、
-少し消化不良を起こしていたのです。</p>
-
-<h1>実践</h1>
-
-<p>というわけで、本日コーチングを実践してみました。
-私がコーチ役で、クライアント役には、個人的も周囲的にも今後の成長が期待される後輩さんに
-なっていただきました。</p>
-
-<p>テーマは「今後のキャリア形成について」的な感じで、
-1時間のセッションをやってみました。
-事前に考えた質問はこんな感じです(質問メモすら渡してしまったので覚えている範囲)</p>
-
-<ul>
-<li>興味がある・追求したい技術</li>
-<li>今のチームと前のチームとの違い</li>
-<li>今のチームでクライアントに求められいること、またはクライアントが思うこうありたい姿</li>
-<li>成功体験・失敗体験</li>
-<li>ロールモデル(参考にしている人物像)</li>
-<li>社外活動に関する質問いくつか(勉強会、コミュニテOSS…)</li>
-</ul>
-
-
-<p>他にも色々あったと思いますが、上記について質問しながら、
-3年後にどうありたいかをイメージしてもらい、ありたい姿に向かうためには
-具体的にどういうことをやっていけばいいかを挙げてもらい、
-そのうち1つを実施することを決めてもらう、というところまでは
-一応できたかなと思います。</p>
-
-<p>クライアントさんは日頃から大体考えていたことらしいので、
-だいぶクライアントさんに助けられた感はあります。もっと実践せな…</p>
-
-<h1>やってみた感想</h1>
-
-<p>うまく行ったこともぼちぼちありますが、
-いくつかうまく行かなかったことがあるので、メモとして残しておきます。</p>
-
-<h2>明確な問題のないセッションの落とし所をどうすればよいか</h2>
-
-<p>今回のように、何か明確な問題があるわけではない、目標設定をするようなセッションでは、
-具体的な行動への落とし所が難しかったです。
-目標を決めたらOKだと事前には思っていたのですが、それでは具体的な行動には
-到達できません。
-ですので、急遽その場で、じゃあその目標に向かうにはどういうことをすれば良いかを
-挙げてもらいました。</p>
-
-<p>最終的に、あるべき姿は覚えておいてもらいつつ、
-具体的な行動ひとつを選択してもらい、それを実践してもらうよう後押しする、
-という風にすることで、無事にセッションが着地できたかなと思います。</p>
-
-<h2>タイムキープ重要</h2>
-
-<p>1時間のセッションと事前に決めていたのですが、その中で40分は質問。
-残り20分で具体的な行動への話に繋げていったのですが、
-上記のような急遽の話があり、最後の具体的な行動の時間がギリギリになってしまい、
-具体的な行動のリストアップを途中で打ち切ってしまうかたちになってしまいました。
-これはアイデアを摘んでしまうことになるので、良くないです。
-コーチ側のタイムキープの力が問われます。</p>
-
-<h2>前もって準備した質問が多すぎた？</h2>
-
-<p>どちらかと言うと、質問の数は少なめにして、逆に「他には？」「具体的には？」などと
-色々出してもらったほうが良かったかもしれません。
-キャリアのことを考える上で色んな視点があった方がいいと思い、
-質問の数を多めにしたのですが、深く聞けたかどうかはちょっと自信がないですね…。
-これはクライアントさんに別途聞いてみようかと思います。</p>
-
-<p>初めての実践コーチングの自己フィードバックでした。</p>
-
-<h1>ロールモデルの存在</h1>
-
-<p>最後に、ロールモデルの存在について。
-上のほうで何となく「参考にする人物像」と書いたのですが、
-<a href="http://kotobank.jp/word/%E3%83%AD%E3%83%BC%E3%83%AB%E3%83%A2%E3%83%87%E3%83%AB">ロールモデル とは &ndash; コトバンク</a>によると、</p>
-
-<blockquote><p>具体的な行動技術や行動事例を模倣・学習する対象となる人材</p></blockquote>
-
-<p>だそうです
-(実はロールモデルの定義をちゃんと知らずこの言葉を使っていた…反省)。</p>
-
-<p>ロールモデルとなる方は、どのくらい自分から離れた存在なのが良いのかな、と
-セッション後に考えてみた次第です。
-例えば、新人のロールモデルが課長、みたいなケースだと、
-ちょっとロールモデルとするには距離感がありすぎる気がするんですね。
-新人さんが模倣しようにも、上司とは業務内容から視点から色々異なるので、
-参考にしにくいのではないか？思うわけです。
-逆に近すぎると、それはそれでロールモデルとしては適切ではないのかな、とも思います。
-参考にすると言うよりは、ライバル的な関係となり切磋琢磨するのが良いのかなと、何となく思います。</p>
-
-<p>そう考えると、程よく離れた関係がロールモデルとして適切なのかと思うのですが、
-さてさてこの「程よく離れた」って実際にはどのくらい？というのが分からない。
-何か指標みたいなのがあればいいんですけどね。まだ調べていないので、分からないです。</p>
-
-<p>話を戻してクライアントさんですが、今はクライアントさんの上にも下にも
-バラエティに富んだチームメンバーがいます。
-そういう環境では、ロールモデルとなる人を見つけやすいと思いますし、
-実際にいるとのことなので、何よりだと思います。</p>
-
-<p>そのクライアントさんだけに限らず、他のメンバーがどういう人をロールモデルとして
-捉えているのか、その距離感はどんなものなのか、この辺を注目していこうと思います。</p>
-
-<h1>最後にコーチングについて</h1>
-
-<p>コーチング研修の先生は、何度も「答えはクライアントの中にある」と仰っていました。
-何回かの演習と今日の実践を踏まえて、仰っていることは本当なのだと思います。
-今回の実践は私も非常に勉強になりましたので、引き続き実践していく予定です。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -1022,6 +965,10 @@ Pythonの勉強会に参加するのは初めてなので、Pythonはそうい�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/08/25/decision-tree-feature-names/">決定木の表示に変数名を表示する</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/08/12/writing-decision-tree/">Pythonで決定木を描いてみる</a>
       </li>
     
@@ -1035,10 +982,6 @@ Pythonの勉強会に参加するのは初めてなので、Pythonはそうい�
     
       <li class="post">
         <a href="/blog/2014/06/24/developing-oss-release-checker/">OSS Release Checkerというサービスを開発しています</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/16/npm-update-peerinvalid/">Qiitaにnpm Installでpeerinvalidエラーが出た際のエラー解消方法を書いた＋α</a>
       </li>
     
   </ul>

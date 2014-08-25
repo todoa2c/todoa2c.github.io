@@ -9,9 +9,10 @@
   <meta name="author" content="Atsushi Kanaya (todoa2c)">
 
   
-  <meta name="description" content="はじめに データ分析が必要な局面がぼちぼち出てきましたので、まずは簡単な決定木を用いて
-分析結果の可視化をしようじゃないか、というのが今回の目論見です。 決定木とは 決定木とは、scikit-learnの1.8. Decision Treesによると、
-分類や回帰を行うために使われる、 &hellip;">
+  <meta name="description" content="決定木を描画できたのはいいのですが、「変数が0数えで何番目かをいちいち数えなきゃいけないのが不便！」
+というお声をいただきまして、早速調査しました。 結論から言いますと、できました。
+sklearn.tree.export_graphviz
+関数の引数に、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +80,77 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/25/decision-tree-feature-names/">決定木の表示に変数名を表示する</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-25T20:55:28+09:00" pubdate data-updated="true">2014-08-25</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>決定木を描画できたのはいいのですが、「変数が0数えで何番目かをいちいち数えなきゃいけないのが不便！」
+というお声をいただきまして、早速調査しました。</p>
+
+<p>結論から言いますと、できました。
+<a href="http://scikit-learn.org/stable/modules/generated/sklearn.tree.export_graphviz.html">sklearn.tree.export_graphviz</a>
+関数の引数に、<code>feature_names</code>を渡せばよかったです。</p>
+
+<p>変更後のプログラムはこちら。<code>export_graphviz</code>関数の引数に、<code>feature_names=variables</code>を渡しています。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>import pandas as pd
+</span><span class='line'>from sklearn import tree
+</span><span class='line'>
+</span><span class='line'>data = pd.read_table('iris.txt')
+</span><span class='line'>variables = ['Sepal.Length', 'Sepal.Width', 'Petal.Length', 'Petal.Width']
+</span><span class='line'>
+</span><span class='line'>classifier = tree.DecisionTreeClassifier(min_samples_leaf=3, max_depth=3)
+</span><span class='line'>classifier = classifier.fit(data[variables], data['Species'])
+</span><span class='line'>
+</span><span class='line'>with open('graph.dot', 'w') as f:
+</span><span class='line'>    f = tree.export_graphviz(classifier, out_file=f, feature_names=variables)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>結果得られた決定木はこちら。非常に見やすくなりました！</p>
+
+<p><img src="/images/contents/20140825-feature-names.png" alt="変数名表示バージョン" /></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -985,99 +1057,6 @@ developブランチにコミットがあった場合にステージング環境�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/16/beginning-appengine-python/">App Engine用言語をPythonにした件…</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-05-16T11:19:49+09:00" pubdate data-updated="true">2014-05-16</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>はじめに</h1>
-
-<p><a href="http://todoa2c.github.io/blog/2014/02/13/beginning-appengine-go/">GoでGoogle App Engineを触るテスト</a>を
-書いておきながら、諸般の事情により、Pythonで書きなおすことにしました。
-書き直すと言っても、大した進んでいないので、また1から書き直しという感じですね。</p>
-
-<h2>準備</h2>
-
-<p>今回はMacで開発しているので、ライブラリはここからダウンロードし、インストール＆実行すればOK。</p>
-
-<p><a href="https://developers.google.com/appengine/downloads?hl=ja">Download the Google App Engine SDK &ndash; Google App Engine &ndash; Google Developers</a></p>
-
-<p>Pythonはvirtualenv経由だとうまく動かないもようなので、Pyenvで特定の2.7系バージョンを作る。</p>
-
-<p>開発環境は<a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a>のPythonプラグイン + App Engineサポートを利用。
-間違ってもFlaskを使いたいからと言って、Flask Templateを選んではいけない。あとで自分でライブラリを
-ダウンロードすること。そうしなければ、App EngineのライブラリがIntelliJ IDEA側で認識してくれなかった
-(別途不具合報告予定)。</p>
-
-<h2>書いてみる</h2>
-
-<p>ライブラリは requirements.txt あたりを用意し、下記コマンドを実行することで、
-ライブラリがlibフォルダに置かれる。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>pip install -r requirements.txt -t lib</span></code></pre></td></tr></table></div></figure>
-
-
-<p>また、appengine_config.py を用意し、上記のlibフォルダをライブラリフォルダとして認識するように、
-下記を記述する。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>import os
-</span><span class='line'>import sys
-</span><span class='line'>ROOTPATH = os.path.dirname(__file__)
-</span><span class='line'>LIBPATH = os.path.join(ROOTPATH, 'lib')
-</span><span class='line'>sys.path.append(LIBPATH)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>その他コードは割愛するけれど、Flaskのフレームワークとしての薄さと
-3rd-partyライブラリによる拡張性の高さは結構好み。
-とは言えDjangoをまじめに学習したことがないので、別途
-<a href="http://connpass.com/event/6369/">大阪Pythonユーザの集まり 2014/05</a>の
-Djangoセッションで学習してみようかと思う。</p>
-
-<h2>デプロイ</h2>
-
-<p>デプロイは、ローカル＆本番環境ともに、とりあえず簡単に、IntelliJ IDEAから試す。
-ローカル環境の場合は、App Engine Serverから起動する事ができる。</p>
-
-<p>本番環境は、メニューのToolsからGoogle App Engine → Upload App Engine app&hellip; から
-アップロードできる。簡単。</p>
-
-<p>簡単だけど、継続的デリバリーができなくなるので、別途デプロイ方法を検討する。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1093,6 +1072,10 @@ Djangoセッションで学習してみようかと思う。</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/08/25/decision-tree-feature-names/">決定木の表示に変数名を表示する</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/08/12/writing-decision-tree/">Pythonで決定木を描いてみる</a>
       </li>
     
@@ -1106,10 +1089,6 @@ Djangoセッションで学習してみようかと思う。</p>
     
       <li class="post">
         <a href="/blog/2014/06/24/developing-oss-release-checker/">OSS Release Checkerというサービスを開発しています</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/16/npm-update-peerinvalid/">Qiitaにnpm Installでpeerinvalidエラーが出た際のエラー解消方法を書いた＋α</a>
       </li>
     
   </ul>
