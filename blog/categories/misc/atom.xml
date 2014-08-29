@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Misc | 技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/blog/categories/misc/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-08-25T21:04:15+09:00</updated>
+  <updated>2014-08-29T18:46:08+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,44 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[株式会社ラクスを退職しました]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/08/29/quit-working-at-rakus/"/>
+    <updated>2014-08-29T15:45:19+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/08/29/quit-working-at-rakus</id>
+    <content type="html"><![CDATA[<p>8月31日をもって、<a href="http://www.rakus.co.jp/">株式会社ラクス</a>を退職しました。29日が最終出社日です。
+入社は2012年3月1日ですので、2年半お世話になりました。</p>
+
+<p>入社してからというもの、<a href="http://www.rignite.com/">Rignite</a> という
+ソーシャルメディアマーケティング用Webサービスの開発に従事しておりました。</p>
+
+<p>技術的にも色々なものに触れることができました。
+トピックだけでも書くと…何と言いますか、特殊なことばっかりやっていた気がします。
+それもこれも、チームのメンバーに恵まれた結果かなと思っています。</p>
+
+<ul>
+<li>Python (NLTK, scikit-learnを使った感情解析やデータサイエンス的な分析)
+** Pythonとの出会いから、<a href="http://osakapy.connpass.com/">大阪Pythonユーザの集まり</a>のコミュティができました！</li>
+<li>Node.js (Socket.IOによるリアルタイム通信)</li>
+<li>Go (結局実戦投入できなかったけど、社外で初めて勉強会を開催した。え？第2回？てへぺろ)</li>
+<li>クライアント側のJavaScriptフレームワーク(AngularJS, Ember.js)</li>
+</ul>
+
+
+<p>一方、自分が技術だけに突き進んでいいのか？という気持ちも湧いてきており、
+もっとチーム力の底上げをしていく仕事もしたいと思うようになりました。
+そして将来的には、経営とITを融合させるためにはどうすればいいかを、考え実践していく…</p>
+
+<p>そう考えたとき、今のポジションは適切ではないのだろう、と考えてしまったわけです。</p>
+
+<p>というわけで、早速来週9月1日から、新たな会社で新たなポジションとして、
+心機一転、頑張っていく所存であります！
+結局技術もバリバリやりますけどね！</p>
+
+<p>※時間切れでコレ以上書けない…</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[GitHubのRelease機能についてQiitaに投稿した]]></title>
@@ -220,54 +258,6 @@ Twitterなどのサービスのタブを常駐させたまま各種リンクを�
 <p>コーチング研修の先生は、何度も「答えはクライアントの中にある」と仰っていました。
 何回かの演習と今日の実践を踏まえて、仰っていることは本当なのだと思います。
 今回の実践は私も非常に勉強になりましたので、引き続き実践していく予定です。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[サイボウズLiveを試用する]]></title>
-    <link href="http://todoa2c.github.io/blog/2014/02/17/cybozu-live-trial/"/>
-    <updated>2014-02-17T19:24:53+09:00</updated>
-    <id>http://todoa2c.github.io/blog/2014/02/17/cybozu-live-trial</id>
-    <content type="html"><![CDATA[<p><a href="http://todoa2c.github.io/blog/2014/02/12/email-one-more-suck/">Emailがコラボレーションツールに適していないもう1点</a>で書いたことを実践する機会ができまして。
-諸事情により地域の会合に参加することになったのですが、
-そこでの議論の結果がメールで回されることになりそうだったのです。
-Emailはコラボレーションツールに適してないと主張する私としては
-黙って見ているわけにはいきません。</p>
-
-<p>「メールでのやりとりは議論が残せないので、別の場所を設けましょう。私が提案します！」</p>
-
-<p>と手を上げて、実際に導入するところまでを面倒見ることにしました。</p>
-
-<h1>評価ポイント</h1>
-
-<p>今回の地域の会合で、ある程度PCやスマホに慣れている男性陣が想定利用者です。
-評価ポイントは、ざっくり以下としました。</p>
-
-<ul>
-<li>無料である(まだ予算とかないので…)</li>
-<li>セキュアである</li>
-<li>スケジュール、議事録、TODO管理ができる</li>
-<li>スマホ対応している</li>
-</ul>
-
-
-<p>こういう条件で、限られた時間内で調べてみました。</p>
-
-<h1>評価対象</h1>
-
-<ul>
-<li><a href="https://live.cybozu.co.jp/">サイボウズLive</a></li>
-<li><a href="https://groups.google.com/forum/?hl=ja#!overview">Googleグループ</a></li>
-<li><a href="http://ja.youroom.in/">youroom</a></li>
-<li><a href="https://www.atlassian.com/ja/software/confluence">Confluence</a></li>
-</ul>
-
-
-<p>この中で、サイボウズLiveを第1候補としました。
-上記の評価ポイントをすべて押さえているからです。</p>
-
-<p>というわけで、サイボウズLiveに登録し、実際に試用してもらうことにしました。
-まだ1日しか経っていませんが、果たしてどうなることやら。</p>
 ]]></content>
   </entry>
   

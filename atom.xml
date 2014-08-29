@@ -4,7 +4,7 @@
   <title><![CDATA[技術情報棚卸し(平日限定)]]></title>
   <link href="http://todoa2c.github.io/atom.xml" rel="self"/>
   <link href="http://todoa2c.github.io/"/>
-  <updated>2014-08-25T21:04:15+09:00</updated>
+  <updated>2014-08-29T18:46:08+09:00</updated>
   <id>http://todoa2c.github.io/</id>
   <author>
     <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
@@ -12,6 +12,44 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[株式会社ラクスを退職しました]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/08/29/quit-working-at-rakus/"/>
+    <updated>2014-08-29T15:45:19+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/08/29/quit-working-at-rakus</id>
+    <content type="html"><![CDATA[<p>8月31日をもって、<a href="http://www.rakus.co.jp/">株式会社ラクス</a>を退職しました。29日が最終出社日です。
+入社は2012年3月1日ですので、2年半お世話になりました。</p>
+
+<p>入社してからというもの、<a href="http://www.rignite.com/">Rignite</a> という
+ソーシャルメディアマーケティング用Webサービスの開発に従事しておりました。</p>
+
+<p>技術的にも色々なものに触れることができました。
+トピックだけでも書くと…何と言いますか、特殊なことばっかりやっていた気がします。
+それもこれも、チームのメンバーに恵まれた結果かなと思っています。</p>
+
+<ul>
+<li>Python (NLTK, scikit-learnを使った感情解析やデータサイエンス的な分析)
+** Pythonとの出会いから、<a href="http://osakapy.connpass.com/">大阪Pythonユーザの集まり</a>のコミュティができました！</li>
+<li>Node.js (Socket.IOによるリアルタイム通信)</li>
+<li>Go (結局実戦投入できなかったけど、社外で初めて勉強会を開催した。え？第2回？てへぺろ)</li>
+<li>クライアント側のJavaScriptフレームワーク(AngularJS, Ember.js)</li>
+</ul>
+
+
+<p>一方、自分が技術だけに突き進んでいいのか？という気持ちも湧いてきており、
+もっとチーム力の底上げをしていく仕事もしたいと思うようになりました。
+そして将来的には、経営とITを融合させるためにはどうすればいいかを、考え実践していく…</p>
+
+<p>そう考えたとき、今のポジションは適切ではないのだろう、と考えてしまったわけです。</p>
+
+<p>というわけで、早速来週9月1日から、新たな会社で新たなポジションとして、
+心機一転、頑張っていく所存であります！
+結局技術もバリバリやりますけどね！</p>
+
+<p>※時間切れでコレ以上書けない…</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[決定木の表示に変数名を表示する]]></title>
@@ -1287,33 +1325,6 @@ Pythonの勉強会に参加するのは初めてなので、Pythonはそうい�
 
 <p>今回のエラーから必要なのは、<code>__lt__</code> メソッドをオーバーライドしてあげれば良いと分かり、
 早速Aクラスに<code>__lt__</code>メソッドの詳細を実装したところ、うまく動きました。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Check iOでレベル10に到達した]]></title>
-    <link href="http://todoa2c.github.io/blog/2014/03/10/checkio-level-10/"/>
-    <updated>2014-03-10T18:51:13+09:00</updated>
-    <id>http://todoa2c.github.io/blog/2014/03/10/checkio-level-10</id>
-    <content type="html"><![CDATA[<p>ちまちまやっているCheck iOですが、ようやく<a href="http://www.checkio.org/user/todogzm/">レベル10に到達</a>しました。
-自分で解くのも面白いのですが、人のソースを読むのも非常に参考になります。</p>
-
-<p>例えば<a href="http://www.checkio.org/mission/three-points-circle/">Three Points Circle</a>ですが、
-私は別件で解いたように、<a href="http://manapedia.jp/text/index?text_id=658">3点を通る3つの連立方程式</a>を
-用いて解きました。
-方程式を解くだけではダメで、そこから<code>(x-x0)^2+(y-y0)^2=r^2</code>に変換すべく、もう一手間加えなければ、
-本当の回答にまで至らなかったわけで、少々面倒でした。</p>
-
-<p>一方、この問題を<a href="http://ja.wikipedia.org/wiki/%E5%A4%96%E6%8E%A5%E5%86%86">外接円</a>の
-外心を求める問題だと気付けば、半径と位置をより容易に解くことができるわけです。</p>
-
-<p>この解き方をしていたのは日本人の競技プログラマーですが、
-競技プログラミングにおいては、問題の適切な定義と解き方の引き出しが
-尋常じゃなく沢山あるのかもしれません。
-もしくは、私の引き出しが少なすぎるのかもしれません orz</p>
-
-<p>競技プログラミング用のアルゴリズムの学習も、今後はしていきたいですね。
-一応本も一冊持っていることですし(ざっとは読んだけど理解は…ってレベル)</p>
 ]]></content>
   </entry>
   

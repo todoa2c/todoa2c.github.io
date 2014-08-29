@@ -9,8 +9,10 @@
   <meta name="author" content="Atsushi Kanaya (todoa2c)">
 
   
-  <meta name="description" content="前置き 最近、会社のチーム内でコーチング研修が何回かありました。
-コーチングとは何かについては、コーチング &ndash; Wikipediaから引用するに留めます。 コーチング（coaching）とは、人材開発の技法の1つ。対話によって相手の自己実現や目標達成を図る技術である。相手の話をよく聴き &hellip;">
+  <meta name="description" content="ちまちまやっているCheck iOですが、ようやくレベル10に到達しました。
+自分で解くのも面白いのですが、人のソースを読むのも非常に参考になります。 例えばThree Points Circleですが、
+私は別件で解いたように、3点を通る3つの連立方程式を
+用いて解きました。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +80,60 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/03/10/checkio-level-10/">Check iOでレベル10に到達した</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-10T18:51:13+09:00" pubdate data-updated="true">2014-03-10</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>ちまちまやっているCheck iOですが、ようやく<a href="http://www.checkio.org/user/todogzm/">レベル10に到達</a>しました。
+自分で解くのも面白いのですが、人のソースを読むのも非常に参考になります。</p>
+
+<p>例えば<a href="http://www.checkio.org/mission/three-points-circle/">Three Points Circle</a>ですが、
+私は別件で解いたように、<a href="http://manapedia.jp/text/index?text_id=658">3点を通る3つの連立方程式</a>を
+用いて解きました。
+方程式を解くだけではダメで、そこから<code>(x-x0)^2+(y-y0)^2=r^2</code>に変換すべく、もう一手間加えなければ、
+本当の回答にまで至らなかったわけで、少々面倒でした。</p>
+
+<p>一方、この問題を<a href="http://ja.wikipedia.org/wiki/%E5%A4%96%E6%8E%A5%E5%86%86">外接円</a>の
+外心を求める問題だと気付けば、半径と位置をより容易に解くことができるわけです。</p>
+
+<p>この解き方をしていたのは日本人の競技プログラマーですが、
+競技プログラミングにおいては、問題の適切な定義と解き方の引き出しが
+尋常じゃなく沢山あるのかもしれません。
+もしくは、私の引き出しが少なすぎるのかもしれません orz</p>
+
+<p>競技プログラミング用のアルゴリズムの学習も、今後はしていきたいですね。
+一応本も一冊持っていることですし(ざっとは読んだけど理解は…ってレベル)</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -902,314 +958,6 @@ Windows Updateも失敗しまくるし…環境を作り直して1年経って�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/02/13/beginning-appengine-go/">GoでGoogle App Engineを触るテスト</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-02-13T16:50:18+09:00" pubdate data-updated="true">2014-02-13</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>はじめに</h1>
-
-<p>Google App Engineを初めて触ることにしました。
-しかもみんな大好き<a href="http://golang.org/">プログラミング言語Go</a>で。
-ここ最近Gopher Tシャツを着てPythonコードを書くことが多かったので、
-リハビリも兼ねつつGoogle App Engineでのスピンアップ最速と言われるGoを
-採用することにしました。
-以下は作業メモです。</p>
-
-<h2>準備</h2>
-
-<p>開発環境は<a href="https://developers.google.com/appengine/docs/go/gettingstarted/devenvironment">The Development Environment</a>に書かれている。
-Goの環境はSDKに含まれているけれど、別途Python 2.7が必要。
-ローカルでサーバーを起動するなどで必要らしい。
-既にPython 2.7は入れていたので、そのまま次に進む。</p>
-
-<p><a href="https://developers.google.com/appengine/docs/go/gettingstarted/introduction">GAE/g のチュートリアル(英語)</a>を読む。噂に違わず、Goの標準APIで大体の事が書けそうな雰囲気を掴む。</p>
-
-<p><a href="https://developers.google.com/appengine/docs/go/gettingstarted/usingdatastore">Using the Datastore</a>の部分は正直よく分かっていない。</p>
-
-<p>あとはざっと<a href="https://developers.google.com/appengine/docs/go/apis">Go Service APIs</a>にも目を通す。</p>
-
-<h2>書いてみる</h2>
-
-<p>今回作ろうと思ったものは、GitHubに多少絡むものなので、
-GitHub APIも使ってみることにする。</p>
-
-<p>幸いGoogleが<a href="https://github.com/google/go-github">go-github</a>を公開しているので、
-下記のコマンドで使えるようにする。
-go-githubには書かれていなかったが、
-go-githubが<a href="https://github.com/google/go-querystring">go-querystring</a>に依存しているようなので、
-合わせて入れる。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>go get github.com/google/go-github
-</span><span class='line'>go get github.com/google/go-querystring</span></code></pre></td></tr></table></div></figure>
-
-
-<p>上記で取得できたライブラリを、プロジェクトフォルダと同じ場所に置く。
-環境変数GOPATHの参照先に置く、といういつものルールではないことに注意が必要。</p>
-
-<p>実際に、GitHub APIのSearch APIを叩いてみる。
-とりあえずgo-githubのサンプル通りに…</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>package front
-</span><span class='line'>
-</span><span class='line'>import (
-</span><span class='line'>  "github.com/google/go-github/github"
-</span><span class='line'>  "html/template"
-</span><span class='line'>  "net/http"
-</span><span class='line'>)
-</span><span class='line'>
-</span><span class='line'>func init() {
-</span><span class='line'>  http.HandleFunc("/", index)
-</span><span class='line'>  http.HandleFunc("/find", find)
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>func index(w http.ResponseWriter, r *http.Request) {
-</span><span class='line'>  if err := indexTemplate.Execute(w, nil); err != nil {
-</span><span class='line'>      http.Error(w, err.Error(), http.StatusInternalServerError)
-</span><span class='line'>  }
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>var indexTemplate = template.Must(template.New("index").Parse(indexTemplateHTML))
-</span><span class='line'>
-</span><span class='line'>const indexTemplateHTML = `
-</span><span class='line'>&lt;html&gt;
-</span><span class='line'>  &lt;body&gt;
-</span><span class='line'>    &lt;form action="/find" method="get"&gt;
-</span><span class='line'>      &lt;div&gt;&lt;input type="text" name="q"&gt;&lt;/div&gt;
-</span><span class='line'>      &lt;div&gt;&lt;input type="submit" value="Search"&gt;&lt;/div&gt;
-</span><span class='line'>    &lt;/form&gt;
-</span><span class='line'>  &lt;/body&gt;
-</span><span class='line'>&lt;/html&gt;
-</span><span class='line'>`
-</span><span class='line'>
-</span><span class='line'>func find(w http.ResponseWriter, r *http.Request) {
-</span><span class='line'>  client := github.NewClient(nil)
-</span><span class='line'>  query := r.FormValue("q")
-</span><span class='line'>
-</span><span class='line'>  opts := &github.SearchOptions{Sort: "forks", Order: "desc", ListOptions: github.ListOptions{Page: 1, PerPage: 20}}
-</span><span class='line'>  res, _, err := client.Search.Repositories(query, opts)
-</span><span class='line'>
-</span><span class='line'>  if err != nil {
-</span><span class='line'>      http.Error(w, err.Error(), http.StatusInternalServerError)
-</span><span class='line'>      return
-</span><span class='line'>  }
-</span><span class='line'>
-</span><span class='line'>  if err := findTemplate.Execute(w, res); err != nil {
-</span><span class='line'>      http.Error(w, err.Error(), http.StatusInternalServerError)
-</span><span class='line'>  }
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>var findTemplate = template.Must(template.New("find").Parse(findTemplateHTML))
-</span><span class='line'>
-</span><span class='line'>const findTemplateHTML = `
-</span><span class='line'>&lt;html&gt;
-</span><span class='line'>  &lt;body&gt;
-</span><span class='line'>      &lt;ul&gt;
-</span><span class='line'>    
-</span><span class='line'>      &lt;li&gt;&lt;a href=""&gt;&lt;/a&gt;&lt;/li&gt;
-</span><span class='line'>    
-</span><span class='line'>  &lt;/ul&gt;
-</span><span class='line'>  &lt;/body&gt;
-</span><span class='line'>&lt;/html&gt;
-</span><span class='line'>`</span></code></pre></td></tr></table></div></figure>
-
-
-<p>で、<code>goapp serve</code>によりアプリを起動して、<code>http://localhost:8080/</code>にアクセスして、
-いざ検索実行！</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Get https://api.github.com/search/repositories?order=desc&page=1&per_page=20&q=abc&sort=forks:
-</span><span class='line'>http.DefaultTransport and http.DefaultClient are not available in App Engine.
-</span><span class='line'>See https://developers.google.com/appengine/docs/go/urlfetch/overview</span></code></pre></td></tr></table></div></figure>
-
-
-<p>ちーん。エラーが返ってきた。
-そう言えば<a href="https://developers.google.com/appengine/docs/go/urlfetch/">URL Fetch Go API Overview</a>に、
-GAE環境用のHTTP clientを取得する必要があると書かれていたのを思い出す。</p>
-
-<p>で、import文とfind関数を以下のように変更する。
-appengine, appengine/urlfetchの2つをimportすることと、
-<code>appengine.NewContext(r)</code>でContextなるものを取得し、それを使って<code>urlfetch.Client(c)</code>で
-GAE環境用HTTP clientを取得するように変更した。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>import (
-</span><span class='line'>  "appengine"
-</span><span class='line'>  "appengine/urlfetch"
-</span><span class='line'>  "github.com/google/go-github/github"
-</span><span class='line'>  "html/template"
-</span><span class='line'>  "net/http"
-</span><span class='line'>)
-</span><span class='line'>
-</span><span class='line'>func find(w http.ResponseWriter, r *http.Request) {
-</span><span class='line'>  // 下記の2行でApp Engine上でURL Fetchができる
-</span><span class='line'>  c := appengine.NewContext(r)  
-</span><span class='line'>  client := github.NewClient(urlfetch.Client(c))
-</span><span class='line'>
-</span><span class='line'>  query := r.FormValue("q")
-</span><span class='line'>
-</span><span class='line'>  opts := &github.SearchOptions{Sort: "forks", Order: "desc", ListOptions: github.ListOptions{Page: 1, PerPage: 20}}
-</span><span class='line'>  res, _, err := client.Search.Repositories(query, opts)
-</span><span class='line'>
-</span><span class='line'>  if err != nil {
-</span><span class='line'>      http.Error(w, err.Error(), http.StatusInternalServerError)
-</span><span class='line'>      return
-</span><span class='line'>  }
-</span><span class='line'>
-</span><span class='line'>  if err := findTemplate.Execute(w, res); err != nil {
-</span><span class='line'>      http.Error(w, err.Error(), http.StatusInternalServerError)
-</span><span class='line'>  }
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>これで何とか動いた。
-このくらいの内容であれば、あまり困らずにGoで書けることに驚き。</p>
-
-<h2>デプロイ</h2>
-
-<p>デプロイは事前に<a href="https://appengine.google.com/">Applications Overview</a>で
-アプリケーションを登録しておき、app.yamlのアプリケーション名と名前を合わせて(よく分かってない)、
-<code>goapp deploy</code>コマンドでデプロイできる。</p>
-
-<p>私は2段階認証を使っているので、事前にデプロイ用の固有パスワードを取得しておいた。</p>
-
-<p>デプロイは割とあっさり完了し、普通にGAE/Go環境が本番環境でも動いている。凄い…
-次はDatastoreまわりを学んでいこうっと。</p>
-
-<h2>分からない点</h2>
-
-<ul>
-<li>appengine.NewContextとは？</li>
-<li>go-githubのSearchOptionsの詳細</li>
-<li>Datastore</li>
-<li>スケジュール実行</li>
-<li>GAE/gに適したフレームワークってあるのかしら？</li>
-<li>関係ないけどそろそろシンタックスハイライトをこのブログでも使いたい</li>
-<li>これまた関係ないけどF-SecureがひたすらWebアプリの実行を邪魔してツラい。</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -1227,6 +975,10 @@ GAE環境用HTTP clientを取得するように変更した。</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/08/29/quit-working-at-rakus/">株式会社ラクスを退職しました</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/08/25/decision-tree-feature-names/">決定木の表示に変数名を表示する</a>
       </li>
     
@@ -1240,10 +992,6 @@ GAE環境用HTTP clientを取得するように変更した。</p>
     
       <li class="post">
         <a href="/blog/2014/07/07/intellij-git-revision-graph/">IntelliJ IDEAでGitのRevision Graphが表示できる</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/24/developing-oss-release-checker/">OSS Release Checkerというサービスを開発しています</a>
       </li>
     
   </ul>

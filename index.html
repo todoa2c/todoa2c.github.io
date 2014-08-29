@@ -9,10 +9,9 @@
   <meta name="author" content="Atsushi Kanaya (todoa2c)">
 
   
-  <meta name="description" content="決定木を描画できたのはいいのですが、「変数が0数えで何番目かをいちいち数えなきゃいけないのが不便！」
-というお声をいただきまして、早速調査しました。 結論から言いますと、できました。
-sklearn.tree.export_graphviz
-関数の引数に、 &hellip;">
+  <meta name="description" content="8月31日をもって、株式会社ラクスを退職しました。29日が最終出社日です。
+入社は2012年3月1日ですので、2年半お世話になりました。 入社してからというもの、Rignite という
+ソーシャルメディアマーケティング用Webサービスの開発に従事しておりました。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +79,71 @@ sklearn.tree.export_graphviz
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/29/quit-working-at-rakus/">株式会社ラクスを退職しました</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-29T15:45:19+09:00" pubdate data-updated="true">2014-08-29</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>8月31日をもって、<a href="http://www.rakus.co.jp/">株式会社ラクス</a>を退職しました。29日が最終出社日です。
+入社は2012年3月1日ですので、2年半お世話になりました。</p>
+
+<p>入社してからというもの、<a href="http://www.rignite.com/">Rignite</a> という
+ソーシャルメディアマーケティング用Webサービスの開発に従事しておりました。</p>
+
+<p>技術的にも色々なものに触れることができました。
+トピックだけでも書くと…何と言いますか、特殊なことばっかりやっていた気がします。
+それもこれも、チームのメンバーに恵まれた結果かなと思っています。</p>
+
+<ul>
+<li>Python (NLTK, scikit-learnを使った感情解析やデータサイエンス的な分析)
+** Pythonとの出会いから、<a href="http://osakapy.connpass.com/">大阪Pythonユーザの集まり</a>のコミュティができました！</li>
+<li>Node.js (Socket.IOによるリアルタイム通信)</li>
+<li>Go (結局実戦投入できなかったけど、社外で初めて勉強会を開催した。え？第2回？てへぺろ)</li>
+<li>クライアント側のJavaScriptフレームワーク(AngularJS, Ember.js)</li>
+</ul>
+
+
+<p>一方、自分が技術だけに突き進んでいいのか？という気持ちも湧いてきており、
+もっとチーム力の底上げをしていく仕事もしたいと思うようになりました。
+そして将来的には、経営とITを融合させるためにはどうすればいいかを、考え実践していく…</p>
+
+<p>そう考えたとき、今のポジションは適切ではないのだろう、と考えてしまったわけです。</p>
+
+<p>というわけで、早速来週9月1日から、新たな会社で新たなポジションとして、
+心機一転、頑張っていく所存であります！
+結局技術もバリバリやりますけどね！</p>
+
+<p>※時間切れでコレ以上書けない…</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -994,69 +1058,6 @@ developブランチにコミットがあった場合にステージング環境�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/22/appengine-python-traps/">App Engine/Pythonでハマった初心者向けトラップ</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-05-22T20:08:31+09:00" pubdate data-updated="true">2014-05-22</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>早速いくつかトラップにハマりました。</p>
-
-<h1>requestsパッケージがApp Engineで動かない</h1>
-
-<p>App Engine/Pythonは<a href="https://developers.google.com/appengine/docs/python/urlfetch/?hl=ja">URL Fetch Python API Overview</a>
-にあるように、標準ライブラリのurllib, urllib2, httplibであればそのままURL Fetchが使えました。</p>
-
-<p>一方、GitHubのAPIを叩く際に使っていた<a href="https://github.com/sigmavirus24/github3.py">github3.py</a>は
-内部的に<a href="https://github.com/kennethreitz/requests">requests</a>ライブラリを使用しているわけですが、
-このrequestsライブラリですと、App Engineでは動かないのです。
-更にこのrequestsライブラリの中で使われているurllib3はApp Engine内で動くらしいのですが…動かず。無念。</p>
-
-<p>結局他のGitHub APIライブラリを使用しました。</p>
-
-<h1>GoogleAppEngineLauncher.appアップデート後の罠</h1>
-
-<p>GoogleAppEngineLauncher.appアップデート後は、一度は起動しないと最新モジュールが
-適用されないみたいです。
-私はIntelliJ IDEAを使っており、そのIntelliJ IDEAが参照する<code>google_appengine</code>フォルダは
-<code>/usr/local/google_appengine</code> ではなく、GoogleAppEngineLauncher.app内の結構深いところにある
-<code>google_appengine</code>フォルダを参照します。</p>
-
-<p>で、GoogleAppEngineLauncher.app がアップデートされたあとは、この <code>google_appengine</code>フォルダが
-見当たらないのです。その代わり、google_appengine.zip はある。
-一度起動することにより、google_appengine.zipが解凍されて <code>google_appengine</code>フォルダが
-作られる模様ですね。。。気づかんわこれ。</p>
-
-<p>こちらからは以上です。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1072,6 +1073,10 @@ developブランチにコミットがあった場合にステージング環境�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/08/29/quit-working-at-rakus/">株式会社ラクスを退職しました</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/08/25/decision-tree-feature-names/">決定木の表示に変数名を表示する</a>
       </li>
     
@@ -1085,10 +1090,6 @@ developブランチにコミットがあった場合にステージング環境�
     
       <li class="post">
         <a href="/blog/2014/07/07/intellij-git-revision-graph/">IntelliJ IDEAでGitのRevision Graphが表示できる</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/24/developing-oss-release-checker/">OSS Release Checkerというサービスを開発しています</a>
       </li>
     
   </ul>
