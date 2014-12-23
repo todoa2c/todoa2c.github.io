@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Node.js | 技術情報棚卸し(平日限定)]]></title>
+  <link href="http://todoa2c.github.io/blog/categories/node-dot-js/atom.xml" rel="self"/>
+  <link href="http://todoa2c.github.io/"/>
+  <updated>2014-12-23T22:52:43+09:00</updated>
+  <id>http://todoa2c.github.io/</id>
+  <author>
+    <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Qiitaにnpm Installでpeerinvalidエラーが出た際のエラー解消方法を書いた＋α]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/06/16/npm-update-peerinvalid/"/>
+    <updated>2014-06-16T19:11:45+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/06/16/npm-update-peerinvalid</id>
+    <content type="html"><![CDATA[<p>何度かハマるので、メモ的に書いておきました。</p>
+
+<p><a href="http://qiita.com/todogzm/items/e965c47f888c23da1c0a">npm installでpeerinvalidエラーが出た時の解消方法</a></p>
+
+<p>ところで、今作っているサービスのデプロイの際に、npmからモジュールを都度取ってきて
+処理を行う的な部分があるのですが、npmに上がっているモジュールに問題があった場合に
+デプロイの処理が止まってしまう問題があります。
+対策としてはnpmに上がっているモジュールのバージョンを固定にしてしまうことだとは
+思うのですが、一方で開発の際には、なるべく最新のモジュールを使うべく、
+このバージョン以降を使う、という設定をしています(Qiitaに載せてるpackage.jsonみたいに)。</p>
+
+<p>ローカル開発環境と、ステージング＆本番環境では、package.jsonの管理方法を変えるのが良いか、
+はたまたどちらも統一してしまうべきか、少々悩ましいです。</p>
+
+<p>皆様がどうされているのか、教えていただければ嬉しいですね。</p>
+]]></content>
+  </entry>
+  
+</feed>

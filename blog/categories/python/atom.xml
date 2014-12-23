@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Python | 技術情報棚卸し(平日限定)]]></title>
+  <link href="http://todoa2c.github.io/blog/categories/python/atom.xml" rel="self"/>
+  <link href="http://todoa2c.github.io/"/>
+  <updated>2014-12-23T22:52:43+09:00</updated>
+  <id>http://todoa2c.github.io/</id>
+  <author>
+    <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[決定木の表示に変数名を表示する]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/08/25/decision-tree-feature-names/"/>
+    <updated>2014-08-25T20:55:28+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/08/25/decision-tree-feature-names</id>
+    <content type="html"><![CDATA[<p>決定木を描画できたのはいいのですが、「変数が0数えで何番目かをいちいち数えなきゃいけないのが不便！」
+というお声をいただきまして、早速調査しました。</p>
+
+<p>結論から言いますと、できました。
+<a href="http://scikit-learn.org/stable/modules/generated/sklearn.tree.export_graphviz.html">sklearn.tree.export_graphviz</a>
+関数の引数に、<code>feature_names</code>を渡せばよかったです。</p>
+
+<p>変更後のプログラムはこちら。<code>export_graphviz</code>関数の引数に、<code>feature_names=variables</code>を渡しています。</p>
+
+<p>```
+import pandas as pd
+from sklearn import tree</p>
+
+<p>data = pd.read_table(&lsquo;iris.txt&rsquo;)
+variables = [&lsquo;Sepal.Length&rsquo;, &lsquo;Sepal.Width&rsquo;, &lsquo;Petal.Length&rsquo;, &lsquo;Petal.Width&rsquo;]</p>
+
+<p>classifier = tree.DecisionTreeClassifier(min_samples_leaf=3, max_depth=3)
+classifier = classifier.fit(data[variables], data[&lsquo;Species&rsquo;])</p>
+
+<p>with open(&lsquo;graph.dot&rsquo;, &lsquo;w&rsquo;) as f:</p>
+
+<pre><code>f = tree.export_graphviz(classifier, out_file=f, feature_names=variables)
+</code></pre>
+
+<p>```</p>
+
+<p>結果得られた決定木はこちら。非常に見やすくなりました！</p>
+
+<p><img src="/images/contents/20140825-feature-names.png" alt="変数名表示バージョン" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Pythonで決定木を描いてみる]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/08/12/writing-decision-tree/"/>
+    <updated>2014-08-12T11:48:47+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/08/12/writing-decision-tree</id>
+    <content type="html"><![CDATA[<h1>はじめに</h1>
+
+<p>データ分析が必要な局面がぼちぼち出てきましたので、まずは簡単な決定木を用いて
+分析結果の可視化をしようじゃないか、というのが今回の目論見です。</p>
+
+<h2>決定木とは</h2>
+
+<p>決定木とは、scikit-learnの<a href="http://scikit-learn.org/stable/modules/tree.html">1.8. Decision Trees</a>によると、
+分類や回帰を行うために使われる、ノンパラメトリックな教師あり学習のひとつ、とあります。
+また、目的は、学習データ中の特徴(説明変数)を用いて、目的変数の推測を行えるモデルを作ること、だそうです。</p>
+
+<p>ナンノコッチャ？ですので例を挙げますと、例えばある有料サービスに申し込んでくれる人を増やすために、
+今までの履歴からどういったお客様が有料サービスに申し込んでくれたか、を調査するとします。
+無料サービスA, B, Cがあったとして、どれとどれをどのくらい使っている人が
+有料サービスを申し込んでくれるか、こういうことを考えたいわけですね。
+ここで言う無料サービスA, B, Cが説明変数で、有料サービスに申し込むかどうかが目的変数になります。</p>
+
+<p>決定木を使うことにより、Aのサービスを10回使って、かつCのサービスを1回以上使ったお客様は
+有料サービスを申し込んでくれる可能性が高い、というモデルを構築することが出来ます。
+また、モデルが構築できたら、そのモデルを用いて、有料サービスを申し込む前から
+今までの行動から、お客様が有料サービスに申し込んでくれるかどうかを推定することができるようになるわけです。</p>
+
+<h2>必要なライブラリ</h2>
+
+<ul>
+<li><a href="http://www.python.org/">Python</a> (今回使うライブラリは2/3互換です。私は3.3系を使っています)</li>
+<li><a href="http://scikit-learn.org/">scikit-learn</a> (インストール方法は<a href="http://scikit-learn.org/stable/install.html">Installing scikit-learn</a>参照)</li>
+<li><a href="http://pandas.pydata.org/">pandas</a> (インストール方法は<a href="http://pandas.pydata.org/pandas-docs/stable/install.html">Installation</a>参照)</li>
+<li><a href="http://www.graphviz.org/">Graphviz</a> (インストール方法は<a href="http://www.graphviz.org/Download..php">Download</a>またはMacなら<code>brew install graphviz</code>でOK)</li>
+</ul>
+
+
+<h1>分析の手順</h1>
+
+<h2>データの準備</h2>
+
+<p>まずは自分の分析したいデータを用意します。…といっても、すぐに用意できないことがあるかと思いますので、
+こちらに事前に調理しておいた…いやいや、日本語解説付きのデータセットがありますので、
+気になるデータを使用してみてください。
+<a href="http://d.hatena.ne.jp/hoxo_m/20120214/p1">統計を学びたい人へ贈る、統計解析に使えるデータセットまとめ</a></p>
+
+<p>ここでは、Irisデータを使用します。</p>
+
+<h2>決定木の作成</h2>
+
+<p>データの読み込み・選定あたりでpandasを使用し、実際の学習でscikit-learnを使用します。
+下記のようなコードを書き、実行してください。
+<code>graph.dot</code>というファイルが生成されます。</p>
+
+<p>```
+import pandas as pd
+from sklearn import tree</p>
+
+<h1>サンプルデータ(タブ区切り)の読み込み</h1>
+
+<p>data = pd.read_table(&lsquo;iris.txt&rsquo;)</p>
+
+<h1>説明変数</h1>
+
+<p>variables = [&lsquo;Sepal.Length&rsquo;, &lsquo;Sepal.Width&rsquo;, &lsquo;Petal.Length&rsquo;, &lsquo;Petal.Width&rsquo;]</p>
+
+<h1>決定木の分類器を作成。各種設定は引数に与える</h1>
+
+<p>classifier = tree.DecisionTreeClassifier()</p>
+
+<h1>決定木の分類器にサンプルデータを食わせて学習。目的変数はSpecies</h1>
+
+<p>classifier = classifier.fit(data[variables], data[&lsquo;Species&rsquo;])</p>
+
+<h1>学習した結果をGraphvizが認識できる形式にして出力する</h1>
+
+<p>with open(&lsquo;graph.dot&rsquo;, &lsquo;w&rsquo;) as f:</p>
+
+<pre><code>f = tree.export_graphviz(classifier, out_file=f)
+</code></pre>
+
+<p>```</p>
+
+<h2>PDFによる可視化</h2>
+
+<p>上記のコードより得られる結果は <code>graph.dot</code> というファイルなのですが、
+これだけ見てもよく分かりません。
+そこで、下記コマンドを実行し、PDF変換します。</p>
+
+<p><code>
+dot -Tpdf graph.dot -o graph.pdf
+</code></p>
+
+<p>結果を見てみましょう。</p>
+
+<p><img src="/images/contents/20140812-default-tree.png" alt="未設定で生成した決定木" /></p>
+
+<p>見方は、上から順番に、説明変数を0から数えて2番め(<code>Petal.Length</code>)が2.45以下か
+否かで、Yesなら左、Noなら右に進んでいくことで分類していきます。
+Yesならsetosa全データが入っているので、これは分類が容易だと分かります。
+Noなら、次は<code>Petal.Width</code>が1.75以下か否かで…というかたちで見ていけばよいです。</p>
+
+<p>決定木は分類ルールが生成されるので、人にとっても解釈しやすいですね。</p>
+
+<h2>分類ルールは機能するのか？ ： 交差検定</h2>
+
+<p>ところで今回得られた結果には、大きな問題が2つあります。
+ひとつは、未知のデータに対しても有効かどうかが分かりません。
+もうひとつは、過学習している可能性が高いことです。</p>
+
+<p>過学習とは、与えられた学習データにフィットしすぎた結果、
+未知のデータに対して正しい分類ができない状態のことです。
+今回の決定木も、非常に細かいところまで分類しています。
+例えば<code>Petal.Width &lt;= 1.75</code>のとき、90%の確率でversicolorになるはずなのですが、
+その条件下で<code>Petal.Width &gt; 1.65</code>のときはvirginicaである、と分類しています。
+要するに、<code>1.65 &lt; Petal.Width &lt;= 1.75</code>のときはvirginicaである、という
+細かい分類をしてしまうわけです。
+この結果は確かに与えられた学習データに対してはうまくいきますが、
+未知のデータに対しては、分類が細かすぎて誤分類してしまう可能性が高まります。</p>
+
+<p>そこで、分類データを何個かに分割して、大部分を決定木の作成に使用し、
+残る一部のデータを、その決定木の性能測定に使用します。
+この操作を「交差検定 (Cross-validation)」と言います。</p>
+
+<p>早速交差検定をやってみましょう。</p>
+
+<p>```
+import pandas as pd
+import numpy as np
+from sklearn import tree, cross_validation</p>
+
+<p>data = pd.read_table(&lsquo;iris.txt&rsquo;)</p>
+
+<h1>データがSpecies順になっているので、シャッフルする</h1>
+
+<p>data = data.reindex(np.random.permutation(data.index))
+variables = [&lsquo;Sepal.Length&rsquo;, &lsquo;Sepal.Width&rsquo;, &lsquo;Petal.Length&rsquo;, &lsquo;Petal.Width&rsquo;]</p>
+
+<p>classifier = tree.DecisionTreeClassifier()</p>
+
+<h1>ここが差分。交差検定を5分割して、4つのデータセットと1つの検証データに分けて精度を計算</h1>
+
+<h1>それを5回実施した結果を返す</h1>
+
+<p>scores = cross_validation.cross_val_score(classifier, data[variables], data[&lsquo;Species&rsquo;], cv=5)</p>
+
+<p>print(scores.mean(), scores)
+```</p>
+
+<p>結果は下記のように出力されます(データセットを本プログラム起動時にシャッフルしているため、
+結果は常に異なった値になります)。
+この場合、94.67%の精度で分類ができていることになります。何となく良さげな精度？ですが、
+100個のデータを与えたら、5〜6個は間違えるよ、という精度ですね。</p>
+
+<p><code>
+0.946666666667 [ 1.          0.93333333  1.          0.9         0.9       ]
+</code></p>
+
+<h2>過学習の対策</h2>
+
+<p>決定木の過学習を抑える対策は、大きく分けて2つあります。</p>
+
+<ol>
+<li>子ノードに存在するデータ数の最小値を設ける</li>
+<li>ツリーの深さを制限する</li>
+</ol>
+
+
+<p>1.の方は、先ほどの<code>Petal.Width</code>の例を防ぐ事ができるようになります。
+本設定を使用するには、<code>tree.DecisionTreeClassifier</code>のコンストラクタ引数で設定を入れましょう。</p>
+
+<p><code>
+classifier = tree.DecisionTreeClassifier(min_samples_leaf=2)  # 最低2件のデータが必要
+</code></p>
+
+<p>2.の方の設定は、下記のように行います。
+ルートノードを0として、子ノードまでが1、孫ノードまでが2…と設定します。</p>
+
+<p><code>
+classifier = tree.DecisionTreeClassifier(max_depth=3)
+</code></p>
+
+<p>そして、2つのパラメーターをどう設定するのが良いか…これはもう計算してもらいましょう。
+<code>min_samples_leaf</code>を1〜7、<code>max_depth</code>を2〜8、それぞれの組み合わせで精度を計算します。</p>
+
+<p>```
+import pandas as pd
+import numpy as np
+from sklearn import tree, cross_validation</p>
+
+<p>data = pd.read_table(&lsquo;iris.txt&rsquo;)
+data = data.reindex(np.random.permutation(data.index))
+variables = [&lsquo;Sepal.Length&rsquo;, &lsquo;Sepal.Width&rsquo;, &lsquo;Petal.Length&rsquo;, &lsquo;Petal.Width&rsquo;]</p>
+
+<p>for min_samples_leaf in range(1, 7):</p>
+
+<pre><code>for max_depth in range(2, 8):
+    classifier = tree.DecisionTreeClassifier(
+            min_samples_leaf=min_samples_leaf, max_depth=max_depth)
+    scores = cross_validation.cross_val_score(classifier, data[variables], data['Species'], cv=5)
+    print('{0:.3f}\t{1}\t{2}'.format(scores.mean(), min_samples_leaf, max_depth))
+</code></pre>
+
+<p>```</p>
+
+<p>結果はこちら。平均精度、<code>min_samples_leaf</code>、<code>max_depth</code>の順番です。
+<code>
+0.933   1   2
+0.953   1   3
+0.947   1   4
+0.953   1   5
+0.953   1   6
+0.940   1   7   # 未設定時
+0.933   2   2
+0.953   2   3
+0.940   2   4
+0.940   2   5
+0.940   2   6
+0.940   2   7
+0.933   3   2
+0.967   3   3   # 最良
+0.967   3   4
+0.967   3   5
+0.967   3   6
+0.967   3   7
+0.933   4   2
+0.960   4   3
+0.960   4   4
+0.960   4   5
+0.960   4   6
+0.960   4   7
+0.933   5   2
+0.960   5   3
+0.960   5   4
+0.960   5   5
+0.960   5   6
+0.960   5   7
+0.933   6   2
+0.947   6   3
+0.947   6   4
+0.947   6   5
+0.947   6   6
+0.947   6   7
+</code></p>
+
+<p>100個のデータを与えたら6個間違えるパラメーター未設定時と比較し、最良の場合は
+100個のデータを与えたら3〜4個間違える程度まで軽減されました。
+ちなみに<code>min_samples_leaf=3, max_depth=3</code>のときの決定木はこちら。</p>
+
+<p><img src="/images/contents/20140812-best-parameters.png" alt="最良のパラメーターで生成した決定木" /></p>
+
+<p>ちなみに、パラメーターの調整には、scikit-learnにGrid Searchなる機能があり、
+各種パラメーターを入れ替えながら検証してくれる仕組みがあります。
+今回は使いませんでしたが、次回試してみるつもりです。</p>
+
+<h1>まとめ</h1>
+
+<p>Python + pandas + scikit-learn で決定木を計算する方法をご紹介しました。
+また、精度の計算に交差検定を使う方法と、決定木で過学習を抑えるための方法をご紹介しました。</p>
+
+<p>実際のデータに対して試してみると、思わぬ発見が出てきて楽しいですよ。
+是非お試しください。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[OSS Release Checkerというサービスを開発しています]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/06/24/developing-oss-release-checker/"/>
+    <updated>2014-06-24T19:58:33+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/06/24/developing-oss-release-checker</id>
+    <content type="html"><![CDATA[<p>オープンソースのプロジェクトについて、リリース情報を収集して一覧するサービスを作っています。
+その名もOSS Release Checkerという、いかにも日本人が付けたような名前です。</p>
+
+<p><a href="http://osschecker.appspot.com/">http://osschecker.appspot.com/</a></p>
+
+<p>うちの会社の業務で、ライブラリやフレームワークのリリース情報をチェックして報告する業務があります。
+それ毎日見るの面倒だからリリース情報のチェックを一手に引き受けてくれるサービスを作ったらえぇやん、というのが発想ですね。</p>
+
+<p>機能的な話ですが、まずはリリース情報の収集先はGitHubをターゲットにしています。
+検索画面から気になるプロジェクトを検索してウォッチしていけば、あとは自動的にリリース情報を収集してくれます。
+そして収集した結果、最新のリリースおよびタグ付けされたリポジトリが、画面に一覧表示される、という寸法です。</p>
+
+<p>直近の目標はこんな感じです。
+GitHubのアカウントでOAuthした上で、自分のウォッチしたいリポジトリを登録しておきます。
+そして、ウォッチしているリポジトリに更新があればGitHubのメールアドレスに対してメール通知すると。
+これができたら、自分的にはいい感じですね。</p>
+
+<p>あとは見た目はもう少し何とかしたいですね。検索画面とか、Bootstrap感満載の画面とか…。
+ドメインを取ってみたもののApp Engineに適用しようと思ったらGoogle Appsが必要みたいで躊躇してたり…
+(Google Appsが必要じゃないケースもあるらしいが…)</p>
+
+<p>最後に、GitHubで何かしら開発されている方は、タグ付けだけでなく、GitHubのリリース機能を使用してください。
+リリース機能を使うことで、ただのタグ付けだけでなく、そのリリースがどういうものかを説明する場所と、モジュールの配布場所が提供されます。
+そして、私のサービスでも、リリース情報として取り込むことができるようになります。</p>
+
+<p>※ <a href="http://qiita.com/todogzm/items/db9f5f2cedf976379f84">GitHubのリリース機能を使う &ndash; Qiita</a> も
+合わせてご参照ください。</p>
+
+<p>こちらからは以上です。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[大阪Pythonユーザの集まり2014/05に参加＆発表してきた '#osakapy]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/06/02/attended-osaka-python-study-session/"/>
+    <updated>2014-06-02T19:30:00+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/06/02/attended-osaka-python-study-session</id>
+    <content type="html"><![CDATA[<h1>まえがき</h1>
+
+<p><a href="http://osakapy.connpass.com/">大阪Pythonユーザの集まり</a>の勉強会、
+<a href="http://osakapy.connpass.com/event/6369/">大阪Pythonユーザの集まり 2014/05</a>の
+企画、参加、発表してきました。</p>
+
+<p>まさか開始前に、高専談義が行われるとは…(私含め3名の高専出身者が参加されていました)。</p>
+
+<h1>発表内容</h1>
+
+<h2>Djangoの黒魔術</h2>
+
+<p><a href="http://www.slideshare.net/YasushiMasuda/django-boodoo">http://www.slideshare.net/YasushiMasuda/django-boodoo</a>">http://www.slideshare.net/YasushiMasuda/django-boodoo">http://www.slideshare.net/YasushiMasuda/django-boodoo</a></a></p>
+
+<p>増田さん (<a href="https://twitter.com/whosaysni">@whosaysni</a>) による、
+Djangoを使う上での黒魔術的な工夫。
+Djangoは触ったことがなかったので、黒魔術自体は参考になることはなかったものの、
+内部実装を交えた話があることで、ずいぶんと興味深く聞くことができた。
+スコープがスタックとして実装されており、上から順番に探索しているので、
+ネストした名前の解決もうまくいくと。</p>
+
+<h2>オープンCAEとPython</h2>
+
+<p><a href="http://www.slideshare.net/TatsuyaKatayama/caepython-35353509">http://www.slideshare.net/TatsuyaKatayama/caepython-35353509</a>">http://www.slideshare.net/TatsuyaKatayama/caepython-35353509">http://www.slideshare.net/TatsuyaKatayama/caepython-35353509</a></a></p>
+
+<p><a href="http://ofbkansai.sakura.ne.jp/">オープンCAE勉強会@関西</a>幹事の片山さんによる、
+オープンCAEに関する実装とPythonとの関連について。
+CAEとは<a href="http://ja.wikipedia.org/wiki/CAE">CAE &ndash; Wikipedia</a>によると、</p>
+
+<blockquote><p>コンピュータ技術を活用して製品の設計、製造や工程設計の事前検討の支援を行うこと、またはそれを行うツールである</p></blockquote>
+
+<p>とのこと。
+今回は、数値解析・シミュレーションなどで使われる計算を行うソフトウェアの
+オープンソース実装と、Pythonがどのように関係しているかをご紹介いただいた。
+今回ご紹介いただいたオープンソース実装には何かしらPythonのインターフェースがあり、
+最終的には、これらの実装をPythonでつなぐことを検討中とのことです。</p>
+
+<h2>Python 3世代が考える(?) Python 2/3コード共存戦略</h2>
+
+<p><a href="http://www.slideshare.net/AtsushiKanaya/python-python3and2">http://www.slideshare.net/AtsushiKanaya/python-python3and2</a>">http://www.slideshare.net/AtsushiKanaya/python-python3and2">http://www.slideshare.net/AtsushiKanaya/python-python3and2</a></a></p>
+
+<p>私の発表です。知らぬ間にPython 2.7を使っており、int / int でfloatが返ってきてハマった話から、
+Python 2でも3でもコードをメンテナンスしなければならない場合の、
+取りうる戦略とメリット・デメリットについて発表しました。</p>
+
+<h1>LT</h1>
+
+<h2>GAEでスパイクを捌く</h2>
+
+<p><a href="http://www.slideshare.net/idoojosjp/gae-32257210">http://www.slideshare.net/idoojosjp/gae-32257210</a>">http://www.slideshare.net/idoojosjp/gae-32257210">http://www.slideshare.net/idoojosjp/gae-32257210</a></a></p>
+
+<p>会津さん (<a href="https://twitter.com/Ido">@Ido</a>) による、瞬間的な大量リクエスト(スパイク)を
+App Engineでどのように捌くかについて。
+あるインスタンスが1秒間に捌けるリクエスト数から、予想される最大リクエスト数に対する
+インスタンスを事前に起動しておくことで対処する。
+4桁台のインスタンスを起動する的な話も…これはApp Engineならではと言った感じですね。</p>
+
+<h2>とあるプロジェクトでのPython導入事例</h2>
+
+<p><a href="http://www.hexacosa.net/documents/osakapy-20140529-lt">http://www.hexacosa.net/documents/osakapy-20140529-lt</a>">http://www.hexacosa.net/documents/osakapy-20140529-lt">http://www.hexacosa.net/documents/osakapy-20140529-lt</a></a></p>
+
+<p>服部さん (<a href="https://twitter.com/hhatto">@hhatto</a>) による、
+ソーシャルゲーム開発・運用周りで作ったツールの紹介。
+あちこちで使われており、自分もまだまだ業務改善する余地がありそうだなぁと反省…。</p>
+
+<h1>懇親会</h1>
+
+<p>実は当日までお店すら決めていなかったのです。
+今回は参加人数も多くないし、大丈夫だろうと高をくくっていたのですが、
+蓋を開けると勉強会参加者は20名、懇親会参加者も11名に。</p>
+
+<p>当日のお昼に急いで店を探して予約して、飲み放題プランで料金3500円ポッキリ、
+当日の参加もOKよ！というかたちにしました。</p>
+
+<p>また、前回は自分の終電の都合もあって23時解散にしたのですが、
+もう少しゆっくりしたい方々もいらっしゃるかもしれないと思い、
+実際の会計は増田さんにお願いしました。増田さん、ありがとうございます。</p>
+
+<p>懇親会では、Javaのコミュニティの大移動の話や、フリーランスとしての活動の話など、
+Python以外にも色々ためになる話を聞くことが出来ました。
+そしてまた今回もErlangいいよ、という話が聞こえてきたので、
+そろそろErlangを真面目に触ってみたほうがよいのかも…(いやいやそんな時間ないわ…)。</p>
+
+<h1>次回</h1>
+
+<p>まだ未定ですが、多分勉強会は8月開催だと思います。
+また、数時間程度のハッカソンは別途検討したいと考えています。
+土日の合宿もやってみたいですが、まずは平日のハッカソンかなぁ…。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Codeshipを使ったApp Engineへの継続的デリバリー]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/05/30/codeship-appengine-continuous-delivery/"/>
+    <updated>2014-05-30T11:13:17+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/05/30/codeship-appengine-continuous-delivery</id>
+    <content type="html"><![CDATA[<p>IntelliJ IDEAからApp Engineへのデプロイが簡単にできることは以前書いたのですが、
+自分のIntelliJ IDEAのローカルフォルダの情報がそのままデプロイされてしまうので、
+コミットしていないコードがそのままデプロイされてしまう危険性があります。
+また、デプロイの作業が自分しかできない、暗黙知化されるのも良くないわけです。</p>
+
+<p>こういった問題の解決策として継続的デリバリーを行うべく、
+実現できるサービスを探したところ、ありました。
+<a href="https://www.codeship.io/">Codeship</a>というサービスです。</p>
+
+<p>Codeshipは、扱えるコード、コードのホスト先だけでなく、
+コードを動かすクラウド環境(AWSやDigital Oceanなど)も選べるし、その際に必要となる
+デプロイやプロビジョニングツールも提供されており、
+テストから環境構築してデプロイまでを一手に引き受けてくれるサービスです。</p>
+
+<p>今回は、Bitbucketに置いてある自分のプライベートリポジトリを監視し、
+コードのPushがあったタイミングでテストを行い、
+かつmasterブランチに対するコミットがあった時点でApp Engineにデプロイする、
+というところまでをやってみました。</p>
+
+<p>基本的な実現方法は、下記をご参照ください。こっちの方が分かりやすいです。</p>
+
+<p><a href="http://blog.codeship.io/2014/01/21/continuous-deployment-google-app-engine-bitbucket-python-django.html">Continuous Deployment for Django apps from Bitbucket to Google App Engine &ndash; Codeship</a></p>
+
+<p>工夫した点は、設定面の工夫は特にありませんが、デプロイの仕方だけは少し工夫しています。
+GitのブランチをGit-flow風にして、developを開発用ブランチ、masterをリリース用ブランチにして、
+リリース時には、developの変更点をmasterにマージしてもらうようなPull Requestを
+Bitbucket上で作成します。</p>
+
+<p><img src="/images/contents/20140530-bitbucket-deploy-pr.png" alt="デプロイ用Pull Requestの変更点" /></p>
+
+<p>こうすることで、どのコミットがリリースに含まれるかが、リリース用Pull Requestを見れば
+一目瞭然になるわけです。</p>
+
+<p>※アイデアは <a href="http://d.hatena.ne.jp/naoya/20140502/1399027655">GitHub 時代のデプロイ戦略 &ndash; naoyaのはてなダイアリー</a>です。</p>
+
+<p>あとはデプロイはCodeshipにお願いすると。</p>
+
+<p><img src="/images/contents/20140530-codeship-deploy.png" alt="Codeshipによるデプロイ" /></p>
+
+<p>これでBitbucket上からのリリースもできるようになり、非常に快適になりました。
+あとは、今はまだステージング環境のようなものを用意していないのですが、
+developブランチにコミットがあった場合にステージング環境にデプロイもする、という設定を
+追加すると良いかもしれないですね。</p>
+
+<p>Codeshipは1ヶ月に50回のビルドまでであれば無料で使うことが出来ますので、
+ご興味のある方は、是非是非お試しください。</p>
+]]></content>
+  </entry>
+  
+</feed>

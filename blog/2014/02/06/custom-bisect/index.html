@@ -1,0 +1,421 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>カスタム条件で二分探索したい - 技術情報棚卸し(平日限定)</title>
+  <meta name="author" content="Atsushi Kanaya (todoa2c)">
+
+  
+  <meta name="description" content="Pythonのbisectの返す結果に戸惑った、
+と同僚に話したところ、「いや他の言語のライブラリも大体同じですよ」
+と言われたわけです。 戸惑った部分ですが、新人プログラマー野田さんの課題を
+解いている過程で、「指定した金額以下で一番大きい金額のインデックス」が欲しい、と思ったのですよね。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://todoa2c.github.io/blog/2014/02/06/custom-bisect">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="技術情報棚卸し(平日限定)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47839845-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">技術情報棚卸し(平日限定)</a></h1>
+  
+    <h2>todoa2cの技術情報棚卸しです。平日限定ってことはアレだ。言わせんな恥ずかしい。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:todoa2c.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">カスタム条件で二分探索したい</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-06T16:46:42+09:00" pubdate data-updated="true">2014-02-06</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Pythonの<a href="http://docs.python.jp/3/library/bisect.html">bisect</a>の返す結果に戸惑った、
+と同僚に話したところ、「いや他の言語のライブラリも大体同じですよ」
+と言われたわけです。</p>
+
+<p>戸惑った部分ですが、<a href="https://paiza.jp/poh/ec-campaign">新人プログラマー野田さんの課題</a>を
+解いている過程で、「指定した金額以下で一番大きい金額のインデックス」が欲しい、と思ったのですよね。
+結局それは<a href="http://docs.python.jp/3/library/bisect.html#bisect.bisect_left">bisect.bisect_left</a>を使って解決したんだけど、
+bisect_leftの場合「返り値のインデックスの更に1コ前」が欲しい値だったわけです。</p>
+
+<p>改めて二分探索の挙動について調べたところ、少なくともPython, Java共に、
+あるデータが「挿入されてもソート状態が保たれる箇所」を探索してくれるものらしい。</p>
+
+<p>例えば以下はPythonの例。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>import bisect
+</span><span class='line'>
+</span><span class='line'>a = [1, 2, 4, 8, 11]
+</span><span class='line'>data = 6
+</span><span class='line'>i = bisect.bisect(a, data)
+</span><span class='line'># i の値は 3
+</span><span class='line'>a.insert(i, data)
+</span><span class='line'># a の値は [1, 2, 4, 6, 8, 11]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>なるほど。納得。</p>
+
+<p>とは言え、カスタムの条件で二分探索したいケースもあると思うんですよね。例えば<a href="http://ja.wikipedia.org/wiki/%E6%8E%A5%E5%B0%BE%E8%BE%9E%E9%85%8D%E5%88%97">接尾辞配列</a>のように。</p>
+
+<p>超簡単な例だと、こういうイメージ。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>txt = 'banana'
+</span><span class='line'>suf = [i for i in range(len(txt))]
+</span><span class='line'># suf の値は [0, 1, 2, 3, 4, 5]
+</span><span class='line'>
+</span><span class='line'>suf.sort(key=lambda i: txt[i:])
+</span><span class='line'># suf の値は [5, 3, 1, 0, 4, 2]
+</span><span class='line'>
+</span><span class='line'>print([txt[i:] for i in suf])
+</span><span class='line'># ['a', 'ana', 'anana', 'banana', 'na', 'nana'] が出力される。
+</span><span class='line'># この結果は、全部分文字列がソートされた状態
+</span><span class='line'>## a
+</span><span class='line'>## ana
+</span><span class='line'>## anana
+</span><span class='line'>## banana
+</span><span class='line'>## na
+</span><span class='line'>## nana
+</span><span class='line'># sufにはソートされた状態の各部分文字列へのインデックスが格納されている。
+</span><span class='line'># この中から、例えば'an'が含まれる全ての箇所を探す、というのはbisectでは探索できない…</span></code></pre></td></tr></table></div></figure>
+
+
+<p>こういう用途用の二分探索は、接尾辞配列ライブラリに含まれてると思うんですけどね。</p>
+
+<p>少なくともPythonで言うと、リストの外の情報を使ってソートすることはできるけれど、
+それに対する二分探索による探索がないのはちょっと不便な気がしたのです。
+それを可能とするライブラリがあるのであれば、それを使うにして、
+なければそれを実現するライブラリを作ろうかしら。</p>
+
+<p>「それ～～でできるよ」情報があったらお教え下さいませ。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Atsushi Kanaya (todoa2c)</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-06T16:46:42+09:00" pubdate data-updated="true">2014-02-06</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/python/'>Python</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://todoa2c.github.io/blog/2014/02/06/custom-bisect/" data-via="todogzm" data-counturl="http://todoa2c.github.io/blog/2014/02/06/custom-bisect/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/02/07/small-web-api-integration-to-python33/" title="Next Post: ちっちゃいWeb APIをPython 3.3に移行する">ちっちゃいWeb APIをPython 3.3に移行する &raquo;</a>
+      
+    </p>
+  </footer>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- todoa2c.github.ioの記事下 -->
+  <ins class="adsbygoogle"
+	  style="display:inline-block;width:728px;height:90px"
+	  data-ad-client="ca-pub-4872492087202732"
+	  data-ad-slot="4323136485"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</article>
+
+  <section>
+  <h1>Comments</h1>
+  <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/12/23/blog-environment-restored/">ブログ環境を直していた</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/29/quit-working-at-rakus/">株式会社ラクスを退職しました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/25/decision-tree-feature-names/">決定木の表示に変数名を表示する</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/12/writing-decision-tree/">Pythonで決定木を描いてみる</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/16/mac-java-switch-version/">MacでJavaのバージョンを切り替える方法</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/todoa2c">@todoa2c</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'todoa2c',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+<section>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- todoa2c.github.ioのサイドバー -->
+  <ins class="adsbygoogle"
+       style="display:inline-block;width:250px;height:250px"
+       data-ad-client="ca-pub-4872492087202732"
+       data-ad-slot="5799869680"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</section>
+<section>
+	<h1>Latest Tweets</h1>
+	<a class="twitter-timeline" href="https://twitter.com/todogzm" data-widget-id="444303472796528640">@todogzm からのツイート</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/+AtsushiKanaya?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Atsushi Kanaya (todoa2c) -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'todoa2c-github-io';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://todoa2c.github.io/blog/2014/02/06/custom-bisect/';
+        var disqus_url = 'http://todoa2c.github.io/blog/2014/02/06/custom-bisect/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

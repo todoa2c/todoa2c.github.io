@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: AppEngine | 技術情報棚卸し(平日限定)]]></title>
+  <link href="http://todoa2c.github.io/blog/categories/appengine/atom.xml" rel="self"/>
+  <link href="http://todoa2c.github.io/"/>
+  <updated>2014-12-23T22:52:43+09:00</updated>
+  <id>http://todoa2c.github.io/</id>
+  <author>
+    <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[OSS Release Checkerというサービスを開発しています]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/06/24/developing-oss-release-checker/"/>
+    <updated>2014-06-24T19:58:33+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/06/24/developing-oss-release-checker</id>
+    <content type="html"><![CDATA[<p>オープンソースのプロジェクトについて、リリース情報を収集して一覧するサービスを作っています。
+その名もOSS Release Checkerという、いかにも日本人が付けたような名前です。</p>
+
+<p><a href="http://osschecker.appspot.com/">http://osschecker.appspot.com/</a></p>
+
+<p>うちの会社の業務で、ライブラリやフレームワークのリリース情報をチェックして報告する業務があります。
+それ毎日見るの面倒だからリリース情報のチェックを一手に引き受けてくれるサービスを作ったらえぇやん、というのが発想ですね。</p>
+
+<p>機能的な話ですが、まずはリリース情報の収集先はGitHubをターゲットにしています。
+検索画面から気になるプロジェクトを検索してウォッチしていけば、あとは自動的にリリース情報を収集してくれます。
+そして収集した結果、最新のリリースおよびタグ付けされたリポジトリが、画面に一覧表示される、という寸法です。</p>
+
+<p>直近の目標はこんな感じです。
+GitHubのアカウントでOAuthした上で、自分のウォッチしたいリポジトリを登録しておきます。
+そして、ウォッチしているリポジトリに更新があればGitHubのメールアドレスに対してメール通知すると。
+これができたら、自分的にはいい感じですね。</p>
+
+<p>あとは見た目はもう少し何とかしたいですね。検索画面とか、Bootstrap感満載の画面とか…。
+ドメインを取ってみたもののApp Engineに適用しようと思ったらGoogle Appsが必要みたいで躊躇してたり…
+(Google Appsが必要じゃないケースもあるらしいが…)</p>
+
+<p>最後に、GitHubで何かしら開発されている方は、タグ付けだけでなく、GitHubのリリース機能を使用してください。
+リリース機能を使うことで、ただのタグ付けだけでなく、そのリリースがどういうものかを説明する場所と、モジュールの配布場所が提供されます。
+そして、私のサービスでも、リリース情報として取り込むことができるようになります。</p>
+
+<p>※ <a href="http://qiita.com/todogzm/items/db9f5f2cedf976379f84">GitHubのリリース機能を使う &ndash; Qiita</a> も
+合わせてご参照ください。</p>
+
+<p>こちらからは以上です。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Codeshipを使ったApp Engineへの継続的デリバリー]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/05/30/codeship-appengine-continuous-delivery/"/>
+    <updated>2014-05-30T11:13:17+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/05/30/codeship-appengine-continuous-delivery</id>
+    <content type="html"><![CDATA[<p>IntelliJ IDEAからApp Engineへのデプロイが簡単にできることは以前書いたのですが、
+自分のIntelliJ IDEAのローカルフォルダの情報がそのままデプロイされてしまうので、
+コミットしていないコードがそのままデプロイされてしまう危険性があります。
+また、デプロイの作業が自分しかできない、暗黙知化されるのも良くないわけです。</p>
+
+<p>こういった問題の解決策として継続的デリバリーを行うべく、
+実現できるサービスを探したところ、ありました。
+<a href="https://www.codeship.io/">Codeship</a>というサービスです。</p>
+
+<p>Codeshipは、扱えるコード、コードのホスト先だけでなく、
+コードを動かすクラウド環境(AWSやDigital Oceanなど)も選べるし、その際に必要となる
+デプロイやプロビジョニングツールも提供されており、
+テストから環境構築してデプロイまでを一手に引き受けてくれるサービスです。</p>
+
+<p>今回は、Bitbucketに置いてある自分のプライベートリポジトリを監視し、
+コードのPushがあったタイミングでテストを行い、
+かつmasterブランチに対するコミットがあった時点でApp Engineにデプロイする、
+というところまでをやってみました。</p>
+
+<p>基本的な実現方法は、下記をご参照ください。こっちの方が分かりやすいです。</p>
+
+<p><a href="http://blog.codeship.io/2014/01/21/continuous-deployment-google-app-engine-bitbucket-python-django.html">Continuous Deployment for Django apps from Bitbucket to Google App Engine &ndash; Codeship</a></p>
+
+<p>工夫した点は、設定面の工夫は特にありませんが、デプロイの仕方だけは少し工夫しています。
+GitのブランチをGit-flow風にして、developを開発用ブランチ、masterをリリース用ブランチにして、
+リリース時には、developの変更点をmasterにマージしてもらうようなPull Requestを
+Bitbucket上で作成します。</p>
+
+<p><img src="/images/contents/20140530-bitbucket-deploy-pr.png" alt="デプロイ用Pull Requestの変更点" /></p>
+
+<p>こうすることで、どのコミットがリリースに含まれるかが、リリース用Pull Requestを見れば
+一目瞭然になるわけです。</p>
+
+<p>※アイデアは <a href="http://d.hatena.ne.jp/naoya/20140502/1399027655">GitHub 時代のデプロイ戦略 &ndash; naoyaのはてなダイアリー</a>です。</p>
+
+<p>あとはデプロイはCodeshipにお願いすると。</p>
+
+<p><img src="/images/contents/20140530-codeship-deploy.png" alt="Codeshipによるデプロイ" /></p>
+
+<p>これでBitbucket上からのリリースもできるようになり、非常に快適になりました。
+あとは、今はまだステージング環境のようなものを用意していないのですが、
+developブランチにコミットがあった場合にステージング環境にデプロイもする、という設定を
+追加すると良いかもしれないですね。</p>
+
+<p>Codeshipは1ヶ月に50回のビルドまでであれば無料で使うことが出来ますので、
+ご興味のある方は、是非是非お試しください。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[App Engine/Pythonでハマった初心者向けトラップ]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/05/22/appengine-python-traps/"/>
+    <updated>2014-05-22T20:08:31+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/05/22/appengine-python-traps</id>
+    <content type="html"><![CDATA[<p>早速いくつかトラップにハマりました。</p>
+
+<h1>requestsパッケージがApp Engineで動かない</h1>
+
+<p>App Engine/Pythonは<a href="https://developers.google.com/appengine/docs/python/urlfetch/?hl=ja">URL Fetch Python API Overview</a>
+にあるように、標準ライブラリのurllib, urllib2, httplibであればそのままURL Fetchが使えました。</p>
+
+<p>一方、GitHubのAPIを叩く際に使っていた<a href="https://github.com/sigmavirus24/github3.py">github3.py</a>は
+内部的に<a href="https://github.com/kennethreitz/requests">requests</a>ライブラリを使用しているわけですが、
+このrequestsライブラリですと、App Engineでは動かないのです。
+更にこのrequestsライブラリの中で使われているurllib3はApp Engine内で動くらしいのですが…動かず。無念。</p>
+
+<p>結局他のGitHub APIライブラリを使用しました。</p>
+
+<h1>GoogleAppEngineLauncher.appアップデート後の罠</h1>
+
+<p>GoogleAppEngineLauncher.appアップデート後は、一度は起動しないと最新モジュールが
+適用されないみたいです。
+私はIntelliJ IDEAを使っており、そのIntelliJ IDEAが参照する<code>google_appengine</code>フォルダは
+<code>/usr/local/google_appengine</code> ではなく、GoogleAppEngineLauncher.app内の結構深いところにある
+<code>google_appengine</code>フォルダを参照します。</p>
+
+<p>で、GoogleAppEngineLauncher.app がアップデートされたあとは、この <code>google_appengine</code>フォルダが
+見当たらないのです。その代わり、google_appengine.zip はある。
+一度起動することにより、google_appengine.zipが解凍されて <code>google_appengine</code>フォルダが
+作られる模様ですね。。。気づかんわこれ。</p>
+
+<p>こちらからは以上です。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[App Engine用言語をPythonにした件…]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/05/16/beginning-appengine-python/"/>
+    <updated>2014-05-16T11:19:49+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/05/16/beginning-appengine-python</id>
+    <content type="html"><![CDATA[<h1>はじめに</h1>
+
+<p><a href="http://todoa2c.github.io/blog/2014/02/13/beginning-appengine-go/">GoでGoogle App Engineを触るテスト</a>を
+書いておきながら、諸般の事情により、Pythonで書きなおすことにしました。
+書き直すと言っても、大した進んでいないので、また1から書き直しという感じですね。</p>
+
+<h2>準備</h2>
+
+<p>今回はMacで開発しているので、ライブラリはここからダウンロードし、インストール＆実行すればOK。</p>
+
+<p><a href="https://developers.google.com/appengine/downloads?hl=ja">Download the Google App Engine SDK &ndash; Google App Engine &ndash; Google Developers</a></p>
+
+<p>Pythonはvirtualenv経由だとうまく動かないもようなので、Pyenvで特定の2.7系バージョンを作る。</p>
+
+<p>開発環境は<a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a>のPythonプラグイン + App Engineサポートを利用。
+間違ってもFlaskを使いたいからと言って、Flask Templateを選んではいけない。あとで自分でライブラリを
+ダウンロードすること。そうしなければ、App EngineのライブラリがIntelliJ IDEA側で認識してくれなかった
+(別途不具合報告予定)。</p>
+
+<h2>書いてみる</h2>
+
+<p>ライブラリは requirements.txt あたりを用意し、下記コマンドを実行することで、
+ライブラリがlibフォルダに置かれる。</p>
+
+<p><code>
+pip install -r requirements.txt -t lib
+</code></p>
+
+<p>また、appengine_config.py を用意し、上記のlibフォルダをライブラリフォルダとして認識するように、
+下記を記述する。</p>
+
+<p><code>
+import os
+import sys
+ROOTPATH = os.path.dirname(__file__)
+LIBPATH = os.path.join(ROOTPATH, 'lib')
+sys.path.append(LIBPATH)
+</code></p>
+
+<p>その他コードは割愛するけれど、Flaskのフレームワークとしての薄さと
+3rd-partyライブラリによる拡張性の高さは結構好み。
+とは言えDjangoをまじめに学習したことがないので、別途
+<a href="http://connpass.com/event/6369/">大阪Pythonユーザの集まり 2014/05</a>の
+Djangoセッションで学習してみようかと思う。</p>
+
+<h2>デプロイ</h2>
+
+<p>デプロイは、ローカル＆本番環境ともに、とりあえず簡単に、IntelliJ IDEAから試す。
+ローカル環境の場合は、App Engine Serverから起動する事ができる。</p>
+
+<p>本番環境は、メニューのToolsからGoogle App Engine → Upload App Engine app&hellip; から
+アップロードできる。簡単。</p>
+
+<p>簡単だけど、継続的デリバリーができなくなるので、別途デプロイ方法を検討する。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[App EngineのDatastoreについて調査中]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/02/14/appengine-datastore-references/"/>
+    <updated>2014-02-14T17:23:07+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/02/14/appengine-datastore-references</id>
+    <content type="html"><![CDATA[<p>Google App EngineのDatastore周りを学習すべく、いくつか参考にしたサイトをまとめておきます。</p>
+
+<ul>
+<li><p><a href="http://www.slideshare.net/devsumi/18c4google-app-engine-6969798">【18-C-4】Google App Engine &ndash; 無限の彼方へ</a></p>
+
+<ul>
+<li>Google松尾さんによる資料。2011年と古いが、Datastoreについての概要はここで学べると思う。</li>
+</ul>
+</li>
+<li><p><a href="http://appengine.keicode.com/gae/datastore.php">データストア &ndash; Google App Engine 入門</a></p>
+
+<ul>
+<li>Python, Javaの両方について記事がある模様。入門とだけあって分かりやすい気がする。</li>
+</ul>
+</li>
+<li><p><a href="http://proppy-appstats.appspot.com/">Google I/O 2012 &ndash; Optimizing Your Google App Engine App</a></p>
+
+<ul>
+<li>つい先程見つけたばかりなので確認中。解説はこちらも見たほうがよいのかな。</li>
+<li><a href="http://blog.vier.jp/2013/02/google-app-engine-appengine-ja-night-23.html">Blog @vierjp : 18.Google App Engineパターン (appengine ja night #23)</a></li>
+</ul>
+</li>
+<li><p><a href="https://developers.google.com/appengine/docs/go/datastore/">Go Datastore API &ndash; Google App Engine &ndash; Google Developers</a></p>
+
+<ul>
+<li>本家。Go版についてはやっぱりここを見ないと話にならないと思う。キーの設定方法が他のオブジェクト指向言語とどのように違うのかがようやく分かった(あくまで気がするレベル)。</li>
+</ul>
+</li>
+</ul>
+
+
+<p>まぁ雰囲気だけ掴んだ感じで、まだよく分かってないことが多いです。
+土日に実際にDatastoreを使った実装に入ってみようかと思います。</p>
+
+<h1>余談</h1>
+
+<p>余談ですが、何故かF-SecureにGoソースコードのコンパイルをことごとく邪魔されるので、
+私物Macで同様の環境を構築しました。
+当初の話の通り、いちいちサーバーを再起動せずに変更が追従されるのがいいですね。</p>
+
+<p>思えば私のWindows環境だと、64bit版Goコンパイラがコンパイル直後に落ちるので、
+色々おかしいのかもしれないです。
+Windows Updateも失敗しまくるし…環境を作り直して1年経ってないのに、また環境の作り直しか…</p>
+]]></content>
+  </entry>
+  
+</feed>

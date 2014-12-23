@@ -1,0 +1,1128 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>技術情報棚卸し(平日限定)</title>
+  <meta name="author" content="Atsushi Kanaya (todoa2c)">
+
+  
+  <meta name="description" content="優先順位付きキューを使おうとして、17.7. queue — 同期キュークラス &ndash; Python 3.3.3 ドキュメントを見たところ、よく分からない一文に遭遇した。 最小の値を持つ要素が最初に検索されます 書いていることの意味は分かるんですよ。分からないのは、「 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://todoa2c.github.io/blog/page/3">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="技術情報棚卸し(平日限定)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47839845-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">技術情報棚卸し(平日限定)</a></h1>
+  
+    <h2>todoa2cの技術情報棚卸しです。平日限定ってことはアレだ。言わせんな恥ずかしい。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:todoa2c.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/03/13/python-priority-queue-and-rich-comparison-method/">PythonのPriorityQueueとobjectの拡張比較メソッド</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-13T11:22:42+09:00" pubdate data-updated="true">2014-03-13</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>優先順位付きキューを使おうとして、<a href="http://docs.python.jp/3/library/queue.html">17.7. queue — 同期キュークラス &ndash; Python 3.3.3 ドキュメント</a>を見たところ、よく分からない一文に遭遇した。</p>
+
+<blockquote><p>最小の値を持つ要素が最初に検索されます</p></blockquote>
+
+<p>書いていることの意味は分かるんですよ。分からないのは、「じゃあ比較はどうすればいいの？」という点。
+ちなみに、自作クラスのインスタンスを優先順位付きキューにそのまま入れてみたら、怒られました。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>from queue import PriorityQueue
+</span><span class='line'>
+</span><span class='line'>pq = PriorityQueue()
+</span><span class='line'>pq.put(A())</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>TypeError: unorderable types: A() &lt; A()</span></code></pre></td></tr></table></div></figure>
+
+
+<p>このエラーから察するに、PriorityQueue自身に比較用メソッドを渡してあげるのではなく、
+インスタンス間で大小を比較できるようにしなさい、ということなのだろうと推測しました。
+そうと分かれば話は早いってんで、
+<a href="http://docs.python.jp/3/reference/datamodel.html#object.__lt__">Python言語リファレンスの3. データモデル</a>
+を見ると、目的の情報を見つけることが出来ました。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>object.__lt__(self, other)
+</span><span class='line'>object.__le__(self, other)
+</span><span class='line'>object.__eq__(self, other)
+</span><span class='line'>object.__ne__(self, other)
+</span><span class='line'>object.__gt__(self, other)
+</span><span class='line'>object.__ge__(self, other)
+</span><span class='line'>
+</span><span class='line'>これらはいわゆる “拡張比較 (rich comparison)” メソッドです。</span></code></pre></td></tr></table></div></figure>
+
+
+<p>objectには特殊メソッド名がいくつかあるのですが、その中に比較に関するメソッドも
+用意されていたわけですね。</p>
+
+<p>今回のエラーから必要なのは、<code>__lt__</code> メソッドをオーバーライドしてあげれば良いと分かり、
+早速Aクラスに<code>__lt__</code>メソッドの詳細を実装したところ、うまく動きました。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/03/10/checkio-level-10/">Check iOでレベル10に到達した</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-10T18:51:13+09:00" pubdate data-updated="true">2014-03-10</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>ちまちまやっているCheck iOですが、ようやく<a href="http://www.checkio.org/user/todogzm/">レベル10に到達</a>しました。
+自分で解くのも面白いのですが、人のソースを読むのも非常に参考になります。</p>
+
+<p>例えば<a href="http://www.checkio.org/mission/three-points-circle/">Three Points Circle</a>ですが、
+私は別件で解いたように、<a href="http://manapedia.jp/text/index?text_id=658">3点を通る3つの連立方程式</a>を
+用いて解きました。
+方程式を解くだけではダメで、そこから<code>(x-x0)^2+(y-y0)^2=r^2</code>に変換すべく、もう一手間加えなければ、
+本当の回答にまで至らなかったわけで、少々面倒でした。</p>
+
+<p>一方、この問題を<a href="http://ja.wikipedia.org/wiki/%E5%A4%96%E6%8E%A5%E5%86%86">外接円</a>の
+外心を求める問題だと気付けば、半径と位置をより容易に解くことができるわけです。</p>
+
+<p>この解き方をしていたのは日本人の競技プログラマーですが、
+競技プログラミングにおいては、問題の適切な定義と解き方の引き出しが
+尋常じゃなく沢山あるのかもしれません。
+もしくは、私の引き出しが少なすぎるのかもしれません orz</p>
+
+<p>競技プログラミング用のアルゴリズムの学習も、今後はしていきたいですね。
+一応本も一冊持っていることですし(ざっとは読んだけど理解は…ってレベル)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/03/06/coaching-session-impression/">コーチング実践してみた感想とロールモデルの距離感</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-06T17:41:18+09:00" pubdate data-updated="true">2014-03-06</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>前置き</h1>
+
+<p>最近、会社のチーム内でコーチング研修が何回かありました。
+コーチングとは何かについては、<a href="http://ja.wikipedia.org/wiki/%E3%82%B3%E3%83%BC%E3%83%81%E3%83%B3%E3%82%B0">コーチング &ndash; Wikipedia</a>から引用するに留めます。</p>
+
+<blockquote><p>コーチング（coaching）とは、人材開発の技法の1つ。対話によって相手の自己実現や目標達成を図る技術である。相手の話をよく聴き（傾聴）、感じたことを伝えて承認し、質問することで、自発的な行動を促す。</p></blockquote>
+
+<p>コーチング研修では、コーチングの基礎を学び、
+何度か演習(コーチングの時間をセッションと言うそうです)もこなしたのですが、
+どうしても短い時間(長くて15分)のセッションだと、
+答えを見つけるまでに到達できないことも多かったので、
+少し消化不良を起こしていたのです。</p>
+
+<h1>実践</h1>
+
+<p>というわけで、本日コーチングを実践してみました。
+私がコーチ役で、クライアント役には、個人的も周囲的にも今後の成長が期待される後輩さんに
+なっていただきました。</p>
+
+<p>テーマは「今後のキャリア形成について」的な感じで、
+1時間のセッションをやってみました。
+事前に考えた質問はこんな感じです(質問メモすら渡してしまったので覚えている範囲)</p>
+
+<ul>
+<li>興味がある・追求したい技術</li>
+<li>今のチームと前のチームとの違い</li>
+<li>今のチームでクライアントに求められいること、またはクライアントが思うこうありたい姿</li>
+<li>成功体験・失敗体験</li>
+<li>ロールモデル(参考にしている人物像)</li>
+<li>社外活動に関する質問いくつか(勉強会、コミュニテOSS…)</li>
+</ul>
+
+
+<p>他にも色々あったと思いますが、上記について質問しながら、
+3年後にどうありたいかをイメージしてもらい、ありたい姿に向かうためには
+具体的にどういうことをやっていけばいいかを挙げてもらい、
+そのうち1つを実施することを決めてもらう、というところまでは
+一応できたかなと思います。</p>
+
+<p>クライアントさんは日頃から大体考えていたことらしいので、
+だいぶクライアントさんに助けられた感はあります。もっと実践せな…</p>
+
+<h1>やってみた感想</h1>
+
+<p>うまく行ったこともぼちぼちありますが、
+いくつかうまく行かなかったことがあるので、メモとして残しておきます。</p>
+
+<h2>明確な問題のないセッションの落とし所をどうすればよいか</h2>
+
+<p>今回のように、何か明確な問題があるわけではない、目標設定をするようなセッションでは、
+具体的な行動への落とし所が難しかったです。
+目標を決めたらOKだと事前には思っていたのですが、それでは具体的な行動には
+到達できません。
+ですので、急遽その場で、じゃあその目標に向かうにはどういうことをすれば良いかを
+挙げてもらいました。</p>
+
+<p>最終的に、あるべき姿は覚えておいてもらいつつ、
+具体的な行動ひとつを選択してもらい、それを実践してもらうよう後押しする、
+という風にすることで、無事にセッションが着地できたかなと思います。</p>
+
+<h2>タイムキープ重要</h2>
+
+<p>1時間のセッションと事前に決めていたのですが、その中で40分は質問。
+残り20分で具体的な行動への話に繋げていったのですが、
+上記のような急遽の話があり、最後の具体的な行動の時間がギリギリになってしまい、
+具体的な行動のリストアップを途中で打ち切ってしまうかたちになってしまいました。
+これはアイデアを摘んでしまうことになるので、良くないです。
+コーチ側のタイムキープの力が問われます。</p>
+
+<h2>前もって準備した質問が多すぎた？</h2>
+
+<p>どちらかと言うと、質問の数は少なめにして、逆に「他には？」「具体的には？」などと
+色々出してもらったほうが良かったかもしれません。
+キャリアのことを考える上で色んな視点があった方がいいと思い、
+質問の数を多めにしたのですが、深く聞けたかどうかはちょっと自信がないですね…。
+これはクライアントさんに別途聞いてみようかと思います。</p>
+
+<p>初めての実践コーチングの自己フィードバックでした。</p>
+
+<h1>ロールモデルの存在</h1>
+
+<p>最後に、ロールモデルの存在について。
+上のほうで何となく「参考にする人物像」と書いたのですが、
+<a href="http://kotobank.jp/word/%E3%83%AD%E3%83%BC%E3%83%AB%E3%83%A2%E3%83%87%E3%83%AB">ロールモデル とは &ndash; コトバンク</a>によると、</p>
+
+<blockquote><p>具体的な行動技術や行動事例を模倣・学習する対象となる人材</p></blockquote>
+
+<p>だそうです
+(実はロールモデルの定義をちゃんと知らずこの言葉を使っていた…反省)。</p>
+
+<p>ロールモデルとなる方は、どのくらい自分から離れた存在なのが良いのかな、と
+セッション後に考えてみた次第です。
+例えば、新人のロールモデルが課長、みたいなケースだと、
+ちょっとロールモデルとするには距離感がありすぎる気がするんですね。
+新人さんが模倣しようにも、上司とは業務内容から視点から色々異なるので、
+参考にしにくいのではないか？思うわけです。
+逆に近すぎると、それはそれでロールモデルとしては適切ではないのかな、とも思います。
+参考にすると言うよりは、ライバル的な関係となり切磋琢磨するのが良いのかなと、何となく思います。</p>
+
+<p>そう考えると、程よく離れた関係がロールモデルとして適切なのかと思うのですが、
+さてさてこの「程よく離れた」って実際にはどのくらい？というのが分からない。
+何か指標みたいなのがあればいいんですけどね。まだ調べていないので、分からないです。</p>
+
+<p>話を戻してクライアントさんですが、今はクライアントさんの上にも下にも
+バラエティに富んだチームメンバーがいます。
+そういう環境では、ロールモデルとなる人を見つけやすいと思いますし、
+実際にいるとのことなので、何よりだと思います。</p>
+
+<p>そのクライアントさんだけに限らず、他のメンバーがどういう人をロールモデルとして
+捉えているのか、その距離感はどんなものなのか、この辺を注目していこうと思います。</p>
+
+<h1>最後にコーチングについて</h1>
+
+<p>コーチング研修の先生は、何度も「答えはクライアントの中にある」と仰っていました。
+何回かの演習と今日の実践を踏まえて、仰っていることは本当なのだと思います。
+今回の実践は私も非常に勉強になりましたので、引き続き実践していく予定です。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/03/04/linear-equations-in-python/">Pythonで線形方程式を解く</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-04T18:55:50+09:00" pubdate data-updated="true">2014-03-04</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.checkio.org/mission/how-much-gold/">How much gold :: CheckiO</a>を解く方法として、
+何か簡単な方法はあるんだろうなと思いながら、線形方程式を解く方法を採用したわけです。</p>
+
+<p>線形方程式を簡単に解く方法はないかな？と探したところ、
+<a href="http://sympy.org/">SymPy</a>を使って式を与えるだけで解くことが出来ました。
+テストその1をベタ書きしています。</p>
+
+<p>ソースコードおよびセットアップ方法は、
+<a href="http://qiita.com/ryosy383/items/e5e2ecb5976f98040d21">Pythonを使って一瞬で連立方程式を解く &ndash; Qiita</a>
+を参考にしています。
+要するに、右辺がゼロとなる方程式を、連立方程式を解くのに必要な分渡しているわけです。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>from fractions import Fraction
+</span><span class='line'>from sympy import *
+</span><span class='line'>
+</span><span class='line'>g, t, i, c = symbols('g t i c')
+</span><span class='line'>out = solve([
+</span><span class='line'>    g * Fraction(1, 1) + t * Fraction(1, 1) - Fraction(1, 2),
+</span><span class='line'>    g * Fraction(1, 1) + i * Fraction(1, 1) - Fraction(1, 3),
+</span><span class='line'>    g * Fraction(1, 1) + c * Fraction(1, 1) - Fraction(1, 4),
+</span><span class='line'>    g * Fraction(1, 1) + t * Fraction(1, 1) + i * Fraction(1, 1) + c * Fraction(1, 1) - Fraction(1, 1),
+</span><span class='line'>], [g, t, i, c])
+</span><span class='line'>
+</span><span class='line'>out[g]  # -&gt; Fraction(1, 24)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ただ、CheckiOでは外部ライブラリの利用はできません。
+また、式を動的に生成する方法があるかも分かりませんので、
+複数ケースに対応する方法が分かりませんでした。</p>
+
+<p>結局、
+<a href="http://ja.wikipedia.org/wiki/%E3%82%AC%E3%82%A6%E3%82%B9%E3%81%AE%E6%B6%88%E5%8E%BB%E6%B3%95">ガウスの消去法 &ndash; Wikipedia</a>
+を使って、自前実装で解くことにしました。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def gauss_elimination(m):
+</span><span class='line'>    '''mは[g, t, i, c, value]というベクトルを4本持つ行列'''
+</span><span class='line'>    n = len(m)
+</span><span class='line'>    # 前進消去
+</span><span class='line'>    for i in range(n):
+</span><span class='line'>        v = m[i][i]
+</span><span class='line'>        if v == 0:
+</span><span class='line'>            # ゼロ以外の値を持つ行と交換する
+</span><span class='line'>            for k in range(i + 1, n):
+</span><span class='line'>                if m[k][i] != 0:
+</span><span class='line'>                    m[i], m[k] = m[k], m[i]
+</span><span class='line'>                    v = m[i][i]
+</span><span class='line'>                    break
+</span><span class='line'>        for j in range(n + 1):
+</span><span class='line'>            m[i][j] /= v
+</span><span class='line'>        for k in range(i + 1, n):
+</span><span class='line'>            v = -m[k][i]
+</span><span class='line'>            for j in range(n + 1):
+</span><span class='line'>                m[k][j] += m[i][j] * v
+</span><span class='line'>
+</span><span class='line'>    # 後退代入
+</span><span class='line'>    for i in range(n-1, 0, -1):
+</span><span class='line'>        v = m[i][i]
+</span><span class='line'>        m[i][i] /= v
+</span><span class='line'>        m[i][n] /= v
+</span><span class='line'>        for k in range(i - 1, -1, -1):
+</span><span class='line'>            v2 = m[k][i] * m[i][n]
+</span><span class='line'>            m[k][n] -= v2
+</span><span class='line'>            m[k][i] = Fraction(0, 1)
+</span><span class='line'>    return m</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これで<code>gauss_elimination()</code>が解けたときにはすべての変数の値が求められた状態になります。
+良かった良かった。</p>
+
+<p>…と思ったら、最短1行で書くことができるらしい。
+<code>G+T=a, G+I=b, G+C=c, G+T+I+C=1</code>から、<code>G = (a + b + c - 1) / 2</code>が導出できて、
+a, b, cを、それぞれGが含まれている場合の式に変換することで計算できると
+(テスト2の方は、1 &ndash; 式とすればGが含まれる方になる)。
+なるほど、勉強になりました。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/28/osaka-python-study-session/">大阪Pythonユーザの集まり 2014/03 を募集開始しました &#8216;#osakapy</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-28T11:43:01+09:00" pubdate data-updated="true">2014-02-28</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>前回の記事で書きました、大阪でPythonの勉強会を行う、という話ですが、
+本日ようやく募集開始しました。</p>
+
+<p><a href="http://connpass.com/event/5361/">大阪Pythonユーザの集まり 2014/03 &ndash; connpass</a></p>
+
+<ul>
+<li>日時 2014/03/13 19:00</li>
+<li>場所 堂島アバンザ21F</li>
+</ul>
+
+
+<p>Pythonユーザはもちろんのこと、
+Pythonに興味を持っていただいている方のご参加もお待ちしております。</p>
+
+<p>今時点では、下記3名が発表予定です。私も参加します。</p>
+
+<ul>
+<li><a href="https://twitter.com/whosaysni">@whosaysni</a> wxPythonの初心者向けのお話(仮) 15分</li>
+<li><a href="https://twitter.com/todogzm">@todogzm</a> scikit-learnを用いた機械学習チュートリアル 30分</li>
+<li><a href="https://twitter.com/heavenshell">@heavenshell</a> タイトル未定 10～15分</li>
+</ul>
+
+
+<p>また、当初の予定にはなかったのですが、とりあえずLT枠も作ってみました。
+誰か少しでも発表できることがありましたら、ご参加をお待ちしております。
+個人的にはPython 3.4の新機能を話せる人がいたら、ひとつピックアップして
+お話いただけると嬉しい次第です。</p>
+
+<p>懇親会も行う予定ですので、こちらも是非ご参加ください。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/25/kansai-it-communities/">関西のIT関連の勉強会・コミュニティ一覧を作ってみた</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-25T16:58:10+09:00" pubdate data-updated="true">2014-02-25</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://d.hatena.ne.jp/nowokay/20140225#1393294814">コミュニティに入るか入らないかでエンジニアとしての幸福度がかわる &ndash; きしだのはてな</a>がホッテントリ入りしていたので、読んでみました。
+幸せの評価基準をバシッと1コに決めてしまう当たりに賛否両論はあるのかもしれませんが、
+少なくとも私は同意するところが多々あります。
+エンジニアですもの、技術力が上がることは成長しているってことで、嬉しいわけですよね。</p>
+
+<p><a href="http://doda.jp/engineer/guide/yosoku/06_1.html">計算機科学者、未踏統括PM 竹内郁雄が語るエンジニアに伝えたいこと | 三年予測 ｜IT・Web業界の転職ならDODAエンジニア IT</a>にも、下記のような話がありました。</p>
+
+<blockquote><p>「閉塞状況から脱出したいなら、コミュニティだ。それも、単に勉強会とかフォーラムに参加して情報を吸収するだけではなく、他人と交わることだ。できれば懇親会まで出て、人との交流を楽しんだほうがいい」</p></blockquote>
+
+<p>コミュニティには、似たようなものを作っている人や、まったく違うものを作っている人、
+様々なキャリアの人がいて、その人達と情報交換することにより、
+自分の知らなかった情報を得ることが出来ます。
+今まで知らなかったことを、存在だけでも知ることができれば、
+あとは自分で調べることができるようになります。
+これがコミュニティに参加する、一番最初に得られるメリットだと思います。</p>
+
+<p>とは言え、関西でコミュニティをどうやって探したらいいのか分からん、とゴネられても困るので、
+<a href="http://qiita.com/todogzm/items/c26aab6caa59d081d4f4">関西のIT関連の勉強会・コミュニティ一覧 &ndash; Qiita</a>を作ってみました。
+不足やカテゴリ変更など色々ツッコミたい部分はあると思いますので、
+是非コメントなり編集リクエストなりをお送りください。
+よろしくお願いします。</p>
+
+<p>なお、3月第2週くらいに、大阪でPythonの勉強会を企画中です。
+<a href="http://todoa2c.github.io/blog/2014/02/19/osaka-python-meeting/">大阪でPythonで集まろうの巻に参加した &ndash; 技術情報棚卸し(平日限定)</a>から上がった企画ですね。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/24/study-with-checkio/">CheckiOでPythonのお勉強</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-24T19:47:30+09:00" pubdate data-updated="true">2014-02-24</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.checkio.org/">CheckiO</a>が楽しいので、少しずつクリアしています。</p>
+
+<p>CheckiOはPythonを使ったプログラミング学習サービスなのですが、
+ゲーム要素溢れるところが非常に特徴的です。</p>
+
+<p>ゲーム要素は、例えばこんな感じです。
+私自身のPython歴がそれほど長くないので、人のコードを読むのは非常に勉強になります。</p>
+
+<ul>
+<li>サインアップするためにもPythonコードを書く必要がある</li>
+<li>コードを書くことによって経験値が得られ、バッジや行ける場所が増える(行ける先はO&#8217;ReillyとかDropboxなどという見慣れた名前が…)</li>
+<li>コードの提出が完了したら、自分の書いたコードを公開できる(経験値ももらえるしレビューももらえる)</li>
+<li>人のコードを読むことが出来、レビューすることができる(レビューすると経験値がもらえる)</li>
+</ul>
+
+
+<p>サイトが重いとか、作りが分かりにくいとか不満点は少々ありますが、
+パズルを解く感覚でPythonを学ぶ事ができるのは、非常に楽しいです。
+下記が私のアカウントですので、よかったら私をフォローして下さい。</p>
+
+<p><a href="http://www.checkio.org/user/todogzm/">todogzm profile  :: CheckiO</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/20/sexy-little-numbers/">Sexy Little Numbersの和訳の賞味期限が短い件</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-20T19:43:20+09:00" pubdate data-updated="true">2014-02-20</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.ogilvy.co.jp/sln/">データ・サイエンティストに学ぶ「分析力」</a>という本を読みました。
+マーケティングに関するサービスを開発している割にマーケティングのことについて
+あまり知識がないことに気付くというしょうもない状態だったので、
+この本で学習しようとしたわけです
+(一応言い訳ですが、マーケティング周り担当になったのはここ最近の話！)。
+割と厚い本であるし初学者でもあるので、まずは分からない点も含めてざっと読みしました。</p>
+
+<h1>マーケティングの流れ</h1>
+
+<ol>
+<li>誰にアプローチするかを決める</li>
+<li>どのようなメッセージを送るかを決める</li>
+<li>客がどこに居るかを探す</li>
+<li>プロモーションにいくら使うかを決める</li>
+<li>実際にプロモーションし、結果を測定する</li>
+<li>測定結果をもとに、次の行動を最適化する</li>
+</ol>
+
+
+<p>という流れとのこと。で、本書はこの各行動について、
+手元にあるデータを頼りにした(またはデータが揃ってない場合には直感なども頼りにした)
+適切なアプローチを取ります。</p>
+
+<h1>適切なアプローチ方法</h1>
+
+<p>例えば誰にアプローチするかについては、既存顧客を分類して、
+どういう顧客層が「価値のある顧客となりうるか」「価値のありそうな潜在顧客か」
+などに割り振ります(バリュースペクトラムモデル)。
+その際の「価値」についても、自分の商品・マーケットにそって、
+色々な尺度があり、それをどのように計算するかが書かれているわけです。</p>
+
+<p>各フェーズについて、データからどのようにアプローチするか、
+データがない場合はどうするかが書かれており、非常に有用に感じました。
+まだ分かってない点も多々あるので、今度は深く読もうと思います。</p>
+
+<h1>本を読んで</h1>
+
+<p>マーケティングの仕方が分かり、マーケティングサービスに
+組み込んでいくためのアイデアをいくつももらえた気がします。
+逆に言うと、いくつも基本的なことが出来ていなかったと思います。反省しきりです…。</p>
+
+<p>また、マーケティングに関わる分析の未来についても書かれており、
+ワクワクする反面、不安になる点もいくつかありました。
+詳細は本を手にとって読んでみてください。</p>
+
+<h1>最後に</h1>
+
+<p>「データ・サイエンティスト」って賞味期限の短そうな名前をタイトルに使うと
+今はいいけど数年後には誰も見向きもしない本に成り下がってしまわないか、
+ちょっと気がかりです。
+10年くらいは有用な本だと思ったので、その点が残念かなぁと思いました。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/19/osaka-python-meeting/">大阪でPythonで集まろうの巻に参加した</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-19T11:01:19+09:00" pubdate data-updated="true">2014-02-19</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>背景</h1>
+
+<p><a href="http://connpass.com/event/5201/">大阪でPythonで集まろうの巻</a>に参加してきました。
+参加してきましたというか、上記リンクの先を見ていただくとお分かりの通り、発端は私です。
+私なんですが、恐れ多くも増田さんにボールをぶん投げ、企画していただいたという次第です。</p>
+
+<p>私自身Pythonを初めて1年半。
+実際にそれなりの時間を割いて書くようになってきたのがここ数ヶ月くらいの話なのですが、
+私の周囲にPythonを書く人がいないんですね(最近少しだけ書く人が増えたけど)。
+Pythonについて相談できる相手がいないわけで、少々つらいこともあるわけです。
+そういう背景もあって関西のPythonコミュニティを探していたわけですが、
+ここ数年の活動は停滞気味だったとのことでした。</p>
+
+<p>まずはテーマとかないけれど、Pythonな人たちで顔合わせしましょうかね、
+合わせて勉強会とか開発合宿とか企画したいね、という感じで企画されたのが今回の会合です。
+増田さん、お忙しい中企画と会場をご提供いただき、ありがとうございます。</p>
+
+<h1>会合</h1>
+
+<p>会合ですが、各人の自己紹介を経て、勉強会のざっくり方針だけを決めて、
+会合自体は30分で終わり懇親会場になだれ込みましたｗ</p>
+
+<h1>メモ</h1>
+
+<p>以下はメモ。時系列などは無視のだらだら箇条書きです。</p>
+
+<ul>
+<li>大阪にはPythonの仕事もGoの仕事もある！</li>
+<li>ミッション・クリティカルなシステムにもPythonが使われており、構成次第では非常に大量のアクセスもさばける模様。</li>
+<li>Erlangの軽量プロセスの管理がGoよりも充実しており、子プロセス生成時に、子プロセスが異常終了した場合にどのように通知して親プロセスはそのまま生存するか一緒に終了するかの制御を明示的に指定できるらしい。
+
+<ul>
+<li>Erlang開発者の論文に、システムがどういう状況で障害を起こすのか、その対策は、という話が書かれているらしい。多分これっぽい。<a href="http://www.erlang.org/download/armstrong_thesis_2003.pdf">armstrong_thesis_2003.pdf</a></li>
+</ul>
+</li>
+<li>Seleniumのドライバーに、<a href="https://pypi.python.org/pypi/selenium/">Python用のSelenium Driver</a>がある。うちもJavaじゃなくてPythonを使ったほうがサクサク書けるんじゃないかな。</li>
+<li>スプリント・バックログを付箋化するのはひと目で分かって良い。ただチケットも別途発行しており、そのチケットが溢れる問題は解決しない。</li>
+<li>Web界隈だとGitHubでTravisCIで～という話をよく聞くが、CIも自動テストもない現場が普通にあるとのこと。おっとSVNの悪口はそこまでだ orz</li>
+<li>勉強会の運営についても幾つか。
+
+<ul>
+<li>会場の確保は、20～40人規模なら何とかなりそう。会場提供可能な方が結構多くてビックリ。</li>
+<li>開催日は、平日か土日かといえば、どちらかだけ都合がいいという人が一定数いる関係上、交互にやった方がいいんじゃないか。</li>
+<li>勉強会には参加する人は多いが発表してくれる人はかなり限られる。発表の敷居を下げるか、強制で発表できるような仕組みが必要？</li>
+<li>発表する側、企画する側も何らかの成果を得たい。案として、グループディスカッション形式の勉強会があっても面白いかもしれない。</li>
+</ul>
+</li>
+</ul>
+
+
+<p>最後に。大阪でPythonの勉強会を開催予定です。3月第2週あたりを予定しております。</p>
+
+<p>あぁぁ大阪Go勉強会もこんな感じでいい加減踏ん切りつけてやらないと… orz
+コミュニティ化しないといかんなぁ…。</p>
+
+<p>こちらからは以上です。皆様、昨日はありがとうございました！</p>
+
+<h1>そう言えば。</h1>
+
+<p>妻の同級生が居て腰抜かしそうになるほどびっくりしました。
+世の中広いようで、狭いです。</p>
+
+<h1>追記 2014-02-19 12:55</h1>
+
+<p><a href="https://twitter.com/ikegami__">@ikegami__</a>さんから教えていただいたのですが、
+Python for Kidsという本の訳本が今月末発売予定とのことです。</p>
+
+<p><a href="http://ssl.ohmsha.co.jp/cgi-bin/menu.cgi?ISBN=978-4-274-06944-4">たのしいプログラミング　Pythonではじめよう！</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/02/17/cybozu-live-trial/">サイボウズLiveを試用する</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-17T19:24:53+09:00" pubdate data-updated="true">2014-02-17</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://todoa2c.github.io/blog/2014/02/12/email-one-more-suck/">Emailがコラボレーションツールに適していないもう1点</a>で書いたことを実践する機会ができまして。
+諸事情により地域の会合に参加することになったのですが、
+そこでの議論の結果がメールで回されることになりそうだったのです。
+Emailはコラボレーションツールに適してないと主張する私としては
+黙って見ているわけにはいきません。</p>
+
+<p>「メールでのやりとりは議論が残せないので、別の場所を設けましょう。私が提案します！」</p>
+
+<p>と手を上げて、実際に導入するところまでを面倒見ることにしました。</p>
+
+<h1>評価ポイント</h1>
+
+<p>今回の地域の会合で、ある程度PCやスマホに慣れている男性陣が想定利用者です。
+評価ポイントは、ざっくり以下としました。</p>
+
+<ul>
+<li>無料である(まだ予算とかないので…)</li>
+<li>セキュアである</li>
+<li>スケジュール、議事録、TODO管理ができる</li>
+<li>スマホ対応している</li>
+</ul>
+
+
+<p>こういう条件で、限られた時間内で調べてみました。</p>
+
+<h1>評価対象</h1>
+
+<ul>
+<li><a href="https://live.cybozu.co.jp/">サイボウズLive</a></li>
+<li><a href="https://groups.google.com/forum/?hl=ja#!overview">Googleグループ</a></li>
+<li><a href="http://ja.youroom.in/">youroom</a></li>
+<li><a href="https://www.atlassian.com/ja/software/confluence">Confluence</a></li>
+</ul>
+
+
+<p>この中で、サイボウズLiveを第1候補としました。
+上記の評価ポイントをすべて押さえているからです。</p>
+
+<p>というわけで、サイボウズLiveに登録し、実際に試用してもらうことにしました。
+まだ1日しか経っていませんが、果たしてどうなることやら。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/4/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/2/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/12/23/blog-environment-restored/">ブログ環境を直していた</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/29/quit-working-at-rakus/">株式会社ラクスを退職しました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/25/decision-tree-feature-names/">決定木の表示に変数名を表示する</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/12/writing-decision-tree/">Pythonで決定木を描いてみる</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/16/mac-java-switch-version/">MacでJavaのバージョンを切り替える方法</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/todoa2c">@todoa2c</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'todoa2c',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+<section>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- todoa2c.github.ioのサイドバー -->
+  <ins class="adsbygoogle"
+       style="display:inline-block;width:250px;height:250px"
+       data-ad-client="ca-pub-4872492087202732"
+       data-ad-slot="5799869680"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</section>
+<section>
+	<h1>Latest Tweets</h1>
+	<a class="twitter-timeline" href="https://twitter.com/todogzm" data-widget-id="444303472796528640">@todogzm からのツイート</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/+AtsushiKanaya?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Atsushi Kanaya (todoa2c) -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'todoa2c-github-io';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

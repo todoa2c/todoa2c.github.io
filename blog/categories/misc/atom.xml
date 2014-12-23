@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Misc | 技術情報棚卸し(平日限定)]]></title>
+  <link href="http://todoa2c.github.io/blog/categories/misc/atom.xml" rel="self"/>
+  <link href="http://todoa2c.github.io/"/>
+  <updated>2014-12-23T22:52:43+09:00</updated>
+  <id>http://todoa2c.github.io/</id>
+  <author>
+    <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[ブログ環境を直していた]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/12/23/blog-environment-restored/"/>
+    <updated>2014-12-23T22:35:54+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/12/23/blog-environment-restored</id>
+    <content type="html"><![CDATA[<p>直していたというか、退職に伴いブログ環境をプライベートのマシンに入れる作業を
+中途半端にこなしていたという次第でして…</p>
+
+<p>(なので平日限定だったのですw)</p>
+
+<p>というわけで、新しい職場で働いてもうすぐ4ヶ月が経過しようとしていますが、
+割と元気にやっております。</p>
+
+<p><a href="http://osakapy.connpass.com/">大阪Pythonユーザの集まり</a>も
+2回活動しましたし(といっても1つは忘年会)。
+来年もまた活動しますよ！</p>
+
+<p>その辺も踏まえた報告はまた次のポストにでも書きますね…。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[株式会社ラクスを退職しました]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/08/29/quit-working-at-rakus/"/>
+    <updated>2014-08-29T15:45:19+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/08/29/quit-working-at-rakus</id>
+    <content type="html"><![CDATA[<p>8月31日をもって、<a href="http://www.rakus.co.jp/">株式会社ラクス</a>を退職しました。29日が最終出社日です。
+入社は2012年3月1日ですので、2年半お世話になりました。</p>
+
+<p>入社してからというもの、<a href="http://www.rignite.com/">Rignite</a> という
+ソーシャルメディアマーケティング用Webサービスの開発に従事しておりました。</p>
+
+<p>技術的にも色々なものに触れることができました。
+トピックだけでも書くと…何と言いますか、特殊なことばっかりやっていた気がします。
+それもこれも、チームのメンバーに恵まれた結果かなと思っています。</p>
+
+<ul>
+<li>Python (NLTK, scikit-learnを使った感情解析やデータサイエンス的な分析)
+** Pythonとの出会いから、<a href="http://osakapy.connpass.com/">大阪Pythonユーザの集まり</a>のコミュティができました！</li>
+<li>Node.js (Socket.IOによるリアルタイム通信)</li>
+<li>Go (結局実戦投入できなかったけど、社外で初めて勉強会を開催した。え？第2回？てへぺろ)</li>
+<li>クライアント側のJavaScriptフレームワーク(AngularJS, Ember.js)</li>
+</ul>
+
+
+<p>一方、自分が技術だけに突き進んでいいのか？という気持ちも湧いてきており、
+もっとチーム力の底上げをしていく仕事もしたいと思うようになりました。
+そして将来的には、経営とITを融合させるためにはどうすればいいかを、考え実践していく…</p>
+
+<p>そう考えたとき、今のポジションは適切ではないのだろう、と考えてしまったわけです。</p>
+
+<p>というわけで、早速来週9月1日から、新たな会社で新たなポジションとして、
+心機一転、頑張っていく所存であります！
+結局技術もバリバリやりますけどね！</p>
+
+<p>※時間切れでコレ以上書けない…</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[GitHubのRelease機能についてQiitaに投稿した]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/06/05/github-release-feature/"/>
+    <updated>2014-06-05T20:33:24+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/06/05/github-release-feature</id>
+    <content type="html"><![CDATA[<p>GitHubにRelease機能というのがあります。
+個人的にすごく好きな機能の一つなのですが、あまり使われていない模様でしたので、
+Qiitaに
+<a href="http://qiita.com/todogzm/items/db9f5f2cedf976379f84">GitHubのリリース機能を使う &ndash; Qiita</a>
+を投稿しました。</p>
+
+<p>例えば同僚が作っている
+<a href="https://github.com/oohira/intercom-java/releases">intercom-javaのreleases</a> を見ると、
+ただタグを打っただけではなく、そのリリースに何が含まれているかが書かれており、
+リリースの内容が即座に分かって、非常にいいと思うんですね。</p>
+
+<p>特にリリース内容もアップロードできますので、
+Goでツールを作ってクロスプラットフォーム用バイナリを生成した場合には、
+Release機能を使ってバイナリもアップロードすれば、配布の手間が省けて便利になります。</p>
+
+<p>ちなみに私がGitHubのRelease機能を推しているのにはもうひとつ理由がありまして…。
+その理由は、また近いうちに書きますね。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Chromeで元タブとは異なるプロセスで新規タブを開く方法]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/04/02/chrome-tabs-and-process/"/>
+    <updated>2014-04-02T14:28:06+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/04/02/chrome-tabs-and-process</id>
+    <content type="html"><![CDATA[<p>Google Chromeは基本的に1タブごとに1プロセスを立ち上げるマルチプロセスのアーキテクチャを採用しています。
+マルチプロセスであることにより、下記のメリットが生まれるわけです。</p>
+
+<ol>
+<li>ブラウザ本体のメモリ使用量肥大化を防ぐ</li>
+<li>1つのタブがクラッシュしてもブラウザ全体に影響を及ぼさない</li>
+</ol>
+
+
+<p>ただし、厳密に言うと1タブごとに1プロセス、というわけではありません。
+具体的に言いますと、ある元タブからリンクをクリックした際に開かれるタブ、これは元タブと同じプロセスで
+開かれます。
+ですので、この2つのタブのうちどちらかがクラッシュすると、両方のタブがクラッシュすることになります。
+また、この方法で開き続けると、1つのプロセスで何枚ものタブを開くことになるので、
+最終的には1つのタブのプロセスがメモリ肥大化します。</p>
+
+<p>個人的に、嫌なんですよね。常駐したいタブのメモリが肥大化するのって。
+Twitterなどのサービスのタブを常駐させたまま各種リンクをクリックして見てた結果、
+気がつけばTwitterタブを開いているプロセスのメモリが肥大化しているわけです。</p>
+
+<p>という神経質な私のために、どうしたら別プロセスで新しいタブを開くのか確認しました。
+結論から言いますと、「リンクを右クリックして新しいタブで開く」と新規タブが新しいプロセスで開けます。</p>
+
+<p>以下、検証方法。ブラウザにはWindows版Chrome 33.0.1750.154mを使用しました。
+新規タブで開くリンクに対して、下記の操作を行いました。</p>
+
+<ol>
+<li>左クリックで開く</li>
+<li>中央クリックで開く</li>
+<li>右クリックでコンテキストメニューを出し、「新しいタブで開く」を使って開く</li>
+</ol>
+
+
+<p>結果は以下のとおり、3.の右クリックして新しいタブで開く方法だけが、新しいプロセスで新規タブを
+開くことが出来ました。</p>
+
+<p><img src="/images/contents/20140402-chrome-tabs-and-process.png" alt="3つの方法で新規タブを開いた場合のプロセス" /></p>
+
+<p>最近のマシンではそれほどメモリ使用量を気にすることはないかと思いますが、
+私のような神経質さを持つ方には、是非右クリック→新しいタブで開く、をおすすめします。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[今週はまともにブログを書けなかった…(読む価値なし日記)]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/03/28/no-value-waffle/"/>
+    <updated>2014-03-28T12:10:27+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/03/28/no-value-waffle</id>
+    <content type="html"><![CDATA[<p>今週も色々ありました…ちょっとここには書きにくいので、またあちこちで流すかもしれませんし、
+流さないかもしれません。</p>
+
+<p>とりあえずこんな一文でも、一応更新したんだぞ、と自分に言い聞かせるための
+免罪符的読む価値なし日記でした。ちゃんちゃん。</p>
+]]></content>
+  </entry>
+  
+</feed>

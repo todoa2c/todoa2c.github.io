@@ -1,0 +1,396 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>App Engine用言語をPythonにした件… - 技術情報棚卸し(平日限定)</title>
+  <meta name="author" content="Atsushi Kanaya (todoa2c)">
+
+  
+  <meta name="description" content="はじめに GoでGoogle App Engineを触るテストを
+書いておきながら、諸般の事情により、Pythonで書きなおすことにしました。
+書き直すと言っても、大した進んでいないので、また1から書き直しという感じですね。 準備 今回はMacで開発しているので、ライブラリはここからダウンロードし &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://todoa2c.github.io/blog/2014/05/16/beginning-appengine-python">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="技術情報棚卸し(平日限定)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47839845-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">技術情報棚卸し(平日限定)</a></h1>
+  
+    <h2>todoa2cの技術情報棚卸しです。平日限定ってことはアレだ。言わせんな恥ずかしい。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:todoa2c.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">App Engine用言語をPythonにした件…</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-16T11:19:49+09:00" pubdate data-updated="true">2014-05-16</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>はじめに</h1>
+
+<p><a href="http://todoa2c.github.io/blog/2014/02/13/beginning-appengine-go/">GoでGoogle App Engineを触るテスト</a>を
+書いておきながら、諸般の事情により、Pythonで書きなおすことにしました。
+書き直すと言っても、大した進んでいないので、また1から書き直しという感じですね。</p>
+
+<h2>準備</h2>
+
+<p>今回はMacで開発しているので、ライブラリはここからダウンロードし、インストール＆実行すればOK。</p>
+
+<p><a href="https://developers.google.com/appengine/downloads?hl=ja">Download the Google App Engine SDK &ndash; Google App Engine &ndash; Google Developers</a></p>
+
+<p>Pythonはvirtualenv経由だとうまく動かないもようなので、Pyenvで特定の2.7系バージョンを作る。</p>
+
+<p>開発環境は<a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a>のPythonプラグイン + App Engineサポートを利用。
+間違ってもFlaskを使いたいからと言って、Flask Templateを選んではいけない。あとで自分でライブラリを
+ダウンロードすること。そうしなければ、App EngineのライブラリがIntelliJ IDEA側で認識してくれなかった
+(別途不具合報告予定)。</p>
+
+<h2>書いてみる</h2>
+
+<p>ライブラリは requirements.txt あたりを用意し、下記コマンドを実行することで、
+ライブラリがlibフォルダに置かれる。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pip install -r requirements.txt -t lib</span></code></pre></td></tr></table></div></figure>
+
+
+<p>また、appengine_config.py を用意し、上記のlibフォルダをライブラリフォルダとして認識するように、
+下記を記述する。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>import os
+</span><span class='line'>import sys
+</span><span class='line'>ROOTPATH = os.path.dirname(__file__)
+</span><span class='line'>LIBPATH = os.path.join(ROOTPATH, 'lib')
+</span><span class='line'>sys.path.append(LIBPATH)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>その他コードは割愛するけれど、Flaskのフレームワークとしての薄さと
+3rd-partyライブラリによる拡張性の高さは結構好み。
+とは言えDjangoをまじめに学習したことがないので、別途
+<a href="http://connpass.com/event/6369/">大阪Pythonユーザの集まり 2014/05</a>の
+Djangoセッションで学習してみようかと思う。</p>
+
+<h2>デプロイ</h2>
+
+<p>デプロイは、ローカル＆本番環境ともに、とりあえず簡単に、IntelliJ IDEAから試す。
+ローカル環境の場合は、App Engine Serverから起動する事ができる。</p>
+
+<p>本番環境は、メニューのToolsからGoogle App Engine → Upload App Engine app&hellip; から
+アップロードできる。簡単。</p>
+
+<p>簡単だけど、継続的デリバリーができなくなるので、別途デプロイ方法を検討する。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Atsushi Kanaya (todoa2c)</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-16T11:19:49+09:00" pubdate data-updated="true">2014-05-16</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/appengine/'>AppEngine</a>, <a class='category' href='/blog/categories/python/'>Python</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://todoa2c.github.io/blog/2014/05/16/beginning-appengine-python/" data-via="todogzm" data-counturl="http://todoa2c.github.io/blog/2014/05/16/beginning-appengine-python/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/05/12/osaka-python-study-session/" title="Previous Post: 大阪Pythonユーザの集まり 2014/05 を募集開始しました '#osakapy">&laquo; 大阪Pythonユーザの集まり 2014/05 を募集開始しました '#osakapy</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/05/22/appengine-python-traps/" title="Next Post: App Engine/Pythonでハマった初心者向けトラップ">App Engine/Pythonでハマった初心者向けトラップ &raquo;</a>
+      
+    </p>
+  </footer>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- todoa2c.github.ioの記事下 -->
+  <ins class="adsbygoogle"
+	  style="display:inline-block;width:728px;height:90px"
+	  data-ad-client="ca-pub-4872492087202732"
+	  data-ad-slot="4323136485"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</article>
+
+  <section>
+  <h1>Comments</h1>
+  <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/12/23/blog-environment-restored/">ブログ環境を直していた</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/29/quit-working-at-rakus/">株式会社ラクスを退職しました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/25/decision-tree-feature-names/">決定木の表示に変数名を表示する</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/12/writing-decision-tree/">Pythonで決定木を描いてみる</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/16/mac-java-switch-version/">MacでJavaのバージョンを切り替える方法</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/todoa2c">@todoa2c</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'todoa2c',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+<section>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- todoa2c.github.ioのサイドバー -->
+  <ins class="adsbygoogle"
+       style="display:inline-block;width:250px;height:250px"
+       data-ad-client="ca-pub-4872492087202732"
+       data-ad-slot="5799869680"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</section>
+<section>
+	<h1>Latest Tweets</h1>
+	<a class="twitter-timeline" href="https://twitter.com/todogzm" data-widget-id="444303472796528640">@todogzm からのツイート</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/+AtsushiKanaya?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Atsushi Kanaya (todoa2c) -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'todoa2c-github-io';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://todoa2c.github.io/blog/2014/05/16/beginning-appengine-python/';
+        var disqus_url = 'http://todoa2c.github.io/blog/2014/05/16/beginning-appengine-python/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

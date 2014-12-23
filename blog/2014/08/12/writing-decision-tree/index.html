@@ -5,13 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>技術情報棚卸し(平日限定)</title>
+  <title>Pythonで決定木を描いてみる - 技術情報棚卸し(平日限定)</title>
   <meta name="author" content="Atsushi Kanaya (todoa2c)">
 
   
-  <meta name="description" content="直していたというか、退職に伴いブログ環境をプライベートのマシンに入れる作業を
-中途半端にこなしていたという次第でして… (なので平日限定だったのですw) というわけで、新しい職場で働いてもうすぐ4ヶ月が経過しようとしていますが、
-割と元気にやっております。 大阪Pythonユーザの集まりも &hellip;">
+  <meta name="description" content="はじめに データ分析が必要な局面がぼちぼち出てきましたので、まずは簡単な決定木を用いて
+分析結果の可視化をしようじゃないか、というのが今回の目論見です。 決定木とは 決定木とは、scikit-learnの1.8. Decision Treesによると、
+分類や回帰を行うために使われる、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://todoa2c.github.io">
+  <link rel="canonical" href="http://todoa2c.github.io/blog/2014/08/12/writing-decision-tree">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="技術情報棚卸し(平日限定)" type="application/atom+xml">
@@ -77,199 +77,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/12/23/blog-environment-restored/">ブログ環境を直していた</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-12-23T22:35:54+09:00" pubdate data-updated="true">2014-12-23</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>直していたというか、退職に伴いブログ環境をプライベートのマシンに入れる作業を
-中途半端にこなしていたという次第でして…</p>
-
-<p>(なので平日限定だったのですw)</p>
-
-<p>というわけで、新しい職場で働いてもうすぐ4ヶ月が経過しようとしていますが、
-割と元気にやっております。</p>
-
-<p><a href="http://osakapy.connpass.com/">大阪Pythonユーザの集まり</a>も
-2回活動しましたし(といっても1つは忘年会)。
-来年もまた活動しますよ！</p>
-
-<p>その辺も踏まえた報告はまた次のポストにでも書きますね…。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/29/quit-working-at-rakus/">株式会社ラクスを退職しました</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-29T15:45:19+09:00" pubdate data-updated="true">2014-08-29</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>8月31日をもって、<a href="http://www.rakus.co.jp/">株式会社ラクス</a>を退職しました。29日が最終出社日です。
-入社は2012年3月1日ですので、2年半お世話になりました。</p>
-
-<p>入社してからというもの、<a href="http://www.rignite.com/">Rignite</a> という
-ソーシャルメディアマーケティング用Webサービスの開発に従事しておりました。</p>
-
-<p>技術的にも色々なものに触れることができました。
-トピックだけでも書くと…何と言いますか、特殊なことばっかりやっていた気がします。
-それもこれも、チームのメンバーに恵まれた結果かなと思っています。</p>
-
-<ul>
-<li>Python (NLTK, scikit-learnを使った感情解析やデータサイエンス的な分析)
-** Pythonとの出会いから、<a href="http://osakapy.connpass.com/">大阪Pythonユーザの集まり</a>のコミュティができました！</li>
-<li>Node.js (Socket.IOによるリアルタイム通信)</li>
-<li>Go (結局実戦投入できなかったけど、社外で初めて勉強会を開催した。え？第2回？てへぺろ)</li>
-<li>クライアント側のJavaScriptフレームワーク(AngularJS, Ember.js)</li>
-</ul>
-
-
-<p>一方、自分が技術だけに突き進んでいいのか？という気持ちも湧いてきており、
-もっとチーム力の底上げをしていく仕事もしたいと思うようになりました。
-そして将来的には、経営とITを融合させるためにはどうすればいいかを、考え実践していく…</p>
-
-<p>そう考えたとき、今のポジションは適切ではないのだろう、と考えてしまったわけです。</p>
-
-<p>というわけで、早速来週9月1日から、新たな会社で新たなポジションとして、
-心機一転、頑張っていく所存であります！
-結局技術もバリバリやりますけどね！</p>
-
-<p>※時間切れでコレ以上書けない…</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/25/decision-tree-feature-names/">決定木の表示に変数名を表示する</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-25T20:55:28+09:00" pubdate data-updated="true">2014-08-25</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>決定木を描画できたのはいいのですが、「変数が0数えで何番目かをいちいち数えなきゃいけないのが不便！」
-というお声をいただきまして、早速調査しました。</p>
-
-<p>結論から言いますと、できました。
-<a href="http://scikit-learn.org/stable/modules/generated/sklearn.tree.export_graphviz.html">sklearn.tree.export_graphviz</a>
-関数の引数に、<code>feature_names</code>を渡せばよかったです。</p>
-
-<p>変更後のプログラムはこちら。<code>export_graphviz</code>関数の引数に、<code>feature_names=variables</code>を渡しています。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>import pandas as pd
-</span><span class='line'>from sklearn import tree
-</span><span class='line'>
-</span><span class='line'>data = pd.read_table('iris.txt')
-</span><span class='line'>variables = ['Sepal.Length', 'Sepal.Width', 'Petal.Length', 'Petal.Width']
-</span><span class='line'>
-</span><span class='line'>classifier = tree.DecisionTreeClassifier(min_samples_leaf=3, max_depth=3)
-</span><span class='line'>classifier = classifier.fit(data[variables], data['Species'])
-</span><span class='line'>
-</span><span class='line'>with open('graph.dot', 'w') as f:
-</span><span class='line'>    f = tree.export_graphviz(classifier, out_file=f, feature_names=variables)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>結果得られた決定木はこちら。非常に見やすくなりました！</p>
-
-<p><img src="/images/contents/20140825-feature-names.png" alt="変数名表示バージョン" /></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/12/writing-decision-tree/">Pythonで決定木を描いてみる</a></h1>
+      <h1 class="entry-title">Pythonで決定木を描いてみる</h1>
     
     
       <p class="meta">
@@ -292,7 +105,7 @@
   </header>
 
 
-  <div class="entry-content"><h1>はじめに</h1>
+<div class="entry-content"><h1>はじめに</h1>
 
 <p>データ分析が必要な局面がぼちぼち出てきましたので、まずは簡単な決定木を用いて
 分析結果の可視化をしようじゃないか、というのが今回の目論見です。</p>
@@ -614,85 +427,16 @@ Noなら、次は<code>Petal.Width</code>が1.75以下か否かで…という�
 <p>実際のデータに対して試してみると、思わぬ発見が出てきて楽しいですよ。
 是非お試しください。</p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/16/mac-java-switch-version/">MacでJavaのバージョンを切り替える方法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">Atsushi Kanaya (todoa2c)</span></span>
 
-<time datetime="2014-07-16T18:17:31+09:00" pubdate data-updated="true">2014-07-16</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.ipa.go.jp/security/ciadr/vul/20140716-jre.html">Oracle Java の脆弱性対策について(CVE-2014-4227等)</a>
-のアナウンスと共に、本脆弱性に対する修正プログラムがリリースされましたね。
-※実際には修正プログラムが出る前に、脆弱性の報告が上がってしまって肝を冷やしましたが…</p>
-
-<p>さて自分の開発環境のMacでもJDK 8 Update 11をインストールしたわけですが、
-インストール後に<code>java -version</code> と打っても、今まで使っていたバージョン情報しか出なかったわけで、少し焦りました。</p>
-
-<p>原因は、分かってしまえば何てことはなく、環境変数 <code>JAVA_HOME</code> の書き換えを忘れていた、というオチでした。</p>
-
-<p>というわけで、環境変数を下記のように書き換えればOK。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_11.jdk/Contents/Home</span></code></pre></td></tr></table></div></figure>
-
-
-<p>確認します。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ java -version
-</span><span class='line'>java version "1.8.0_11"
-</span><span class='line'>Java(TM) SE Runtime Environment (build 1.8.0_11-b12)
-</span><span class='line'>Java HotSpot(TM) 64-Bit Server VM (build 25.11-b03, mixed mode)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>無事にバージョン切り替え完了！</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/07/intellij-git-revision-graph/">IntelliJ IDEAでGitのRevision Graphが表示できる</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -704,335 +448,59 @@ Noなら、次は<code>Petal.Width</code>が1.75以下か否かで…という�
   
 
 
-<time datetime="2014-07-07T18:23:34+09:00" pubdate data-updated="true">2014-07-07</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>またQiita側への投稿ですが、こちらにもリンクを載せておきます。</p>
-
-<p><a href="http://qiita.com/todogzm/items/6d529098759359b13b2d">IntelliJ IDEAでGitのRevision Graphを見る &ndash; Qiita</a></p>
-
-<p>さりげなく未だにSubversionを使ってるアピールも欠かさないわけで、切ないですね。
-もっと気軽にブランチを切りたいです。。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
+<time datetime="2014-08-12T11:48:47+09:00" pubdate data-updated="true">2014-08-12</time>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/24/developing-oss-release-checker/">OSS Release Checkerというサービスを開発しています</a></h1>
-    
-    
-      <p class="meta">
-        
 
-
-
-
-
-
-
-
+<span class="categories">
   
+    <a class='category' href='/blog/categories/python/'>Python</a>
+  
+</span>
 
 
-<time datetime="2014-06-24T19:58:33+09:00" pubdate data-updated="true">2014-06-24</time>
-        
-      </p>
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><p>オープンソースのプロジェクトについて、リリース情報を収集して一覧するサービスを作っています。
-その名もOSS Release Checkerという、いかにも日本人が付けたような名前です。</p>
-
-<p><a href="http://osschecker.appspot.com/">http://osschecker.appspot.com/</a></p>
-
-<p>うちの会社の業務で、ライブラリやフレームワークのリリース情報をチェックして報告する業務があります。
-それ毎日見るの面倒だからリリース情報のチェックを一手に引き受けてくれるサービスを作ったらえぇやん、というのが発想ですね。</p>
-
-<p>機能的な話ですが、まずはリリース情報の収集先はGitHubをターゲットにしています。
-検索画面から気になるプロジェクトを検索してウォッチしていけば、あとは自動的にリリース情報を収集してくれます。
-そして収集した結果、最新のリリースおよびタグ付けされたリポジトリが、画面に一覧表示される、という寸法です。</p>
-
-<p>直近の目標はこんな感じです。
-GitHubのアカウントでOAuthした上で、自分のウォッチしたいリポジトリを登録しておきます。
-そして、ウォッチしているリポジトリに更新があればGitHubのメールアドレスに対してメール通知すると。
-これができたら、自分的にはいい感じですね。</p>
-
-<p>あとは見た目はもう少し何とかしたいですね。検索画面とか、Bootstrap感満載の画面とか…。
-ドメインを取ってみたもののApp Engineに適用しようと思ったらGoogle Appsが必要みたいで躊躇してたり…
-(Google Appsが必要じゃないケースもあるらしいが…)</p>
-
-<p>最後に、GitHubで何かしら開発されている方は、タグ付けだけでなく、GitHubのリリース機能を使用してください。
-リリース機能を使うことで、ただのタグ付けだけでなく、そのリリースがどういうものかを説明する場所と、モジュールの配布場所が提供されます。
-そして、私のサービスでも、リリース情報として取り込むことができるようになります。</p>
-
-<p>※ <a href="http://qiita.com/todogzm/items/db9f5f2cedf976379f84">GitHubのリリース機能を使う &ndash; Qiita</a> も
-合わせてご参照ください。</p>
-
-<p>こちらからは以上です。</p>
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://todoa2c.github.io/blog/2014/08/12/writing-decision-tree/" data-via="todogzm" data-counturl="http://todoa2c.github.io/blog/2014/08/12/writing-decision-tree/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
 </div>
-  
-  
 
-
-    </article>
-  
-  
-    <article>
+    
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/16/npm-update-peerinvalid/">Qiitaにnpm Installでpeerinvalidエラーが出た際のエラー解消方法を書いた＋α</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-16T19:11:45+09:00" pubdate data-updated="true">2014-06-16</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>何度かハマるので、メモ的に書いておきました。</p>
-
-<p><a href="http://qiita.com/todogzm/items/e965c47f888c23da1c0a">npm installでpeerinvalidエラーが出た時の解消方法</a></p>
-
-<p>ところで、今作っているサービスのデプロイの際に、npmからモジュールを都度取ってきて
-処理を行う的な部分があるのですが、npmに上がっているモジュールに問題があった場合に
-デプロイの処理が止まってしまう問題があります。
-対策としてはnpmに上がっているモジュールのバージョンを固定にしてしまうことだとは
-思うのですが、一方で開発の際には、なるべく最新のモジュールを使うべく、
-このバージョン以降を使う、という設定をしています(Qiitaに載せてるpackage.jsonみたいに)。</p>
-
-<p>ローカル開発環境と、ステージング＆本番環境では、package.jsonの管理方法を変えるのが良いか、
-はたまたどちらも統一してしまうべきか、少々悩ましいです。</p>
-
-<p>皆様がどうされているのか、教えていただければ嬉しいですね。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
+        <a class="basic-alignment left" href="/blog/2014/07/16/mac-java-switch-version/" title="Previous Post: MacでJavaのバージョンを切り替える方法">&laquo; MacでJavaのバージョンを切り替える方法</a>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/05/github-release-feature/">GitHubのRelease機能についてQiitaに投稿した</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-05T20:33:24+09:00" pubdate data-updated="true">2014-06-05</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>GitHubにRelease機能というのがあります。
-個人的にすごく好きな機能の一つなのですが、あまり使われていない模様でしたので、
-Qiitaに
-<a href="http://qiita.com/todogzm/items/db9f5f2cedf976379f84">GitHubのリリース機能を使う &ndash; Qiita</a>
-を投稿しました。</p>
-
-<p>例えば同僚が作っている
-<a href="https://github.com/oohira/intercom-java/releases">intercom-javaのreleases</a> を見ると、
-ただタグを打っただけではなく、そのリリースに何が含まれているかが書かれており、
-リリースの内容が即座に分かって、非常にいいと思うんですね。</p>
-
-<p>特にリリース内容もアップロードできますので、
-Goでツールを作ってクロスプラットフォーム用バイナリを生成した場合には、
-Release機能を使ってバイナリもアップロードすれば、配布の手間が省けて便利になります。</p>
-
-<p>ちなみに私がGitHubのRelease機能を推しているのにはもうひとつ理由がありまして…。
-その理由は、また近いうちに書きますね。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/02/attended-osaka-python-study-session/">大阪Pythonユーザの集まり2014/05に参加＆発表してきた &#8216;#osakapy</a></h1>
-    
-    
-      <p class="meta">
-        
+        <a class="basic-alignment right" href="/blog/2014/08/25/decision-tree-feature-names/" title="Next Post: 決定木の表示に変数名を表示する">決定木の表示に変数名を表示する &raquo;</a>
+      
+    </p>
+  </footer>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- todoa2c.github.ioの記事下 -->
+  <ins class="adsbygoogle"
+	  style="display:inline-block;width:728px;height:90px"
+	  data-ad-client="ca-pub-4872492087202732"
+	  data-ad-slot="4323136485"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</article>
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-02T19:30:00+09:00" pubdate data-updated="true">2014-06-02</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>まえがき</h1>
-
-<p><a href="http://osakapy.connpass.com/">大阪Pythonユーザの集まり</a>の勉強会、
-<a href="http://osakapy.connpass.com/event/6369/">大阪Pythonユーザの集まり 2014/05</a>の
-企画、参加、発表してきました。</p>
-
-<p>まさか開始前に、高専談義が行われるとは…(私含め3名の高専出身者が参加されていました)。</p>
-
-<h1>発表内容</h1>
-
-<h2>Djangoの黒魔術</h2>
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/35342880" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/YasushiMasuda/django-boodoo" title="Django boodoo" target="_blank">Django boodoo</a> </strong> from <strong><a href="http://www.slideshare.net/YasushiMasuda" target="_blank">Yasushi Masuda</a></strong> </div></p>
-
-<p>増田さん (<a href="https://twitter.com/whosaysni">@whosaysni</a>) による、
-Djangoを使う上での黒魔術的な工夫。
-Djangoは触ったことがなかったので、黒魔術自体は参考になることはなかったものの、
-内部実装を交えた話があることで、ずいぶんと興味深く聞くことができた。
-スコープがスタックとして実装されており、上から順番に探索しているので、
-ネストした名前の解決もうまくいくと。</p>
-
-<h2>オープンCAEとPython</h2>
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/35353509" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/TatsuyaKatayama/caepython-35353509" title="オープンCAEとPython" target="_blank">オープンCAEとPython</a> </strong> from <strong><a href="http://www.slideshare.net/TatsuyaKatayama" target="_blank">TatsuyaKatayama</a></strong> </div></p>
-
-<p><a href="http://ofbkansai.sakura.ne.jp/">オープンCAE勉強会@関西</a>幹事の片山さんによる、
-オープンCAEに関する実装とPythonとの関連について。
-CAEとは<a href="http://ja.wikipedia.org/wiki/CAE">CAE &ndash; Wikipedia</a>によると、</p>
-
-<blockquote><p>コンピュータ技術を活用して製品の設計、製造や工程設計の事前検討の支援を行うこと、またはそれを行うツールである</p></blockquote>
-
-<p>とのこと。
-今回は、数値解析・シミュレーションなどで使われる計算を行うソフトウェアの
-オープンソース実装と、Pythonがどのように関係しているかをご紹介いただいた。
-今回ご紹介いただいたオープンソース実装には何かしらPythonのインターフェースがあり、
-最終的には、これらの実装をPythonでつなぐことを検討中とのことです。</p>
-
-<h2>Python 3世代が考える(?) Python 2/3コード共存戦略</h2>
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/35257323" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/AtsushiKanaya/python-python3and2" title="Python 2/3コード共存戦略 #osakapy" target="_blank">Python 2/3コード共存戦略 #osakapy</a> </strong> from <strong><a href="http://www.slideshare.net/AtsushiKanaya" target="_blank">Atsushi Kanaya</a></strong> </div></p>
-
-<p>私の発表です。知らぬ間にPython 2.7を使っており、int / int でfloatが返ってきてハマった話から、
-Python 2でも3でもコードをメンテナンスしなければならない場合の、
-取りうる戦略とメリット・デメリットについて発表しました。</p>
-
-<h1>LT</h1>
-
-<h2>GAEでスパイクを捌く</h2>
-
-<iframe src="http://www.slideshare.net/slideshow/embed_code/32257210" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-
-
-<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/idoojosjp/gae-32257210" title="GAEでスパイクを捌く" target="_blank">GAEでスパイクを捌く</a> </strong> from <strong><a href="http://www.slideshare.net/idoojosjp" target="_blank">Tsuyoshi Aizu</a></strong> </div></p>
-
-<p>会津さん (<a href="https://twitter.com/Ido">@Ido</a>) による、瞬間的な大量リクエスト(スパイク)を
-App Engineでどのように捌くかについて。
-あるインスタンスが1秒間に捌けるリクエスト数から、予想される最大リクエスト数に対する
-インスタンスを事前に起動しておくことで対処する。
-4桁台のインスタンスを起動する的な話も…これはApp Engineならではと言った感じですね。</p>
-
-<h2>とあるプロジェクトでのPython導入事例</h2>
-
-<p><a href="http://www.hexacosa.net/documents/osakapy-20140529-lt"><a href="http://www.hexacosa.net/documents/osakapy-20140529-lt">http://www.hexacosa.net/documents/osakapy-20140529-lt</a></a></p>
-
-<p>服部さん (<a href="https://twitter.com/hhatto">@hhatto</a>) による、
-ソーシャルゲーム開発・運用周りで作ったツールの紹介。
-あちこちで使われており、自分もまだまだ業務改善する余地がありそうだなぁと反省…。</p>
-
-<h1>懇親会</h1>
-
-<p>実は当日までお店すら決めていなかったのです。
-今回は参加人数も多くないし、大丈夫だろうと高をくくっていたのですが、
-蓋を開けると勉強会参加者は20名、懇親会参加者も11名に。</p>
-
-<p>当日のお昼に急いで店を探して予約して、飲み放題プランで料金3500円ポッキリ、
-当日の参加もOKよ！というかたちにしました。</p>
-
-<p>また、前回は自分の終電の都合もあって23時解散にしたのですが、
-もう少しゆっくりしたい方々もいらっしゃるかもしれないと思い、
-実際の会計は増田さんにお願いしました。増田さん、ありがとうございます。</p>
-
-<p>懇親会では、Javaのコミュニティの大移動の話や、フリーランスとしての活動の話など、
-Python以外にも色々ためになる話を聞くことが出来ました。
-そしてまた今回もErlangいいよ、という話が聞こえてきたので、
-そろそろErlangを真面目に触ってみたほうがよいのかも…(いやいやそんな時間ないわ…)。</p>
-
-<h1>次回</h1>
-
-<p>まだ未定ですが、多分勉強会は8月開催だと思います。
-また、数時間程度のハッカソンは別途検討したいと考えています。
-土日の合宿もやってみたいですが、まずは平日のハッカソンかなぁ…。</p>
+  <section>
+  <h1>Comments</h1>
+  <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-  
-  
+  </section>
 
-
-    </article>
-  
-  <div class="pagination">
-    
-      <a class="prev" href="/blog/page/2/">&larr; Older</a>
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
 </div>
+
 <aside class="sidebar">
   
     <section>
@@ -1065,7 +533,7 @@ Python以外にも色々ためになる話を聞くことが出来ました。
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/todoa2c">@todoa2c</a> on GitHub
@@ -1123,6 +591,7 @@ Python以外にも色々ためになる話を聞くことが出来ました。
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -1137,7 +606,10 @@ Python以外にも色々ためになる話を聞くことが出来ました。
       var disqus_shortname = 'todoa2c-github-io';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://todoa2c.github.io/blog/2014/08/12/writing-decision-tree/';
+        var disqus_url = 'http://todoa2c.github.io/blog/2014/08/12/writing-decision-tree/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

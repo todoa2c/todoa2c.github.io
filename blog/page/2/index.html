@@ -1,0 +1,1116 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>技術情報棚卸し(平日限定)</title>
+  <meta name="author" content="Atsushi Kanaya (todoa2c)">
+
+  
+  <meta name="description" content="IntelliJ IDEAからApp Engineへのデプロイが簡単にできることは以前書いたのですが、
+自分のIntelliJ IDEAのローカルフォルダの情報がそのままデプロイされてしまうので、
+コミットしていないコードがそのままデプロイされてしまう危険性があります。
+また、 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://todoa2c.github.io/blog/page/2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="技術情報棚卸し(平日限定)" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47839845-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">技術情報棚卸し(平日限定)</a></h1>
+  
+    <h2>todoa2cの技術情報棚卸しです。平日限定ってことはアレだ。言わせんな恥ずかしい。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:todoa2c.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/30/codeship-appengine-continuous-delivery/">Codeshipを使ったApp Engineへの継続的デリバリー</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-30T11:13:17+09:00" pubdate data-updated="true">2014-05-30</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>IntelliJ IDEAからApp Engineへのデプロイが簡単にできることは以前書いたのですが、
+自分のIntelliJ IDEAのローカルフォルダの情報がそのままデプロイされてしまうので、
+コミットしていないコードがそのままデプロイされてしまう危険性があります。
+また、デプロイの作業が自分しかできない、暗黙知化されるのも良くないわけです。</p>
+
+<p>こういった問題の解決策として継続的デリバリーを行うべく、
+実現できるサービスを探したところ、ありました。
+<a href="https://www.codeship.io/">Codeship</a>というサービスです。</p>
+
+<p>Codeshipは、扱えるコード、コードのホスト先だけでなく、
+コードを動かすクラウド環境(AWSやDigital Oceanなど)も選べるし、その際に必要となる
+デプロイやプロビジョニングツールも提供されており、
+テストから環境構築してデプロイまでを一手に引き受けてくれるサービスです。</p>
+
+<p>今回は、Bitbucketに置いてある自分のプライベートリポジトリを監視し、
+コードのPushがあったタイミングでテストを行い、
+かつmasterブランチに対するコミットがあった時点でApp Engineにデプロイする、
+というところまでをやってみました。</p>
+
+<p>基本的な実現方法は、下記をご参照ください。こっちの方が分かりやすいです。</p>
+
+<p><a href="http://blog.codeship.io/2014/01/21/continuous-deployment-google-app-engine-bitbucket-python-django.html">Continuous Deployment for Django apps from Bitbucket to Google App Engine &ndash; Codeship</a></p>
+
+<p>工夫した点は、設定面の工夫は特にありませんが、デプロイの仕方だけは少し工夫しています。
+GitのブランチをGit-flow風にして、developを開発用ブランチ、masterをリリース用ブランチにして、
+リリース時には、developの変更点をmasterにマージしてもらうようなPull Requestを
+Bitbucket上で作成します。</p>
+
+<p><img src="/images/contents/20140530-bitbucket-deploy-pr.png" alt="デプロイ用Pull Requestの変更点" /></p>
+
+<p>こうすることで、どのコミットがリリースに含まれるかが、リリース用Pull Requestを見れば
+一目瞭然になるわけです。</p>
+
+<p>※アイデアは <a href="http://d.hatena.ne.jp/naoya/20140502/1399027655">GitHub 時代のデプロイ戦略 &ndash; naoyaのはてなダイアリー</a>です。</p>
+
+<p>あとはデプロイはCodeshipにお願いすると。</p>
+
+<p><img src="/images/contents/20140530-codeship-deploy.png" alt="Codeshipによるデプロイ" /></p>
+
+<p>これでBitbucket上からのリリースもできるようになり、非常に快適になりました。
+あとは、今はまだステージング環境のようなものを用意していないのですが、
+developブランチにコミットがあった場合にステージング環境にデプロイもする、という設定を
+追加すると良いかもしれないですね。</p>
+
+<p>Codeshipは1ヶ月に50回のビルドまでであれば無料で使うことが出来ますので、
+ご興味のある方は、是非是非お試しください。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/22/appengine-python-traps/">App Engine/Pythonでハマった初心者向けトラップ</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-22T20:08:31+09:00" pubdate data-updated="true">2014-05-22</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>早速いくつかトラップにハマりました。</p>
+
+<h1>requestsパッケージがApp Engineで動かない</h1>
+
+<p>App Engine/Pythonは<a href="https://developers.google.com/appengine/docs/python/urlfetch/?hl=ja">URL Fetch Python API Overview</a>
+にあるように、標準ライブラリのurllib, urllib2, httplibであればそのままURL Fetchが使えました。</p>
+
+<p>一方、GitHubのAPIを叩く際に使っていた<a href="https://github.com/sigmavirus24/github3.py">github3.py</a>は
+内部的に<a href="https://github.com/kennethreitz/requests">requests</a>ライブラリを使用しているわけですが、
+このrequestsライブラリですと、App Engineでは動かないのです。
+更にこのrequestsライブラリの中で使われているurllib3はApp Engine内で動くらしいのですが…動かず。無念。</p>
+
+<p>結局他のGitHub APIライブラリを使用しました。</p>
+
+<h1>GoogleAppEngineLauncher.appアップデート後の罠</h1>
+
+<p>GoogleAppEngineLauncher.appアップデート後は、一度は起動しないと最新モジュールが
+適用されないみたいです。
+私はIntelliJ IDEAを使っており、そのIntelliJ IDEAが参照する<code>google_appengine</code>フォルダは
+<code>/usr/local/google_appengine</code> ではなく、GoogleAppEngineLauncher.app内の結構深いところにある
+<code>google_appengine</code>フォルダを参照します。</p>
+
+<p>で、GoogleAppEngineLauncher.app がアップデートされたあとは、この <code>google_appengine</code>フォルダが
+見当たらないのです。その代わり、google_appengine.zip はある。
+一度起動することにより、google_appengine.zipが解凍されて <code>google_appengine</code>フォルダが
+作られる模様ですね。。。気づかんわこれ。</p>
+
+<p>こちらからは以上です。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/16/beginning-appengine-python/">App Engine用言語をPythonにした件…</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-16T11:19:49+09:00" pubdate data-updated="true">2014-05-16</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>はじめに</h1>
+
+<p><a href="http://todoa2c.github.io/blog/2014/02/13/beginning-appengine-go/">GoでGoogle App Engineを触るテスト</a>を
+書いておきながら、諸般の事情により、Pythonで書きなおすことにしました。
+書き直すと言っても、大した進んでいないので、また1から書き直しという感じですね。</p>
+
+<h2>準備</h2>
+
+<p>今回はMacで開発しているので、ライブラリはここからダウンロードし、インストール＆実行すればOK。</p>
+
+<p><a href="https://developers.google.com/appengine/downloads?hl=ja">Download the Google App Engine SDK &ndash; Google App Engine &ndash; Google Developers</a></p>
+
+<p>Pythonはvirtualenv経由だとうまく動かないもようなので、Pyenvで特定の2.7系バージョンを作る。</p>
+
+<p>開発環境は<a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a>のPythonプラグイン + App Engineサポートを利用。
+間違ってもFlaskを使いたいからと言って、Flask Templateを選んではいけない。あとで自分でライブラリを
+ダウンロードすること。そうしなければ、App EngineのライブラリがIntelliJ IDEA側で認識してくれなかった
+(別途不具合報告予定)。</p>
+
+<h2>書いてみる</h2>
+
+<p>ライブラリは requirements.txt あたりを用意し、下記コマンドを実行することで、
+ライブラリがlibフォルダに置かれる。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pip install -r requirements.txt -t lib</span></code></pre></td></tr></table></div></figure>
+
+
+<p>また、appengine_config.py を用意し、上記のlibフォルダをライブラリフォルダとして認識するように、
+下記を記述する。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>import os
+</span><span class='line'>import sys
+</span><span class='line'>ROOTPATH = os.path.dirname(__file__)
+</span><span class='line'>LIBPATH = os.path.join(ROOTPATH, 'lib')
+</span><span class='line'>sys.path.append(LIBPATH)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>その他コードは割愛するけれど、Flaskのフレームワークとしての薄さと
+3rd-partyライブラリによる拡張性の高さは結構好み。
+とは言えDjangoをまじめに学習したことがないので、別途
+<a href="http://connpass.com/event/6369/">大阪Pythonユーザの集まり 2014/05</a>の
+Djangoセッションで学習してみようかと思う。</p>
+
+<h2>デプロイ</h2>
+
+<p>デプロイは、ローカル＆本番環境ともに、とりあえず簡単に、IntelliJ IDEAから試す。
+ローカル環境の場合は、App Engine Serverから起動する事ができる。</p>
+
+<p>本番環境は、メニューのToolsからGoogle App Engine → Upload App Engine app&hellip; から
+アップロードできる。簡単。</p>
+
+<p>簡単だけど、継続的デリバリーができなくなるので、別途デプロイ方法を検討する。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/12/osaka-python-study-session/">大阪Pythonユーザの集まり 2014/05 を募集開始しました &#8216;#osakapy</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-12T19:37:12+09:00" pubdate data-updated="true">2014-05-12</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>第2回の大阪Pythonユーザの集まりを、5月29日に行います。</p>
+
+<p><a href="http://connpass.com/event/6369/">大阪Pythonユーザの集まり 2014/05 &ndash; connpass</a></p>
+
+<ul>
+<li>日時 2014/05/29 19:00</li>
+<li>場所 堂島アバンザ21F</li>
+</ul>
+
+
+<p>Pythonユーザはもちろんのこと、
+Pythonに興味を持っていただいている方のご参加もお待ちしております。</p>
+
+<p>今時点では、下記3名が発表予定です。私も参加します。</p>
+
+<ul>
+<li><a href="https://twitter.com/whosaysni">@whosaysni</a> Django関連</li>
+<li><a href="https://twitter.com/todogzm">@todogzm</a> とりあえず何か。多分Python 2/3移行関連？</li>
+<li><a href="https://twitter.com/Ido">@Ido</a> GAE/PyについてLT</li>
+</ul>
+
+
+<p>誰か少しでも発表できることがありましたら、ご参加をお待ちしております。
+個人的にはPython 3.4の新機能を話せる人がいたら、お話いただけると嬉しい次第です。</p>
+
+<p>また、発表者が少なかった場合には、グループディスカッションを考えています。
+何についてディスカッションしていただくかはまだ考えていませんが、
+結果として参加者も勉強会に貢献したぜ感を感じられるような勉強会にできればなぁと
+漠然と考えております。</p>
+
+<p>懇親会も行う予定ですので、こちらも是非ご参加ください。
+前回の反省(?)を踏まえ、早めにアナウンスします。</p>
+
+<p>ちなみに、アンケートを募集したものの、サンプル数が少なすぎました…。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/14/python-osaka-session-questionnaires/">大阪Pythonユーザの集まりの意見募集中 &#8216;#osakapy</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-14T18:08:41+09:00" pubdate data-updated="true">2014-04-14</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>大阪Pythonユーザの集まりについて、GW明けにまた行おうと考えています。
+第1回は平日夜の開催で、発表形式の会でしたが、他にも色々やってみたいという声がありましたので、
+どの要望が一番多いかを調べるべく、アンケートを作成してみることにしました。</p>
+
+<blockquote class="twitter-tweet"><p>大阪Pythonユーザの集まり・企画アンケートを作成しました。よろしければ次回に向けての企画のためのご意見をお送りください。 <a href="https://twitter.com/hashtag/osakapy?src=hash">#osakapy</a> <a href="http://t.co/OqC4rWHUPy">http://t.co/OqC4rWHUPy</a></p>&mdash; Atsushi Kanaya (@todogzm) <a href="https://twitter.com/todogzm/status/455585461386625024">April 14, 2014</a></blockquote>
+
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p>アンケートはGoogleドライブのフォーム作成機能を使って実現しています。
+簡単に作れて即公開できるのが便利ですね。</p>
+
+<p><a href="https://support.google.com/drive/topic/1360904?hl=ja&amp;ref_topic=2811744">フォーム &ndash; ドライブ ヘルプ</a>
+を見れば、大体の作り方は分かるかと思いますので、
+アンケートを作成する際には、候補のひとつに入れてみてもよいかと思います。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/02/chrome-tabs-and-process/">Chromeで元タブとは異なるプロセスで新規タブを開く方法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-02T14:28:06+09:00" pubdate data-updated="true">2014-04-02</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Google Chromeは基本的に1タブごとに1プロセスを立ち上げるマルチプロセスのアーキテクチャを採用しています。
+マルチプロセスであることにより、下記のメリットが生まれるわけです。</p>
+
+<ol>
+<li>ブラウザ本体のメモリ使用量肥大化を防ぐ</li>
+<li>1つのタブがクラッシュしてもブラウザ全体に影響を及ぼさない</li>
+</ol>
+
+
+<p>ただし、厳密に言うと1タブごとに1プロセス、というわけではありません。
+具体的に言いますと、ある元タブからリンクをクリックした際に開かれるタブ、これは元タブと同じプロセスで
+開かれます。
+ですので、この2つのタブのうちどちらかがクラッシュすると、両方のタブがクラッシュすることになります。
+また、この方法で開き続けると、1つのプロセスで何枚ものタブを開くことになるので、
+最終的には1つのタブのプロセスがメモリ肥大化します。</p>
+
+<p>個人的に、嫌なんですよね。常駐したいタブのメモリが肥大化するのって。
+Twitterなどのサービスのタブを常駐させたまま各種リンクをクリックして見てた結果、
+気がつけばTwitterタブを開いているプロセスのメモリが肥大化しているわけです。</p>
+
+<p>という神経質な私のために、どうしたら別プロセスで新しいタブを開くのか確認しました。
+結論から言いますと、「リンクを右クリックして新しいタブで開く」と新規タブが新しいプロセスで開けます。</p>
+
+<p>以下、検証方法。ブラウザにはWindows版Chrome 33.0.1750.154mを使用しました。
+新規タブで開くリンクに対して、下記の操作を行いました。</p>
+
+<ol>
+<li>左クリックで開く</li>
+<li>中央クリックで開く</li>
+<li>右クリックでコンテキストメニューを出し、「新しいタブで開く」を使って開く</li>
+</ol>
+
+
+<p>結果は以下のとおり、3.の右クリックして新しいタブで開く方法だけが、新しいプロセスで新規タブを
+開くことが出来ました。</p>
+
+<p><img src="/images/contents/20140402-chrome-tabs-and-process.png" alt="3つの方法で新規タブを開いた場合のプロセス" /></p>
+
+<p>最近のマシンではそれほどメモリ使用量を気にすることはないかと思いますが、
+私のような神経質さを持つ方には、是非右クリック→新しいタブで開く、をおすすめします。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/03/28/no-value-waffle/">今週はまともにブログを書けなかった…(読む価値なし日記)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-28T12:10:27+09:00" pubdate data-updated="true">2014-03-28</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今週も色々ありました…ちょっとここには書きにくいので、またあちこちで流すかもしれませんし、
+流さないかもしれません。</p>
+
+<p>とりあえずこんな一文でも、一応更新したんだぞ、と自分に言い聞かせるための
+免罪符的読む価値なし日記でした。ちゃんちゃん。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/03/20/java8-stream/">Java 8リリース & java.util.streamのお勉強</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-20T18:45:15+09:00" pubdate data-updated="true">2014-03-20</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>ようやくJava 8がリリースされましたね。
+正直Java飽きたと思っていたのですが、Java 8はかなり熱い機能が満載です。
+特に関数型ちっくに書けるのは大きいですね。</p>
+
+<p>とりあえず練習のため、1から100までに対するFizzBuzzを、今時点で知る限りの
+Java 8の機能を使って書いてみました。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>import java.util.stream.IntStream;
+</span><span class='line'>
+</span><span class='line'>public class Main {
+</span><span class='line'>  public static String fizzbuzz(int x) {
+</span><span class='line'>      if (x % 15 == 0)
+</span><span class='line'>          return "FizzBuzz";
+</span><span class='line'>      else if (x % 3 == 0)
+</span><span class='line'>          return "Fizz";
+</span><span class='line'>      else if (x % 5 == 0)
+</span><span class='line'>          return "Buzz";
+</span><span class='line'>      else
+</span><span class='line'>          return String.valueOf(x);
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  public static void p(String fb) {
+</span><span class='line'>      System.out.println(fb);
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  public static void main(String[] args) {
+</span><span class='line'>      IntStream.range(1, 101).boxed().map(Main::fizzbuzz).forEach(Main::p);
+</span><span class='line'>  }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>もはや今までに見てきたJavaとは思えない書き方ですね。
+特にmain()部分は1行で色々やっているので、解説を書いていきますが、
+その前に、そもそもStreamってなに？ということで、Streamについて調べました。
+以下、<a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html">java.util.stream.Streamインターフェース</a>の最初の一文の引用です。</p>
+
+<blockquote><p>A sequence of elements supporting sequential and parallel aggregate operations.</p></blockquote>
+
+<p>つまり、直列処理も並列処理も行うことができる、連続したデータを集めたもの、のようです。
+今までのコレクションとの最大の違いは、並列処理も行うことができる、という部分でしょうね。
+また、関数型言語のような高階関数を多数用意しているところも特徴です。</p>
+
+<p>Streamが何となく雰囲気分かった気がしたところで、では1行ずつ見てみましょう。
+ちなみに、「模様です」と書いている部分は、まだ私自身の調査が及んでない部分です。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>IntStream.range(1, 101)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>IntStreamはprimitiveなint専用のStreamに関するインターフェース。
+IntStream.range(1, 101)により、1から100までのStreamを生成します。
+(IntStream.rangeClosed(1, 100)でもOKです)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>IntStream.range(1, 101)
+</span><span class='line'>  .boxed()</span></code></pre></td></tr></table></div></figure>
+
+
+<p>.boxed()でprimitiveなintのStreamをStream&lt;Integer&gt;に変換。
+Pipelineにより、Stream内のデータが必要になった時点で変換する模様です。
+要するに一括変換ではない模様。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>IntStream.range(1, 101).boxed()
+</span><span class='line'>  .map(Main::fizzbuzz)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>map()にはFunctionを渡します。
+Function&lt;T,R&gt;は、型Tの入力を受け取り型Rの結果を返す関数インターフェース。
+map()は、型TのStreamを、引数に渡した関数を用いて型Rのストリームを変換(生成)します。</p>
+
+<p>今回map()に渡すFunctionはMainクラスのfizzbuzzメソッド。
+staticメソッドに対しては、特別にMain::fizzbuzzと書くことができるようになりました。
+この書き方をすることで、fizzbuzzメソッドはFunctionの匿名クラスに変換される模様です。</p>
+
+<p>map()の結果として、Stream&lt;String&gt;で、中身はFizzBuzzのStreamが生成されたことになります。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>IntStream.range(1, 101).boxed().map(Main::fizzbuzz)
+</span><span class='line'>  .forEach(Main::p);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>forEach()にはConsumerを渡します。
+Consumer&lt;T&gt;は型Tの入力を受け取り何も返さない手続き(何も返さないから関数ではない)インターフェース。
+forEach()は、型TのStreamを用いて何かしらの処理をしますが、結果は返しません。
+今回のように、標準出力などの副作用を行う場合に使うことになるかと思います。</p>
+
+<p>map()が返した型はStream&lt;String&gt;なので、Main::pの引数はStringである必要があります。
+うっかりMain::pの引数をIntegerなどStringと互換のない型にした場合、
+型が違うとコンパイルエラーを返してくれるため、型で悩むことがなくなります。</p>
+
+<p>(System.out::println と書いてもOKですが、型の説明のためにわざわざMain::pを定義しました)。</p>
+
+<p>これでmain文の難解な1行を読み解くことが出来ました(消化不良もあるかと思いますが…)。</p>
+
+<p>ちなみに、Streamの説明のところで、並列処理もOKという話をしましたが、
+このFizzBuzzを並列処理しようとした場合、下記のように書けばOKです。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>IntStream.range(1, 101).boxed()
+</span><span class='line'>  .paraparallel()   // ここで並列処理化している
+</span><span class='line'>  .map(Main::fizzbuzz).forEach(Main::p);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>直列処理の場合は、1, 2, Fizz, 4, &hellip;と表示されていたのですが、
+並列処理にすることにより、順番がバラバラになるのが分かるかと思います。
+これはmap()が、その前のStreamが並列化されたことに伴い、
+順不同で並列にデータが来るようになったためと考えられます。</p>
+
+<p>結果を集計するような場合にはparallelは強力ですが、順序が重要な場合には
+parallelは使えないと考えたほうがよいかもしれません。
+ちなみに集計には、Streamに<code>collect(), min(), max()</code>が定義されていました。
+最大値や最小値を、複数CPUを使って探してくれるのは、何か胸が熱くなりますね(?)。</p>
+
+<p>さて、いつから実戦投入できるようになるかな？それが一番の問題ですね！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/03/17/python-instance-method/">Pythonのインスタンスメソッドと関数実行</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-17T19:07:26+09:00" pubdate data-updated="true">2014-03-17</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://docs.python.jp/3/reference/datamodel.html#the-standard-type-hierarchy">3.データモデルのうち「インスタンスメソッド」</a>を読んでいたのですが、興味深い一文を見つけました。</p>
+
+<blockquote><p>インスタンスメソッドオブジェクトが呼び出される際、根底にある関数 (<strong>func</strong>) が呼び出されます。このとき、クラスインスタンス (<strong>self</strong>) が引数リストの先頭に挿入されます。例えば、 C を関数 f() の定義を含むクラス、 x を C のインスタンスとすると、 x.f(1) の呼び出しは C.f(x, 1) の呼び出しと同じです。</p></blockquote>
+
+<p>これを使うと、あるクラスのインスタンスメソッドを列挙しておいて、
+リフレクションのように順次メソッドを実行しておくことが簡単に、かつオーバーヘッドがない状態で
+実行することができる模様です。</p>
+
+<p>こういう具合に書くと、</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ops = [Puzzle.up, Puzzle.down]
+</span><span class='line'>
+</span><span class='line'>p = Puzzle()
+</span><span class='line'>
+</span><span class='line'>for op in ops:
+</span><span class='line'>    op(p)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>こういう書き方をしたときと同じ挙動になるわけです。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>p = Puzzle()
+</span><span class='line'>p.up()
+</span><span class='line'>p.down()</span></code></pre></td></tr></table></div></figure>
+
+
+<p>行数は後者の方が少ないですが、前者の書き方が必要なときもあるんですよ。
+特にメソッドをひたすら実行しまくる場合には、前者の書き方は便利です。
+しかもJavaでリフレクションを使った時のようなオーバーヘッドがないのは良いですね
+(普通Javaではこういう書き方せずにインターフェースとか使うけど)。</p>
+
+<p>クラスでメソッド定義をするときに、<code>def up(self):</code> と書くのは、
+インスタンスメソッドとして使った場合には、第1引数のselfにはオブジェクトそのものを勝手に
+指定してくれるような動きになっているのかな？</p>
+
+<h1>追記 (2014-03-19)</h1>
+
+<p>メソッドはレシーバを第1引数に受け取るただの関数、ということだそうです。</p>
+
+<blockquote class="twitter-tweet"><p><a href="https://twitter.com/todogzm">@todogzm</a> <a href="https://twitter.com/kawaken">@kawaken</a> <a href="http://t.co/fVjQkdpxjq">http://t.co/fVjQkdpxjq</a> メソッドはレシーバを第一引数に受け取る只の関数、<a href="http://t.co/ba25AVfZuX">http://t.co/ba25AVfZuX</a> メソッドの第一引数をselfと書くのは単なる慣習で言語的に特別な意味は無いとのことなので出来るはずですよ</p>&mdash; Hiroaki Nakamura (@hnakamur2) <a href="https://twitter.com/hnakamur2/status/445565910149918721">March 17, 2014</a></blockquote>
+
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/03/14/attended-osaka-python-study-session/">大阪Pythonユーザの集まり2014/03に参加＆発表してきた &#8216;#osakapy</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-14T11:44:25+09:00" pubdate data-updated="true">2014-03-14</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>まえがき</h1>
+
+<p>久々の勉強会企画である<a href="http://connpass.com/event/5361/">大阪Pythonユーザの集まり2014/03</a>に
+行ってきて、ついでに発表もしてきました。
+勉強会でまともな話を発表するのは初めてで、ものすごく緊張しましたが、
+なんとか生きて帰ってこれました。</p>
+
+<p>会場をご提供いただきましたシナジーマーケティングさんと<a href="https://twitter.com/kawaken">@kawaken</a>さん、
+ありがとうございます！
+増田さん、司会進行ありがとうございます！
+そして、お足元の悪い中ご参加いただきました皆様、ありがとうございます！</p>
+
+<h1>発表内容</h1>
+
+<h2>scikit-learnを用いた機械学習チュートリアル</h2>
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/32266416" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/AtsushiKanaya/scikitlearn" title="scikit-learnを用いた機械学習チュートリアル" target="_blank">scikit-learnを用いた機械学習チュートリアル</a> </strong> from <strong><a href="http://www.slideshare.net/AtsushiKanaya" target="_blank">Atsushi Kanaya</a></strong> </div></p>
+
+<p>私の発表です。
+機械学習を使う上での取っ掛かりの考え方、それを実際にscikit-learnで実装するには
+どうすればよいかを、テキスト分類の例を交えながら説明したつもりです。</p>
+
+<h2>wxPython入門</h2>
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/32299330" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/YasushiMasuda/wxpythonpython201403" title="wxPython入門（大阪Pythonユーザの集まり2014/03）" target="_blank">wxPython入門（大阪Pythonユーザの集まり2014/03）</a> </strong> from <strong><a href="http://www.slideshare.net/YasushiMasuda" target="_blank">Yasushi Masuda</a></strong> </div></p>
+
+<p>増田さん(<a href="https://twitter.com/whosaysni">@whosaysni</a>)によるwxPythonのお話。
+クロスプラットフォームで各OSのネイティブなコンポーネントを使うあたり、
+Swingより好感が持てる(JavaFXはすみませんが不勉強で…)。</p>
+
+<p>あとで調べてみましたが、Python 3対応はまだみたいですね。</p>
+
+<h2>Autodocについて</h2>
+
+<p><a href="https://speakerdeck.com/heavenshell/autodoc"><a href="https://speakerdeck.com/heavenshell/autodoc">https://speakerdeck.com/heavenshell/autodoc</a></a></p>
+
+<p><a href="https://twitter.com/heavenshell">@heavenshell</a> さんによる、Ruby発
+<a href="http://r7kamura.github.io/2013/12/01/autodoc.html">Autodoc &ndash; r7kamura per second</a>の
+Python版を作った、というお話。
+Web APIサーバーに対するテストを書くと、テストからドキュメントが自動生成されるとのこと。</p>
+
+<p>docstringを使うという選択肢もあったが、的な設計思想に関する質疑応答も聞けて
+Pythonな人の考え方がかいま見えた気がしました。</p>
+
+<p>「我々Pythonistaは〜」というフレーズを何回か聞きました。
+Pythonの勉強会に参加するのは初めてなので、Pythonはそういうノリなのかしら？</p>
+
+<h2>kurokoについて (LT)</h2>
+
+<p><a href="http://www.hexacosa.net/documents/osakapy-20140313-lt_kuroko/#/">kurokoについて</a>  (2014-03-17 URL追加)</p>
+
+<p><a href="https://twitter.com/hhatto">@hhatto</a> さんによる、定期実行するタスクを扱うための
+<a href="https://pypi.python.org/pypi/kuroko">kuroko</a>についてのLT。</p>
+
+<p>デコレーターいいね、な人が今日の勉強会で2名。
+まだデコレーターを使ったことがないので、使ってみようっと。</p>
+
+<h2>ちょっとした黒魔術でライブラリのバグを回避した話 (LT)</h2>
+
+<p><a href="https://twitter.com/soundkitchen">@soundkitchen</a> さんによる、Pythonの黒魔術のお話。
+使ってるライブラリのコンストラクタ周りにバグがあったので
+コンストラクタを差し替えたという荒業のお話をしてくれました。</p>
+
+<p>Pythonは黒魔術的な実装はあまり好かれないそうですが、
+それでも最終手段としてこういうことができる余地を残してくれているのは素晴らしい、
+とのことです。</p>
+
+<h1>懇親会</h1>
+
+<p>懇親会は9名、うち7名が、本勉強会を企画するに当って集まっていただいた方々でした。
+個人的には、懇親会までが勉強会だと思っていますので(ブログを書くまでが勉強会、という話もあるけど)、
+面白い話をもっと聞きたければ懇親会に参加すべきですよ〜と思っています。</p>
+
+<p>今回懇親会に参加されなかった方々も、次回はご参加ください。
+前の会社の後輩にも懇親会に参加していただきましたが、色々楽しい話が聞けてよかった、
+と言ってくれていました。</p>
+
+<h1>感想、反省点など</h1>
+
+<ul>
+<li>事前の準備は周囲の協力をいただきながら、ぼちぼちの出来だったかな？</li>
+<li>一方、懇親会の案内はもっと早くに出すべきだった</li>
+<li>肝心の発表は反省点だらけ。もっと練習しなきゃいけなかったし、スライドも洗練させるべきだった</li>
+</ul>
+
+
+<h1>今後</h1>
+
+<p>関西Pythonのメーリングリストあたりで相談しながら、次回を決めていく予定です。
+私も企画に絡んでいきます。
+ハッカソンしたいなぁ。Pythonの開発をもう少しやってみたいし、
+開発スタイルが多分オレオレ感満載なことになっていると思うので…。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/3/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/12/23/blog-environment-restored/">ブログ環境を直していた</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/29/quit-working-at-rakus/">株式会社ラクスを退職しました</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/25/decision-tree-feature-names/">決定木の表示に変数名を表示する</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/12/writing-decision-tree/">Pythonで決定木を描いてみる</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/16/mac-java-switch-version/">MacでJavaのバージョンを切り替える方法</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/todoa2c">@todoa2c</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'todoa2c',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+<section>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- todoa2c.github.ioのサイドバー -->
+  <ins class="adsbygoogle"
+       style="display:inline-block;width:250px;height:250px"
+       data-ad-client="ca-pub-4872492087202732"
+       data-ad-slot="5799869680"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</section>
+<section>
+	<h1>Latest Tweets</h1>
+	<a class="twitter-timeline" href="https://twitter.com/todogzm" data-widget-id="444303472796528640">@todogzm からのツイート</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/+AtsushiKanaya?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Atsushi Kanaya (todoa2c) -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'todoa2c-github-io';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Community | 技術情報棚卸し(平日限定)]]></title>
+  <link href="http://todoa2c.github.io/blog/categories/community/atom.xml" rel="self"/>
+  <link href="http://todoa2c.github.io/"/>
+  <updated>2014-12-23T22:52:43+09:00</updated>
+  <id>http://todoa2c.github.io/</id>
+  <author>
+    <name><![CDATA[Atsushi Kanaya (todoa2c)]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[大阪Pythonユーザの集まり2014/05に参加＆発表してきた '#osakapy]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/06/02/attended-osaka-python-study-session/"/>
+    <updated>2014-06-02T19:30:00+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/06/02/attended-osaka-python-study-session</id>
+    <content type="html"><![CDATA[<h1>まえがき</h1>
+
+<p><a href="http://osakapy.connpass.com/">大阪Pythonユーザの集まり</a>の勉強会、
+<a href="http://osakapy.connpass.com/event/6369/">大阪Pythonユーザの集まり 2014/05</a>の
+企画、参加、発表してきました。</p>
+
+<p>まさか開始前に、高専談義が行われるとは…(私含め3名の高専出身者が参加されていました)。</p>
+
+<h1>発表内容</h1>
+
+<h2>Djangoの黒魔術</h2>
+
+<p><a href="http://www.slideshare.net/YasushiMasuda/django-boodoo">http://www.slideshare.net/YasushiMasuda/django-boodoo</a>">http://www.slideshare.net/YasushiMasuda/django-boodoo">http://www.slideshare.net/YasushiMasuda/django-boodoo</a></a></p>
+
+<p>増田さん (<a href="https://twitter.com/whosaysni">@whosaysni</a>) による、
+Djangoを使う上での黒魔術的な工夫。
+Djangoは触ったことがなかったので、黒魔術自体は参考になることはなかったものの、
+内部実装を交えた話があることで、ずいぶんと興味深く聞くことができた。
+スコープがスタックとして実装されており、上から順番に探索しているので、
+ネストした名前の解決もうまくいくと。</p>
+
+<h2>オープンCAEとPython</h2>
+
+<p><a href="http://www.slideshare.net/TatsuyaKatayama/caepython-35353509">http://www.slideshare.net/TatsuyaKatayama/caepython-35353509</a>">http://www.slideshare.net/TatsuyaKatayama/caepython-35353509">http://www.slideshare.net/TatsuyaKatayama/caepython-35353509</a></a></p>
+
+<p><a href="http://ofbkansai.sakura.ne.jp/">オープンCAE勉強会@関西</a>幹事の片山さんによる、
+オープンCAEに関する実装とPythonとの関連について。
+CAEとは<a href="http://ja.wikipedia.org/wiki/CAE">CAE &ndash; Wikipedia</a>によると、</p>
+
+<blockquote><p>コンピュータ技術を活用して製品の設計、製造や工程設計の事前検討の支援を行うこと、またはそれを行うツールである</p></blockquote>
+
+<p>とのこと。
+今回は、数値解析・シミュレーションなどで使われる計算を行うソフトウェアの
+オープンソース実装と、Pythonがどのように関係しているかをご紹介いただいた。
+今回ご紹介いただいたオープンソース実装には何かしらPythonのインターフェースがあり、
+最終的には、これらの実装をPythonでつなぐことを検討中とのことです。</p>
+
+<h2>Python 3世代が考える(?) Python 2/3コード共存戦略</h2>
+
+<p><a href="http://www.slideshare.net/AtsushiKanaya/python-python3and2">http://www.slideshare.net/AtsushiKanaya/python-python3and2</a>">http://www.slideshare.net/AtsushiKanaya/python-python3and2">http://www.slideshare.net/AtsushiKanaya/python-python3and2</a></a></p>
+
+<p>私の発表です。知らぬ間にPython 2.7を使っており、int / int でfloatが返ってきてハマった話から、
+Python 2でも3でもコードをメンテナンスしなければならない場合の、
+取りうる戦略とメリット・デメリットについて発表しました。</p>
+
+<h1>LT</h1>
+
+<h2>GAEでスパイクを捌く</h2>
+
+<p><a href="http://www.slideshare.net/idoojosjp/gae-32257210">http://www.slideshare.net/idoojosjp/gae-32257210</a>">http://www.slideshare.net/idoojosjp/gae-32257210">http://www.slideshare.net/idoojosjp/gae-32257210</a></a></p>
+
+<p>会津さん (<a href="https://twitter.com/Ido">@Ido</a>) による、瞬間的な大量リクエスト(スパイク)を
+App Engineでどのように捌くかについて。
+あるインスタンスが1秒間に捌けるリクエスト数から、予想される最大リクエスト数に対する
+インスタンスを事前に起動しておくことで対処する。
+4桁台のインスタンスを起動する的な話も…これはApp Engineならではと言った感じですね。</p>
+
+<h2>とあるプロジェクトでのPython導入事例</h2>
+
+<p><a href="http://www.hexacosa.net/documents/osakapy-20140529-lt">http://www.hexacosa.net/documents/osakapy-20140529-lt</a>">http://www.hexacosa.net/documents/osakapy-20140529-lt">http://www.hexacosa.net/documents/osakapy-20140529-lt</a></a></p>
+
+<p>服部さん (<a href="https://twitter.com/hhatto">@hhatto</a>) による、
+ソーシャルゲーム開発・運用周りで作ったツールの紹介。
+あちこちで使われており、自分もまだまだ業務改善する余地がありそうだなぁと反省…。</p>
+
+<h1>懇親会</h1>
+
+<p>実は当日までお店すら決めていなかったのです。
+今回は参加人数も多くないし、大丈夫だろうと高をくくっていたのですが、
+蓋を開けると勉強会参加者は20名、懇親会参加者も11名に。</p>
+
+<p>当日のお昼に急いで店を探して予約して、飲み放題プランで料金3500円ポッキリ、
+当日の参加もOKよ！というかたちにしました。</p>
+
+<p>また、前回は自分の終電の都合もあって23時解散にしたのですが、
+もう少しゆっくりしたい方々もいらっしゃるかもしれないと思い、
+実際の会計は増田さんにお願いしました。増田さん、ありがとうございます。</p>
+
+<p>懇親会では、Javaのコミュニティの大移動の話や、フリーランスとしての活動の話など、
+Python以外にも色々ためになる話を聞くことが出来ました。
+そしてまた今回もErlangいいよ、という話が聞こえてきたので、
+そろそろErlangを真面目に触ってみたほうがよいのかも…(いやいやそんな時間ないわ…)。</p>
+
+<h1>次回</h1>
+
+<p>まだ未定ですが、多分勉強会は8月開催だと思います。
+また、数時間程度のハッカソンは別途検討したいと考えています。
+土日の合宿もやってみたいですが、まずは平日のハッカソンかなぁ…。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[大阪Pythonユーザの集まり 2014/05 を募集開始しました '#osakapy]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/05/12/osaka-python-study-session/"/>
+    <updated>2014-05-12T19:37:12+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/05/12/osaka-python-study-session</id>
+    <content type="html"><![CDATA[<p>第2回の大阪Pythonユーザの集まりを、5月29日に行います。</p>
+
+<p><a href="http://connpass.com/event/6369/">大阪Pythonユーザの集まり 2014/05 &ndash; connpass</a></p>
+
+<ul>
+<li>日時 2014/05/29 19:00</li>
+<li>場所 堂島アバンザ21F</li>
+</ul>
+
+
+<p>Pythonユーザはもちろんのこと、
+Pythonに興味を持っていただいている方のご参加もお待ちしております。</p>
+
+<p>今時点では、下記3名が発表予定です。私も参加します。</p>
+
+<ul>
+<li><a href="https://twitter.com/whosaysni">@whosaysni</a> Django関連</li>
+<li><a href="https://twitter.com/todogzm">@todogzm</a> とりあえず何か。多分Python 2/3移行関連？</li>
+<li><a href="https://twitter.com/Ido">@Ido</a> GAE/PyについてLT</li>
+</ul>
+
+
+<p>誰か少しでも発表できることがありましたら、ご参加をお待ちしております。
+個人的にはPython 3.4の新機能を話せる人がいたら、お話いただけると嬉しい次第です。</p>
+
+<p>また、発表者が少なかった場合には、グループディスカッションを考えています。
+何についてディスカッションしていただくかはまだ考えていませんが、
+結果として参加者も勉強会に貢献したぜ感を感じられるような勉強会にできればなぁと
+漠然と考えております。</p>
+
+<p>懇親会も行う予定ですので、こちらも是非ご参加ください。
+前回の反省(?)を踏まえ、早めにアナウンスします。</p>
+
+<p>ちなみに、アンケートを募集したものの、サンプル数が少なすぎました…。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[大阪Pythonユーザの集まりの意見募集中 '#osakapy]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/04/14/python-osaka-session-questionnaires/"/>
+    <updated>2014-04-14T18:08:41+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/04/14/python-osaka-session-questionnaires</id>
+    <content type="html"><![CDATA[<p>大阪Pythonユーザの集まりについて、GW明けにまた行おうと考えています。
+第1回は平日夜の開催で、発表形式の会でしたが、他にも色々やってみたいという声がありましたので、
+どの要望が一番多いかを調べるべく、アンケートを作成してみることにしました。</p>
+
+<p><a href="https://twitter.com/todogzm/status/455585461386625024">https://twitter.com/todogzm/status/455585461386625024</a>">https://twitter.com/todogzm/status/455585461386625024">https://twitter.com/todogzm/status/455585461386625024</a></a></p>
+
+<p>アンケートはGoogleドライブのフォーム作成機能を使って実現しています。
+簡単に作れて即公開できるのが便利ですね。</p>
+
+<p><a href="https://support.google.com/drive/topic/1360904?hl=ja&amp;ref_topic=2811744">フォーム &ndash; ドライブ ヘルプ</a>
+を見れば、大体の作り方は分かるかと思いますので、
+アンケートを作成する際には、候補のひとつに入れてみてもよいかと思います。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[大阪Pythonユーザの集まり2014/03に参加＆発表してきた '#osakapy]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/03/14/attended-osaka-python-study-session/"/>
+    <updated>2014-03-14T11:44:25+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/03/14/attended-osaka-python-study-session</id>
+    <content type="html"><![CDATA[<h1>まえがき</h1>
+
+<p>久々の勉強会企画である<a href="http://connpass.com/event/5361/">大阪Pythonユーザの集まり2014/03</a>に
+行ってきて、ついでに発表もしてきました。
+勉強会でまともな話を発表するのは初めてで、ものすごく緊張しましたが、
+なんとか生きて帰ってこれました。</p>
+
+<p>会場をご提供いただきましたシナジーマーケティングさんと<a href="https://twitter.com/kawaken">@kawaken</a>さん、
+ありがとうございます！
+増田さん、司会進行ありがとうございます！
+そして、お足元の悪い中ご参加いただきました皆様、ありがとうございます！</p>
+
+<h1>発表内容</h1>
+
+<h2>scikit-learnを用いた機械学習チュートリアル</h2>
+
+<p><a href="http://www.slideshare.net/AtsushiKanaya/scikitlearn">http://www.slideshare.net/AtsushiKanaya/scikitlearn</a>">http://www.slideshare.net/AtsushiKanaya/scikitlearn">http://www.slideshare.net/AtsushiKanaya/scikitlearn</a></a></p>
+
+<p>私の発表です。
+機械学習を使う上での取っ掛かりの考え方、それを実際にscikit-learnで実装するには
+どうすればよいかを、テキスト分類の例を交えながら説明したつもりです。</p>
+
+<h2>wxPython入門</h2>
+
+<p><a href="http://www.slideshare.net/YasushiMasuda/wxpythonpython201403">http://www.slideshare.net/YasushiMasuda/wxpythonpython201403</a>">http://www.slideshare.net/YasushiMasuda/wxpythonpython201403">http://www.slideshare.net/YasushiMasuda/wxpythonpython201403</a></a></p>
+
+<p>増田さん(<a href="https://twitter.com/whosaysni">@whosaysni</a>)によるwxPythonのお話。
+クロスプラットフォームで各OSのネイティブなコンポーネントを使うあたり、
+Swingより好感が持てる(JavaFXはすみませんが不勉強で…)。</p>
+
+<p>あとで調べてみましたが、Python 3対応はまだみたいですね。</p>
+
+<h2>Autodocについて</h2>
+
+<p><a href="https://speakerdeck.com/heavenshell/autodoc">https://speakerdeck.com/heavenshell/autodoc</a>">https://speakerdeck.com/heavenshell/autodoc">https://speakerdeck.com/heavenshell/autodoc</a></a></p>
+
+<p><a href="https://twitter.com/heavenshell">@heavenshell</a> さんによる、Ruby発
+<a href="http://r7kamura.github.io/2013/12/01/autodoc.html">Autodoc &ndash; r7kamura per second</a>の
+Python版を作った、というお話。
+Web APIサーバーに対するテストを書くと、テストからドキュメントが自動生成されるとのこと。</p>
+
+<p>docstringを使うという選択肢もあったが、的な設計思想に関する質疑応答も聞けて
+Pythonな人の考え方がかいま見えた気がしました。</p>
+
+<p>「我々Pythonistaは〜」というフレーズを何回か聞きました。
+Pythonの勉強会に参加するのは初めてなので、Pythonはそういうノリなのかしら？</p>
+
+<h2>kurokoについて (LT)</h2>
+
+<p><a href="http://www.hexacosa.net/documents/osakapy-20140313-lt_kuroko/#/">kurokoについて</a>  (2014-03-17 URL追加)</p>
+
+<p><a href="https://twitter.com/hhatto">@hhatto</a> さんによる、定期実行するタスクを扱うための
+<a href="https://pypi.python.org/pypi/kuroko">kuroko</a>についてのLT。</p>
+
+<p>デコレーターいいね、な人が今日の勉強会で2名。
+まだデコレーターを使ったことがないので、使ってみようっと。</p>
+
+<h2>ちょっとした黒魔術でライブラリのバグを回避した話 (LT)</h2>
+
+<p><a href="https://twitter.com/soundkitchen">@soundkitchen</a> さんによる、Pythonの黒魔術のお話。
+使ってるライブラリのコンストラクタ周りにバグがあったので
+コンストラクタを差し替えたという荒業のお話をしてくれました。</p>
+
+<p>Pythonは黒魔術的な実装はあまり好かれないそうですが、
+それでも最終手段としてこういうことができる余地を残してくれているのは素晴らしい、
+とのことです。</p>
+
+<h1>懇親会</h1>
+
+<p>懇親会は9名、うち7名が、本勉強会を企画するに当って集まっていただいた方々でした。
+個人的には、懇親会までが勉強会だと思っていますので(ブログを書くまでが勉強会、という話もあるけど)、
+面白い話をもっと聞きたければ懇親会に参加すべきですよ〜と思っています。</p>
+
+<p>今回懇親会に参加されなかった方々も、次回はご参加ください。
+前の会社の後輩にも懇親会に参加していただきましたが、色々楽しい話が聞けてよかった、
+と言ってくれていました。</p>
+
+<h1>感想、反省点など</h1>
+
+<ul>
+<li>事前の準備は周囲の協力をいただきながら、ぼちぼちの出来だったかな？</li>
+<li>一方、懇親会の案内はもっと早くに出すべきだった</li>
+<li>肝心の発表は反省点だらけ。もっと練習しなきゃいけなかったし、スライドも洗練させるべきだった</li>
+</ul>
+
+
+<h1>今後</h1>
+
+<p>関西Pythonのメーリングリストあたりで相談しながら、次回を決めていく予定です。
+私も企画に絡んでいきます。
+ハッカソンしたいなぁ。Pythonの開発をもう少しやってみたいし、
+開発スタイルが多分オレオレ感満載なことになっていると思うので…。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[大阪Pythonユーザの集まり 2014/03 を募集開始しました '#osakapy]]></title>
+    <link href="http://todoa2c.github.io/blog/2014/02/28/osaka-python-study-session/"/>
+    <updated>2014-02-28T11:43:01+09:00</updated>
+    <id>http://todoa2c.github.io/blog/2014/02/28/osaka-python-study-session</id>
+    <content type="html"><![CDATA[<p>前回の記事で書きました、大阪でPythonの勉強会を行う、という話ですが、
+本日ようやく募集開始しました。</p>
+
+<p><a href="http://connpass.com/event/5361/">大阪Pythonユーザの集まり 2014/03 &ndash; connpass</a></p>
+
+<ul>
+<li>日時 2014/03/13 19:00</li>
+<li>場所 堂島アバンザ21F</li>
+</ul>
+
+
+<p>Pythonユーザはもちろんのこと、
+Pythonに興味を持っていただいている方のご参加もお待ちしております。</p>
+
+<p>今時点では、下記3名が発表予定です。私も参加します。</p>
+
+<ul>
+<li><a href="https://twitter.com/whosaysni">@whosaysni</a> wxPythonの初心者向けのお話(仮) 15分</li>
+<li><a href="https://twitter.com/todogzm">@todogzm</a> scikit-learnを用いた機械学習チュートリアル 30分</li>
+<li><a href="https://twitter.com/heavenshell">@heavenshell</a> タイトル未定 10～15分</li>
+</ul>
+
+
+<p>また、当初の予定にはなかったのですが、とりあえずLT枠も作ってみました。
+誰か少しでも発表できることがありましたら、ご参加をお待ちしております。
+個人的にはPython 3.4の新機能を話せる人がいたら、ひとつピックアップして
+お話いただけると嬉しい次第です。</p>
+
+<p>懇親会も行う予定ですので、こちらも是非ご参加ください。</p>
+]]></content>
+  </entry>
+  
+</feed>
